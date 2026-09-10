@@ -20,9 +20,6 @@
     
     .btn-primary { width: 100%; background-color: #ffd814; border: 1px solid #fcd200; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; }
     .btn-primary:hover { background-color: #f7ca00; }
-    .btn-dev-instant { width: 100%; background-color: #131921; color: #ff9900; border: 1px solid #ff9900; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; margin-top: 15px; }
-    .btn-dev-instant:hover { background-color: #232f3e; }
-    
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 12px; color: #0066c0; cursor: pointer; }
 
     /* Navigation Bar */
@@ -44,7 +41,7 @@
     .product-price { font-size: 20px; font-weight: bold; color: #b12704; }
     .product-stock { font-size: 12px; color: #007600; margin-bottom: 10px; font-weight: bold; }
 
-    /* Drawers (Cart, Orders, Dev Admin) */
+    /* Drawers */
     .drawer { position: fixed; top: 0; right: -420px; width: 400px; height: 100%; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: right 0.3s ease; z-index: 1100; padding: 20px; overflow-y: auto; }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eaeded; padding-bottom: 10px; margin-bottom: 15px; }
@@ -60,7 +57,7 @@
     .btn-confirm { background-color: #2ecc71; }
     .btn-reject { background-color: #e74c3c; }
 
-    /* Live Chat Support System */
+    /* Live Support Chat */
     .chat-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
     .chat-toggle-btn { background-color: #232f3e; color: #ff9900; border: 2px solid #ff9900; padding: 12px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; }
     .chat-box { display: none; width: 320px; height: 420px; background-color: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; position: fixed; bottom: 80px; right: 20px; z-index: 1200; }
@@ -76,14 +73,13 @@
 </head>
 <body>
 
-  <!-- AUTHENTICATION OVERLAY WITH INSTANT DEVELOPER SIGN-IN -->
+  <!-- AUTH OVERLAY FOR CUSTOMERS ONLY -->
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
       <div class="auth-logo">zone<span>.in</span></div>
       
-      <!-- Customer Sign In -->
       <div id="loginForm">
-        <h3>User Sign In</h3><br>
+        <h3>Customer Sign In</h3><br>
         <div class="form-group">
           <label>Email Address</label>
           <input type="email" id="loginEmail" placeholder="user@example.com">
@@ -92,14 +88,10 @@
           <label>Password</label>
           <input type="password" id="loginPassword" placeholder="Enter password">
         </div>
-        <button class="btn-primary" onclick="handleLogin()">Sign In as Customer</button>
-        <div class="auth-toggle" onclick="toggleAuthView('register')">Need a user account? Register</div>
-        
-        <hr style="margin: 15px 0;">
-        <button class="btn-dev-instant" onclick="enterDeveloperModeDirectly()">⚡ Direct Developer Access (No Account Required)</button>
+        <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+        <div class="auth-toggle" onclick="toggleAuthView('register')">Need an account? Register</div>
       </div>
 
-      <!-- Customer Registration -->
       <div id="registerForm" style="display: none;">
         <h3>Create Customer Account</h3><br>
         <div class="form-group">
@@ -125,7 +117,7 @@
         <button class="search-btn">🔍</button>
       </div>
       <div class="nav-right">
-        <div class="nav-link">
+        <div class="nav-link" id="userAccountNav">
           <span id="navUserRole">Role: Guest</span>
           <strong id="navUserEmail">Not Signed In</strong>
         </div>
@@ -137,6 +129,8 @@
           <span>Cart</span>
           <strong>🛒 Cart (<span id="cartCount">0</span>)</strong>
         </div>
+        
+        <!-- DEV CONTROL BUTTON (Strictly Hidden on Customer Link) -->
         <button id="devModeBtn" class="btn-primary" style="padding: 6px 12px; width:auto; display:none;" onclick="toggleDrawer('devDrawer')">🛠 Dev Console</button>
       </div>
     </div>
@@ -144,7 +138,7 @@
 
   <!-- STORE CATALOG -->
   <div class="main-container">
-    <h2>Catalog Items</h2><br>
+    <h2 id="catalogTitle">Catalog Items</h2><br>
     <div class="product-grid" id="productGrid"></div>
   </div>
 
@@ -218,26 +212,39 @@
       { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" }
     ];
 
-    // 1. Instant Developer Access (No Account Required)
-    function enterDeveloperModeDirectly() {
-      isDevMode = true;
-      currentUser = { email: "Developer Administrator", isVerified: true };
-      window.location.hash = "#dev";
-      
-      document.getElementById('authOverlay').style.display = 'none';
-      document.getElementById('navUserRole').textContent = "Role: Developer";
-      document.getElementById('navUserEmail').textContent = "Admin Access";
-      document.getElementById('devModeBtn').style.display = 'block';
-      
-      renderProducts();
-      renderDevUsers();
-      renderDevProducts();
-      renderDevOrders();
-      renderChatMessages();
-      toggleDrawer('devDrawer');
+    // ROUTING ENGINE (HANDLES SEPARATE LINKS)
+    function initializeRoute() {
+      if (window.location.hash === "#dev") {
+        // DEVELOPER DIRECT ACCESS MODE
+        isDevMode = true;
+        currentUser = { email: "Developer Administrator", isVerified: true };
+        
+        // Hide Customer Login Overlay
+        document.getElementById('authOverlay').style.display = 'none';
+        
+        // Show Dev Controls
+        document.getElementById('devModeBtn').style.display = 'block';
+        document.getElementById('navUserRole').textContent = "Role: Developer";
+        document.getElementById('navUserEmail').textContent = "Admin Access";
+        document.getElementById('chatTitle').textContent = "Developer Support Console";
+        
+        renderProducts();
+        renderDevUsers();
+        renderDevProducts();
+        renderDevOrders();
+        renderChatMessages();
+        toggleDrawer('devDrawer');
+      } else {
+        // CUSTOMER MODE (No Developer Icons Allowed)
+        isDevMode = false;
+        document.getElementById('devModeBtn').style.display = 'none'; // REMOVE DEV ICON
+        document.getElementById('authOverlay').style.display = 'flex';
+        document.getElementById('chatTitle').textContent = "Chat with Developer Support";
+        renderProducts();
+      }
     }
 
-    // Auth Helpers
+    // AUTH FOR CUSTOMERS
     function toggleAuthView(view) {
       document.getElementById('registerForm').style.display = view === 'register' ? 'block' : 'none';
       document.getElementById('loginForm').style.display = view === 'login' ? 'block' : 'none';
@@ -247,11 +254,11 @@
       const email = document.getElementById('regEmail').value.trim();
       const password = document.getElementById('regPassword').value;
 
-      if (!email || !password) return alert("Please complete all registration fields.");
+      if (!email || !password) return alert("Please fill all fields.");
       if (userAccounts.find(u => u.email === email)) return alert("Account already exists.");
 
       userAccounts.push({ email, password, isVerified: false });
-      alert("Account submitted! Requires verification by Developer in the Dev Console.");
+      alert("Account submitted! Requires Developer verification before sign in.");
       toggleAuthView('login');
       renderDevUsers();
     }
@@ -265,17 +272,13 @@
       if (!acc.isVerified) return alert("Account verification pending from Developer.");
 
       currentUser = acc;
-      isDevMode = false;
-      window.location.hash = "#user";
-      
       document.getElementById('authOverlay').style.display = 'none';
       document.getElementById('navUserRole').textContent = "Role: Customer";
       document.getElementById('navUserEmail').textContent = currentUser.email;
-      
       renderProducts();
     }
 
-    // Store Logic
+    // STORE LOGIC
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
@@ -369,7 +372,7 @@
       });
     }
 
-    // Dev Admin Operations
+    // DEV OPERATIONS
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
@@ -479,7 +482,7 @@
       }
     }
 
-    // Support Chat
+    // SUPPORT CHAT
     function toggleChat() {
       const box = document.getElementById('chatBox');
       box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
@@ -514,12 +517,9 @@
       document.getElementById(id).classList.toggle('open');
     }
 
-    // Auto-detect direct developer link launch (#dev)
-    window.onload = function() {
-      if (window.location.hash === "#dev") {
-        enterDeveloperModeDirectly();
-      }
-    };
+    // Launch routing on load or URL change
+    window.onload = initializeRoute;
+    window.onhashchange = initializeRoute;
   </script>
 </body>
 </html>
