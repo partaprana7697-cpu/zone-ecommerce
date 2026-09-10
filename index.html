@@ -15,7 +15,6 @@
       --primary-dark: #4f46e5;
       --primary-light: #818cf8;
       --accent: #f59e0b;
-      --accent-dark: #d97706;
       --success: #10b981;
       --danger: #ef4444;
       --warning: #f59e0b;
@@ -24,13 +23,9 @@
       --dark-2: #1e293b;
       --dark-3: #334155;
       --grey: #64748b;
-      --grey-light: #cbd5e1;
       --bg: #f1f5f9;
-      --card: #ffffff;
       --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --gradient-warm: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
       --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
@@ -127,17 +122,10 @@
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
       position: relative; overflow: hidden;
     }
-    .btn-primary::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
-      opacity: 0; transition: opacity 0.25s;
-    }
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
     }
-    .btn-primary:hover::after { opacity: 1; }
     .btn-primary:active { transform: translateY(0); }
 
     .auth-toggle {
@@ -292,10 +280,9 @@
       justify-content: space-between;
       box-shadow: var(--shadow-md);
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
       position: relative;
       border: 1px solid rgba(0,0,0,0.04);
-      animation: fadeInUp 0.5s ease backwards;
     }
     .product-card:hover {
       transform: translateY(-6px);
@@ -317,12 +304,6 @@
       display: flex; align-items: center;
       justify-content: center; overflow: hidden;
       position: relative;
-    }
-    .product-image-wrapper::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.03) 100%);
-      pointer-events: none;
     }
     .product-image {
       max-width: 90%; max-height: 90%;
@@ -371,6 +352,7 @@
       padding: 4px 10px;
       border-radius: 20px;
       font-weight: 600;
+      margin-right: 6px;
       margin-bottom: 4px;
     }
     .product-size {
@@ -672,10 +654,6 @@
       from { opacity: 0; transform: translateX(20px); }
       to { opacity: 1; transform: translateX(0); }
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
 
     /* ============ SCROLLBAR ============ */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -865,6 +843,25 @@
     let products = [...DEFAULT_PRODUCTS];
     let isSyncing = false;
 
+    // ⭐ FLICKER FIX: tracks last rendered state
+    let lastDataHash = "";
+
+    // ⭐ FLICKER FIX: compute fast hash of all state to detect real changes
+    function dataHash() {
+      const str = JSON.stringify({
+        u: userAccounts,
+        o: orders,
+        c: chatMessages,
+        p: products
+      });
+      let h = 0;
+      for (let i = 0; i < str.length; i++) {
+        h = ((h << 5) - h) + str.charCodeAt(i);
+        h |= 0;
+      }
+      return h.toString(36);
+    }
+
     // ---------- SYNC BADGE ----------
     function setSyncStatus(status, text) {
       const badge = document.getElementById('syncBadge');
@@ -874,30 +871,43 @@
     }
 
     // ---------- CLOUD ----------
-    async function cloudLoad() {
+    // Returns true ONLY if data actually changed (prevents flicker).
+    // Pass silent=true for background polling to suppress badge flashing.
+    async function cloudLoad(silent = false) {
       if (!CLOUD_ENABLED) {
         loadFromLocal();
-        setSyncStatus('error', '⚠️ Local mode');
+        if (!silent) setSyncStatus('error', '⚠️ Local mode');
         return false;
       }
       try {
-        setSyncStatus('syncing', '⬇️ Loading...');
+        if (!silent) setSyncStatus('syncing', '⬇️ Loading...');
         const res = await fetch(`${JSONBIN_URL}/latest`, {
           headers: { 'X-Master-Key': JSONBIN_API_KEY }
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         const r = data.record || {};
-        userAccounts = Array.isArray(r.users)    ? r.users    : [];
-        orders       = Array.isArray(r.orders)   ? r.orders   : [];
-        chatMessages = Array.isArray(r.chat)     ? r.chat     : [];
-        products     = (Array.isArray(r.products) && r.products.length > 0) ? r.products : [...DEFAULT_PRODUCTS];
+
+        const incoming = {
+          users: Array.isArray(r.users)    ? r.users    : [],
+          orders: Array.isArray(r.orders)  ? r.orders   : [],
+          chat: Array.isArray(r.chat)      ? r.chat     : [],
+          products: (Array.isArray(r.products) && r.products.length > 0) ? r.products : [...DEFAULT_PRODUCTS]
+        };
+
+        const oldHash = dataHash();
+        userAccounts = incoming.users;
+        orders       = incoming.orders;
+        chatMessages = incoming.chat;
+        products     = incoming.products;
+        const newHash = dataHash();
+
         saveToLocal();
-        setSyncStatus('ok', '☁️ Synced');
-        return true;
+        if (!silent) setSyncStatus('ok', '☁️ Synced');
+        return oldHash !== newHash;
       } catch (e) {
         console.error("Cloud load failed:", e);
-        setSyncStatus('error', '❌ Offline');
+        if (!silent) setSyncStatus('error', '❌ Offline');
         loadFromLocal();
         return false;
       }
@@ -952,6 +962,8 @@
 
     async function initializeRoute() {
       await cloudLoad();
+      lastDataHash = dataHash();
+
       if (window.location.hash === "#dev") {
         isDevMode = true;
         currentUser = { email: "Developer Administrator", isVerified: true };
@@ -1018,7 +1030,7 @@
         const stockText = p.quantity === 0 ? 'Out of Stock' : `${p.quantity} in stock`;
 
         grid.innerHTML += `
-          <div class="product-card" style="animation-delay: ${i * 0.05}s">
+          <div class="product-card">
             <div class="product-image-wrapper">
               <img src="${safeImg}" class="product-image" alt="${safeTitle}"
                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;product-image-fallback&quot;>🖼️</div>';">
@@ -1190,6 +1202,7 @@
       const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
       products.push({ id: newId, title, price, quantity, image, size });
       await cloudSave();
+      lastDataHash = dataHash();  // ⭐ update baseline so polling doesn't re-render immediately
       renderAll();
       alert("✅ Product added and synced!");
       document.getElementById('newProdTitle').value = '';
@@ -1204,6 +1217,7 @@
       await cloudLoad();
       products = products.filter(p => p.id !== productId);
       await cloudSave();
+      lastDataHash = dataHash();
       renderAll();
       alert("🗑 Product deleted.");
     }
@@ -1217,6 +1231,7 @@
       p.size     = document.getElementById(`devSize_${productId}`).value.trim() || 'Standard';
       p.image    = document.getElementById(`devImg_${productId}`).value.trim() || 'https://via.placeholder.com/200';
       await cloudSave();
+      lastDataHash = dataHash();
       renderAll();
       alert("💾 Product saved!");
     }
@@ -1255,6 +1270,7 @@
           prod.quantity -= 1;
           ord.status = "Order Confirmed - Shipping";
           await cloudSave();
+          lastDataHash = dataHash();
           renderAll();
           setTimeout(async () => {
             await cloudLoad();
@@ -1262,6 +1278,7 @@
             if (ordToUpdate) {
               ordToUpdate.status = "Delivered";
               await cloudSave();
+              lastDataHash = dataHash();
               renderAll();
             }
           }, 5000);
@@ -1269,6 +1286,7 @@
       } else if (action === 'reject') {
         ord.status = "Product is Unavailable";
         await cloudSave();
+        lastDataHash = dataHash();
         renderAll();
       }
     }
@@ -1286,6 +1304,7 @@
       const sender = isDevMode ? 'developer' : 'customer';
       chatMessages.push({ sender, text, user: currentUser ? currentUser.email : 'Guest' });
       await cloudSave();
+      lastDataHash = dataHash();
       input.value = '';
       renderChatMessages();
     }
@@ -1313,13 +1332,20 @@
       document.getElementById(id).classList.toggle('open');
     }
 
+    // ⭐ INIT — initial load + SMART polling (only re-renders when data changed)
     window.addEventListener('load', async () => {
       await initializeRoute();
+      lastDataHash = dataHash();
+
       setInterval(async () => {
-        const ok = await cloudLoad();
-        if (ok) renderAll();
+        const changed = await cloudLoad(true);   // silent: no badge flashing
+        if (changed) {
+          lastDataHash = dataHash();
+          renderAll();
+        }
       }, 3000);
     });
+
     window.addEventListener('hashchange', initializeRoute);
   </script>
 </body>
