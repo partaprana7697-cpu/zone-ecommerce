@@ -34,9 +34,6 @@
 
       --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --gradient-accent: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --gradient-mesh-1: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-      --gradient-mesh-2: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-      --gradient-mesh-3: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
 
       --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
       --shadow-glass-lg: 0 20px 60px rgba(31, 38, 135, 0.18), 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -131,7 +128,7 @@
     .form-group { margin-bottom: 16px; }
     .form-group label {
       display: block; font-size: 11px; font-weight: 700;
-      margin-bottom: 7px; color: var(--dark-3, #334155);
+      margin-bottom: 7px; color: #334155;
       text-transform: uppercase; letter-spacing: 0.8px;
     }
     .form-group input, .form-group select {
@@ -184,7 +181,7 @@
     }
     .auth-toggle:hover { color: var(--primary-dark); text-decoration: underline; }
 
-    /* ============ NAVBAR (iOS Frosted Glass) ============ */
+    /* ============ NAVBAR ============ */
     header {
       position: sticky; top: 0; z-index: 900;
       background: rgba(255, 255, 255, 0.55);
@@ -266,7 +263,23 @@
       text-transform: uppercase; letter-spacing: 0.5px;
       font-weight: 700;
     }
-    .nav-link strong { font-size: 13px; color: var(--dark); font-weight: 600; }
+    /* FIXED: navbar strong — no more awkward brackets */
+    .nav-link strong {
+      font-size: 13px;
+      color: var(--dark);
+      font-weight: 600;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-link strong span {
+      display: inline;
+      font-size: 13px;
+      color: var(--dark);
+      font-weight: 700;
+      padding: 0 1px;
+    }
 
     #devModeBtn {
       background: var(--gradient-primary);
@@ -280,7 +293,7 @@
       box-shadow: 0 8px 22px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
-    /* ============ SYNC BADGE (iOS Style) ============ */
+    /* ============ SYNC BADGE ============ */
     .sync-badge {
       position: fixed; top: 76px; right: 24px;
       background: rgba(16, 185, 129, 0.85);
@@ -378,21 +391,52 @@
     }
     .product-card:hover::before { opacity: 1; }
 
+    /* GLASSY PRODUCT IMAGE FRAME */
     .product-image-wrapper {
-      width: 100%; height: 220px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(241,245,249,0.5) 100%);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      width: calc(100% - 28px);
+      height: 220px;
+      margin: 14px 14px 0;
+      background:
+        linear-gradient(135deg,
+          rgba(255, 255, 255, 0.55) 0%,
+          rgba(255, 255, 255, 0.25) 50%,
+          rgba(241, 245, 249, 0.45) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       display: flex; align-items: center;
       justify-content: center; overflow: hidden;
       position: relative;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.4),
+        0 4px 16px rgba(31, 38, 135, 0.06);
+    }
+    .product-image-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(115deg,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 60%);
+      transform: translateX(-100%);
+      transition: transform 0.9s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .product-card:hover .product-image-wrapper::before {
+      transform: translateX(100%);
     }
     .product-image {
-      max-width: 90%; max-height: 90%;
+      max-width: 85%; max-height: 85%;
       object-fit: contain; display: block;
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));
+      filter: drop-shadow(0 8px 20px rgba(31, 38, 135, 0.15));
+      position: relative;
+      z-index: 1;
     }
     .product-card:hover .product-image {
       transform: scale(1.1) rotate(-2deg);
@@ -401,7 +445,7 @@
       width: 100%; height: 100%;
       display: flex; align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, rgba(224, 231, 255, 0.7) 0%, rgba(243, 232, 255, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(224, 231, 255, 0.6) 0%, rgba(243, 232, 255, 0.6) 100%);
       color: var(--primary); font-size: 56px;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -504,7 +548,7 @@
       border: 1px solid rgba(99, 102, 241, 0.15);
     }
 
-    /* ============ DRAWERS (iOS Frosted Panels) ============ */
+    /* ============ DRAWERS ============ */
     .drawer {
       position: fixed; top: 0; right: -480px;
       width: 440px; max-width: 100vw;
@@ -573,7 +617,7 @@
       margin: 24px 0;
     }
 
-    /* ============ ITEM CARDS (Frosted) ============ */
+    /* ============ ITEM CARDS ============ */
     .item-card {
       background: rgba(255, 255, 255, 0.55);
       backdrop-filter: var(--glass-blur-light);
@@ -642,7 +686,7 @@
       opacity: 0.4;
     }
 
-    /* ============ CART TOTAL CARD (Frosted) ============ */
+    /* ============ CART TOTAL CARD ============ */
     .cart-total-card {
       background: rgba(255, 255, 255, 0.65);
       backdrop-filter: var(--glass-blur);
@@ -668,7 +712,7 @@
       letter-spacing: -1.2px;
     }
 
-    /* ============ CHAT (iOS Floating Glass) ============ */
+    /* ============ CHAT ============ */
     .chat-widget-container {
       position: fixed; bottom: 24px; right: 24px;
       z-index: 1000;
@@ -848,7 +892,7 @@
       .sync-badge { top: auto; bottom: 90px; right: 16px; font-size: 11px; padding: 7px 13px; }
     }
 
-    /* ============ iOS Fallback for Non-Supporting Browsers ============ */
+    /* ============ Fallback for browsers without backdrop-filter ============ */
     @supports not (backdrop-filter: blur(1px)) {
       .auth-card, .product-card, .drawer, .item-card, .chat-box, .cart-total-card {
         background: rgba(255, 255, 255, 0.95);
@@ -914,11 +958,11 @@
         </div>
         <div class="nav-link" onclick="toggleDrawer('ordersDrawer')">
           <span>Track</span>
-          <strong>📦 Orders (<span id="ordersCount">0</span>)</strong>
+          <strong>📦 Orders&nbsp;(<span id="ordersCount">0</span>)</strong>
         </div>
         <div class="nav-link" onclick="toggleDrawer('cartDrawer')">
           <span>Cart</span>
-          <strong>🛒 (<span id="cartCount">0</span>)</strong>
+          <strong>🛒 Cart&nbsp;(<span id="cartCount">0</span>)</strong>
         </div>
         <button id="devModeBtn" class="btn-primary" style="display:none;" onclick="toggleDrawer('devDrawer')">🛠 Dev Console</button>
       </div>
