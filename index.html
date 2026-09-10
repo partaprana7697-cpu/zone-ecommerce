@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zone - E-Commerce Suite</title>
+  <title>Zone - E-Commerce Portal</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { background-color: #eaeded; color: #0f1111; }
 
-    /* Login Screen Overlay */
-    .login-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
-    .login-card { width: 350px; border: 1px solid #ddd; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .login-logo { font-size: 28px; font-weight: bold; color: #131921; text-align: center; margin-bottom: 20px; }
-    .login-logo span { color: #ff9900; }
+    /* Auth Screens Overlay */
+    .auth-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
+    .auth-card { width: 380px; border: 1px solid #ddd; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .auth-logo { font-size: 28px; font-weight: bold; color: #131921; text-align: center; margin-bottom: 20px; }
+    .auth-logo span { color: #ff9900; }
     
-    .form-group { margin-bottom: 15px; }
+    .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
     .form-group input { width: 100%; padding: 10px; border: 1px solid #a6a6a6; border-radius: 4px; outline: none; }
     
     .btn-primary { width: 100%; background-color: #ffd814; border: 1px solid #fcd200; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; }
     .btn-primary:hover { background-color: #f7ca00; }
+    .auth-toggle { font-size: 13px; text-align: center; margin-top: 15px; color: #0066c0; cursor: pointer; }
 
     /* Navigation Bar */
     .navbar { background-color: #131921; color: white; display: flex; align-items: center; padding: 8px 16px; gap: 15px; }
@@ -31,72 +32,95 @@
     .nav-link { color: white; text-decoration: none; font-size: 14px; cursor: pointer; }
     .nav-link span { display: block; font-size: 12px; color: #ccc; }
 
-    /* Product Grid & Layout */
+    /* Layout & Product Cards */
     .main-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .product-card { background-color: white; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .product-image { width: 100%; height: 200px; object-fit: contain; margin-bottom: 10px; }
     .product-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-    .product-price { font-size: 20px; font-weight: bold; color: #b12704; margin-bottom: 10px; }
+    .product-price { font-size: 20px; font-weight: bold; color: #b12704; }
+    .product-stock { font-size: 12px; color: #007600; margin-bottom: 10px; font-weight: bold; }
 
-    /* Cart & Order Drawers */
-    .drawer { position: fixed; top: 0; right: -400px; width: 380px; height: 100%; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: right 0.3s ease; z-index: 1100; padding: 20px; overflow-y: auto; }
+    /* Drawers (Cart, Orders, Dev Admin) */
+    .drawer { position: fixed; top: 0; right: -420px; width: 400px; height: 100%; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: right 0.3s ease; z-index: 1100; padding: 20px; overflow-y: auto; }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eaeded; padding-bottom: 10px; margin-bottom: 15px; }
-
-    .cart-item, .order-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
-    .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; color: white; }
+    
+    .item-card { border: 1px solid #ddd; padding: 10px; border-radius: 6px; margin-bottom: 10px; background: #fdfdfd; }
+    .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
     .bg-pending { background-color: #f39c12; }
     .bg-shipping { background-color: #3498db; }
     .bg-delivered { background-color: #2ecc71; }
     .bg-rejected { background-color: #e74c3c; }
 
-    .btn-action { border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; margin-top: 5px; }
+    .btn-action { border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; margin-top: 5px; font-size: 12px; }
     .btn-confirm { background-color: #2ecc71; }
     .btn-reject { background-color: #e74c3c; }
+
+    /* Live Chat Support System */
+    .chat-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+    .chat-toggle-btn { background-color: #232f3e; color: #ff9900; border: 2px solid #ff9900; padding: 12px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+    .chat-box { display: none; width: 320px; height: 420px; background-color: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; position: fixed; bottom: 80px; right: 20px; z-index: 1200; }
+    .chat-header { background-color: #232f3e; color: white; padding: 12px; display: flex; justify-content: space-between; font-weight: bold; }
+    .chat-body { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background-color: #f9f9f9; }
+    .chat-message { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; }
+    .chat-message.customer { background-color: #0084ff; color: white; align-self: flex-end; }
+    .chat-message.developer { background-color: #e4e6eb; color: black; align-self: flex-start; }
+    .chat-footer { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+    .chat-input { flex: 1; border: 1px solid #ccc; border-radius: 20px; padding: 8px 12px; outline: none; }
+    .chat-send-btn { background-color: #ff9900; border: none; color: white; padding: 8px 12px; border-radius: 50%; margin-left: 8px; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- STEP 1: MOBILE & OTP LOGIN SCREEN -->
-  <div class="login-overlay" id="loginOverlay">
-    <div class="login-card">
-      <div class="login-logo">zone<span>.in</span></div>
+  <!-- STEP 1: EMAIL & PASSWORD AUTHENTICATION SCREEN -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+      <div class="auth-logo">zone<span>.in</span></div>
       
-      <!-- Mobile Input Step -->
-      <div id="phoneStep">
-        <h3>Sign in with Mobile</h3><br>
+      <!-- Registration Screen -->
+      <div id="registerForm">
+        <h3>Create User Account</h3><br>
         <div class="form-group">
-          <label>Mobile Number</label>
-          <input type="tel" id="userMobile" placeholder="Enter 10-digit mobile number" required>
+          <label>Email Address</label>
+          <input type="email" id="regEmail" placeholder="user@example.com" required>
         </div>
-        <button class="btn-primary" onclick="generateAndSendOTP()">Send OTP</button>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" placeholder="Create password" required>
+        </div>
+        <button class="btn-primary" onclick="handleRegister()">Register Account</button>
+        <div class="auth-toggle" onclick="toggleAuthView('login')">Already have an account? Sign in</div>
       </div>
 
-      <!-- OTP Input Step -->
-      <div id="otpStep" style="display: none;">
-        <h3>Enter OTP</h3><br>
-        <p style="font-size:12px; margin-bottom:10px; color:green;" id="otpAlertText"></p>
+      <!-- Login Screen -->
+      <div id="loginForm" style="display: none;">
+        <h3>Sign In</h3><br>
         <div class="form-group">
-          <label>Enter OTP</label>
-          <input type="text" id="userOTP" placeholder="Enter 4-digit OTP" required>
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" placeholder="user@example.com" required>
         </div>
-        <button class="btn-primary" onclick="verifyOTP()">Verify & Login</button>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password" required>
+        </div>
+        <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+        <div class="auth-toggle" onclick="toggleAuthView('register')">Need an account? Register</div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 2: MAIN E-COMMERCE NAVBAR -->
+  <!-- STEP 2: MAIN STOREFRONT NAVBAR -->
   <header>
     <div class="navbar">
       <div class="nav-logo">zone.in</div>
       <div class="nav-search">
-        <input type="text" class="search-input" placeholder="Search Zone">
+        <input type="text" class="search-input" placeholder="Search Zone products...">
         <button class="search-btn">🔍</button>
       </div>
       <div class="nav-right">
         <div class="nav-link">
-          <span id="navUserPhone">Hello, User</span>
+          <span id="navUserEmail">Hello, Guest</span>
           <strong>Account</strong>
         </div>
         <div class="nav-link" onclick="toggleDrawer('ordersDrawer')">
@@ -112,16 +136,16 @@
     </div>
   </header>
 
-  <!-- Product Storefront -->
+  <!-- Product Catalog -->
   <div class="main-container">
-    <h2>Featured Products</h2><br>
+    <h2>Featured Items for Sale</h2><br>
     <div class="product-grid" id="productGrid"></div>
   </div>
 
   <!-- CUSTOMER CART DRAWER -->
   <div class="drawer" id="cartDrawer">
     <div class="drawer-header">
-      <h3>Your Shopping Cart</h3>
+      <h3>Shopping Cart</h3>
       <button onclick="toggleDrawer('cartDrawer')">✕</button>
     </div>
     <div id="cartItemsContainer"></div>
@@ -132,10 +156,10 @@
     </div>
   </div>
 
-  <!-- CUSTOMER ORDERS DRAWER -->
+  <!-- CUSTOMER ORDERS TRACKING DRAWER -->
   <div class="drawer" id="ordersDrawer">
     <div class="drawer-header">
-      <h3>Your Order Requests</h3>
+      <h3>My Orders & Status</h3>
       <button onclick="toggleDrawer('ordersDrawer')">✕</button>
     </div>
     <div id="userOrdersContainer"></div>
@@ -144,62 +168,110 @@
   <!-- DEVELOPER ADMIN DRAWER -->
   <div class="drawer" id="devDrawer">
     <div class="drawer-header">
-      <h3>Developer Admin Panel</h3>
+      <h3>Developer Control Center</h3>
       <button onclick="toggleDrawer('devDrawer')">✕</button>
     </div>
-    <h4>Incoming Order Requests</h4><br>
+
+    <!-- Section 1: User Account Approvals -->
+    <h4>1. Account Verification Requests</h4><br>
+    <div id="devUsersContainer"></div>
+    <hr><br>
+
+    <!-- Section 2: Product Catalog & Stock Editing -->
+    <h4>2. Inventory & Product Management</h4><br>
+    <div id="devProductEditorContainer"></div>
+    <hr><br>
+
+    <!-- Section 3: Incoming Customer Orders -->
+    <h4>3. Customer Order Requests</h4><br>
     <div id="devOrdersContainer"></div>
   </div>
 
+  <!-- LIVE SUPPORT CHAT WIDGET -->
+  <div class="chat-widget-container">
+    <button class="chat-toggle-btn" onclick="toggleChat()">💬 Chat with Developer</button>
+    <div class="chat-box" id="chatBox">
+      <div class="chat-header">
+        <span id="chatTitle">Developer Query Chat</span>
+        <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-footer">
+        <input type="text" id="chatInput" class="chat-input" placeholder="Type query message...">
+        <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    let generatedOTP = "";
     let isDevMode = false;
-    let currentUserPhone = "";
+    let currentUser = null; // Logged-in customer account
     
+    // Global Persistent Memory Arrays
+    let userAccounts = []; // Stores registered accounts
     let cart = [];
     let orders = [];
+    let chatMessages = [];
+
     let products = [
-      { id: 1, title: "Wireless Headphones", price: 99.99, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" },
-      { id: 2, title: "Smartwatch", price: 49.99, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" }
+      { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 10, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" },
+      { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" }
     ];
 
-    // 1. Dynamic OTP Generation
-    function generateAndSendOTP() {
-      const phone = document.getElementById('userMobile').value;
-      if (phone.length < 10) return alert("Please enter a valid 10-digit mobile number");
-      
-      currentUserPhone = phone;
-      generatedOTP = Math.floor(1000 + Math.random() * 9000).toString(); // Generates 4-digit OTP
-      
-      document.getElementById('phoneStep').style.display = 'none';
-      document.getElementById('otpStep').style.display = 'block';
-      document.getElementById('otpAlertText').textContent = `OTP sent to ${phone}: USE CODE [ ${generatedOTP} ]`;
+    // 1. Email & Password Auth Flow
+    function toggleAuthView(view) {
+      document.getElementById('registerForm').style.display = view === 'register' ? 'block' : 'none';
+      document.getElementById('loginForm').style.display = view === 'login' ? 'block' : 'none';
     }
 
-    function verifyOTP() {
-      const enteredOTP = document.getElementById('userOTP').value;
-      if (enteredOTP === generatedOTP) {
-        document.getElementById('loginOverlay').style.display = 'none';
-        document.getElementById('navUserPhone').textContent = `User: ${currentUserPhone}`;
-        checkRoleRouting();
-      } else {
-        alert("Invalid OTP! Check the generated code above.");
-      }
+    function handleRegister() {
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+
+      if (!email || !password) return alert("Please fill all registration fields.");
+      if (userAccounts.find(u => u.email === email)) return alert("An account with this email already exists.");
+
+      // Account created in PENDING state awaiting developer verification
+      userAccounts.push({ email, password, isVerified: false });
+      alert("Registration submitted! Your account requires verification approval from the Developer before full access.");
+      toggleAuthView('login');
+      renderDevUsers();
     }
 
-    // 2. Hash Routing for Customer vs Dev Link
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const acc = userAccounts.find(u => u.email === email && u.password === password);
+      
+      if (!acc) return alert("Invalid Email or Password!");
+      if (!acc.isVerified) return alert("Account Verification Pending! Please request the developer to verify your account in the Dev Admin panel.");
+
+      currentUser = acc;
+      document.getElementById('authOverlay').style.display = 'none';
+      document.getElementById('navUserEmail').textContent = currentUser.email;
+      checkRoleRouting();
+    }
+
+    // 2. Hash Routing (#dev vs #user)
     function checkRoleRouting() {
       if (window.location.hash === "#dev") {
         isDevMode = true;
         document.getElementById('devModeBtn').style.display = 'block';
+        document.getElementById('chatTitle').textContent = "Developer Query Console";
       } else {
         isDevMode = false;
         document.getElementById('devModeBtn').style.display = 'none';
+        document.getElementById('chatTitle').textContent = "Developer Support Chat";
       }
       renderProducts();
+      renderDevUsers();
+      renderDevProducts();
+      renderDevOrders();
+      renderChatMessages();
     }
 
-    // 3. Render Store Products
+    // 3. Render Storefront Products
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
@@ -210,16 +282,20 @@
               <img src="${p.image}" class="product-image">
               <div class="product-title">${p.title}</div>
               <div class="product-price">$${p.price.toFixed(2)}</div>
+              <div class="product-stock">In Stock: ${p.quantity} units</div>
             </div>
-            <button class="btn-primary" onclick="addToCart(${p.id})">Add to Cart</button>
+            <button class="btn-primary" onclick="addToCart(${p.id})" ${p.quantity === 0 ? 'disabled style="background:#ccc;"' : ''}>
+              ${p.quantity > 0 ? 'Add to Cart' : 'Out of Stock'}
+            </button>
           </div>
         `;
       });
     }
 
-    // 4. Cart Operations
+    // 4. Customer Cart & Orders
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
+      if (product.quantity <= 0) return alert("Item out of stock!");
       cart.push(product);
       updateCartUI();
       toggleDrawer('cartDrawer');
@@ -237,10 +313,10 @@
         return;
       }
 
-      cart.forEach((item, index) => {
+      cart.forEach((item) => {
         total += item.price;
         container.innerHTML += `
-          <div class="cart-item">
+          <div class="item-card">
             <strong>${item.title}</strong> - $${item.price.toFixed(2)}
           </div>
         `;
@@ -250,19 +326,18 @@
       document.getElementById('cartFooter').style.display = 'block';
     }
 
-    // 5. Place Order & Route to Developer
     function placeOrder() {
       if (cart.length === 0) return;
 
       cart.forEach(item => {
-        const newOrder = {
+        orders.push({
           orderId: "ORD" + Math.floor(1000 + Math.random() * 9000),
           productTitle: item.title,
+          productId: item.id,
           price: item.price,
-          customerPhone: currentUserPhone,
+          userEmail: currentUser.email,
           status: "Pending Developer Confirmation"
-        };
-        orders.push(newOrder);
+        });
       });
 
       cart = [];
@@ -273,25 +348,25 @@
       toggleDrawer('ordersDrawer');
     }
 
-    // 6. User Orders View
     function renderUserOrders() {
-      document.getElementById('ordersCount').textContent = orders.length;
+      const userOrders = orders.filter(o => o.userEmail === (currentUser ? currentUser.email : ''));
+      document.getElementById('ordersCount').textContent = userOrders.length;
       const container = document.getElementById('userOrdersContainer');
       container.innerHTML = '';
 
-      if (orders.length === 0) {
-        container.innerHTML = '<p>No orders placed yet.</p>';
+      if (userOrders.length === 0) {
+        container.innerHTML = '<p>No active order requests.</p>';
         return;
       }
 
-      orders.forEach(ord => {
+      userOrders.forEach(ord => {
         let badgeClass = 'bg-pending';
         if (ord.status === 'Order Confirmed - Shipping') badgeClass = 'bg-shipping';
         if (ord.status === 'Delivered') badgeClass = 'bg-delivered';
         if (ord.status === 'Product is Unavailable') badgeClass = 'bg-rejected';
 
         container.innerHTML += `
-          <div class="order-item">
+          <div class="item-card">
             <div><strong>${ord.productTitle}</strong> (${ord.orderId})</div>
             <div>Price: $${ord.price.toFixed(2)}</div>
             <div style="margin-top:5px;">
@@ -302,21 +377,92 @@
       });
     }
 
-    // 7. Developer Order Approval / Rejection Logic
+    // 5. Developer Control Center Functions
+    function renderDevUsers() {
+      const container = document.getElementById('devUsersContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (userAccounts.length === 0) {
+        container.innerHTML = '<p style="font-size:12px;">No account registrations found.</p>';
+        return;
+      }
+
+      userAccounts.forEach((acc, idx) => {
+        container.innerHTML += `
+          <div class="item-card">
+            <div><strong>Email:</strong> ${acc.email}</div>
+            <div>Status: <em>${acc.isVerified ? '✅ Approved' : '⏳ Awaiting Verification'}</em></div>
+            ${!acc.isVerified ? `<button class="btn-action btn-confirm" onclick="verifyUser(${idx})">Verify & Approve Account</button>` : ''}
+          </div>
+        `;
+      });
+    }
+
+    function verifyUser(index) {
+      userAccounts[index].isVerified = true;
+      renderDevUsers();
+      alert(`Account ${userAccounts[index].email} verified! User can now sign in.`);
+    }
+
+    function renderDevProducts() {
+      const container = document.getElementById('devProductEditorContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      products.forEach((p, idx) => {
+        container.innerHTML += `
+          <div class="item-card">
+            <strong>Edit ${p.title}</strong>
+            <div class="form-group" style="margin-top:5px;">
+              <label>Price ($)</label>
+              <input type="number" id="devPrice_${p.id}" value="${p.price}" step="0.01">
+            </div>
+            <div class="form-group">
+              <label>Available Quantity</label>
+              <input type="number" id="devQty_${p.id}" value="${p.quantity}">
+            </div>
+            <div class="form-group">
+              <label>Image URL</label>
+              <input type="text" id="devImg_${p.id}" value="${p.image}">
+            </div>
+            <button class="btn-action btn-confirm" onclick="saveProductChanges(${p.id})">Save Changes</button>
+          </div>
+        `;
+      });
+    }
+
+    function saveProductChanges(productId) {
+      const price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
+      const quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
+      const image = document.getElementById(`devImg_${productId}`).value;
+
+      const p = products.find(prod => prod.id === productId);
+      if (p) {
+        p.price = price;
+        p.quantity = quantity;
+        p.image = image;
+        renderProducts();
+        renderDevProducts();
+        alert("Product details updated successfully!");
+      }
+    }
+
     function renderDevOrders() {
       const container = document.getElementById('devOrdersContainer');
+      if (!container) return;
       container.innerHTML = '';
 
       if (orders.length === 0) {
-        container.innerHTML = '<p>No customer order requests.</p>';
+        container.innerHTML = '<p style="font-size:12px;">No incoming order requests.</p>';
         return;
       }
 
       orders.forEach((ord, index) => {
         container.innerHTML += `
-          <div class="order-item">
+          <div class="item-card">
             <div><strong>${ord.productTitle}</strong> (${ord.orderId})</div>
-            <div>Customer: ${ord.customerPhone}</div>
+            <div>User: ${ord.userEmail}</div>
             <div>Status: <em>${ord.status}</em></div>
             
             ${ord.status === "Pending Developer Confirmation" ? `
@@ -329,22 +475,64 @@
     }
 
     function developerAction(orderIndex, action) {
-      if (action === 'confirm') {
-        orders[orderIndex].status = "Order Confirmed - Shipping";
-        renderUserOrders();
-        renderDevOrders();
+      const ord = orders[orderIndex];
+      const prod = products.find(p => p.id === ord.productId);
 
-        // Delayed delivery simulation after developer confirms
-        setTimeout(() => {
-          orders[orderIndex].status = "Delivered";
+      if (action === 'confirm') {
+        if (prod && prod.quantity > 0) {
+          prod.quantity -= 1; // Decrement stock quantity
+          ord.status = "Order Confirmed - Shipping";
+          renderProducts();
+          renderDevProducts();
           renderUserOrders();
           renderDevOrders();
-        }, 5000); // Delivered after 5 seconds delay
+
+          // Delayed delivery logic
+          setTimeout(() => {
+            ord.status = "Delivered";
+            renderUserOrders();
+            renderDevOrders();
+          }, 5000);
+        } else {
+          alert("Cannot confirm: Product is out of stock!");
+        }
       } else if (action === 'reject') {
-        orders[orderIndex].status = "Product is Unavailable";
+        ord.status = "Product is Unavailable";
         renderUserOrders();
         renderDevOrders();
       }
+    }
+
+    // 6. Two-Way Customer <-> Developer Chat
+    function toggleChat() {
+      const box = document.getElementById('chatBox');
+      box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const sender = isDevMode ? 'developer' : 'customer';
+      chatMessages.push({ sender, text, user: currentUser ? currentUser.email : 'Guest' });
+      input.value = '';
+      renderChatMessages();
+    }
+
+    function renderChatMessages() {
+      const body = document.getElementById('chatBody');
+      body.innerHTML = '';
+
+      chatMessages.forEach(msg => {
+        body.innerHTML += `
+          <div class="chat-message ${msg.sender}">
+            <div style="font-size:10px; opacity:0.8;">${msg.sender === 'customer' ? msg.user : 'Developer Support'}</div>
+            ${msg.text}
+          </div>
+        `;
+      });
+      body.scrollTop = body.scrollHeight;
     }
 
     function toggleDrawer(id) {
