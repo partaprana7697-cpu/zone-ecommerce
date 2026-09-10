@@ -218,23 +218,39 @@
       localStorage.setItem('zone_products', JSON.stringify(products));
     }
 
-    // REAL-TIME SYNC BETWEEN DEV AND USER TABS
-    window.addEventListener('storage', () => {
+    // FIX: robust refresh of all relevant UI components after any data change
+    function refreshAllUI() {
+      // Re-read from localStorage to ensure latest (especially for multi-tab)
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
       chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
       products = JSON.parse(localStorage.getItem('zone_products')) || [];
 
-      renderDevUsers();
-      renderDevOrders();
-      renderDevProducts();
       renderProducts();
+      renderDevUsers();
+      renderDevProducts();
+      renderDevOrders();
       renderChatMessages();
-      renderUserOrders();
+      if (!isDevMode) {
+        renderUserOrders();
+        updateCartUI();
+      }
+    }
+
+    // REAL-TIME SYNC BETWEEN DEV AND USER TABS
+    window.addEventListener('storage', (e) => {
+      // When localStorage changes from another tab, refresh everything
+      refreshAllUI();
     });
 
     // ROUTING ENGINE
     function initializeRoute() {
+      // Always load fresh data from storage when route changes
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+
       if (window.location.hash === "#dev") {
         isDevMode = true;
         currentUser = { email: "Developer Administrator", isVerified: true };
@@ -272,6 +288,7 @@
 
       if (!email || !password) return alert("Please fill all registration fields.");
       
+      // Reload from storage to avoid stale array
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       if (userAccounts.find(u => u.email === email)) return alert("Account already exists.");
 
@@ -284,7 +301,8 @@
       document.getElementById('regPassword').value = '';
       toggleAuthView('login');
       
-      renderDevUsers();
+      // Immediately refresh dev user list if developer view is active in another tab, but also refresh locally
+      refreshAllUI();
     }
 
     function handleLogin() {
@@ -303,6 +321,9 @@
       document.getElementById('navUserEmail').textContent = currentUser.email;
       renderProducts();
       renderUserOrders();
+      // Ensure cart display updates (if any items were added as guest? cart is kept in memory, but we reset for new user)
+      cart = []; 
+      updateCartUI();
     }
 
     // STORE CATALOG
@@ -329,6 +350,7 @@
     }
 
     function addToCart(productId) {
+      if (isDevMode) return alert("Cannot add to cart in developer mode.");
       const product = products.find(p => p.id === productId);
       if (product.quantity <= 0) return alert("Out of stock!");
       cart.push(product);
@@ -359,13 +381,15 @@
 
     function placeOrder() {
       if (cart.length === 0) return;
+      if (!currentUser) return alert("Please sign in to place an order.");
+      
       cart.forEach(item => {
         orders.push({
           orderId: "ORD" + Math.floor(1000 + Math.random() * 9000),
           productTitle: item.title,
           productId: item.id,
           price: item.price,
-          userEmail: currentUser ? currentUser.email : 'Guest',
+          userEmail: currentUser.email,
           status: "Pending Developer Confirmation"
         });
       });
@@ -376,9 +400,11 @@
       renderDevOrders();
       toggleDrawer('cartDrawer');
       toggleDrawer('ordersDrawer');
+      refreshAllUI(); // ensures dev orders updated in other tab
     }
 
     function renderUserOrders() {
+      if (isDevMode) return; // not needed for dev
       const userOrders = orders.filter(o => o.userEmail === (currentUser ? currentUser.email : ''));
       document.getElementById('ordersCount').textContent = userOrders.length;
       const container = document.getElementById('userOrdersContainer');
@@ -400,13 +426,14 @@
       });
     }
 
-    // DEVELOPER WEBSITE VERIFICATION REQUESTS
+    // DEVELOPER WEBSITE VERIFICATION REQUESTS — NOW CORRECTLY SHOWS ALL UNVERIFIED USERS
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
-      container.innerHTML = '';
-
+      
+      // Always fetch latest
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      container.innerHTML = '';
 
       if (userAccounts.length === 0) {
         container.innerHTML = '<p style="font-size:12px; color:#666;">No account verification requests.</p>';
@@ -425,16 +452,27 @@
     }
 
     function verifyUser(index) {
-      userAccounts[index].isVerified = true;
-      saveData();
-      renderDevUsers();
-      alert(`Account approved! ${userAccounts[index].email} can now sign in on the Customer website.`);
+      // Reload to ensure index matches current array
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      if (index >= 0 && index < userAccounts.length) {
+        userAccounts[index].isVerified = true;
+        saveData();
+        renderDevUsers();
+        alert(`Account approved! ${userAccounts[index].email} can now sign in on the Customer website.`);
+        // Also refresh any other views that might depend on users
+        refreshAllUI();
+      } else {
+        alert("User index out of bounds, refreshing list.");
+        renderDevUsers();
+      }
     }
 
     function renderDevProducts() {
       const container = document.getElementById('devProductEditorContainer');
       if (!container) return;
       container.innerHTML = '';
+
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
 
       products.forEach(p => {
         container.innerHTML += `
@@ -459,6 +497,7 @@
     }
 
     function saveProductChanges(productId) {
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
       const p = products.find(prod => prod.id === productId);
       if (p) {
         p.price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
@@ -474,6 +513,8 @@
     function renderDevOrders() {
       const container = document.getElementById('devOrdersContainer');
       if (!container) return;
+      
+      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
       container.innerHTML = orders.length === 0 ? '<p style="font-size:12px;">No incoming orders.</p>' : '';
 
       orders.forEach((ord, index) => {
@@ -492,7 +533,12 @@
     }
 
     function developerAction(orderIndex, action) {
+      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      
       const ord = orders[orderIndex];
+      if (!ord) return;
+      
       const prod = products.find(p => p.id === ord.productId);
 
       if (action === 'confirm') {
@@ -500,16 +546,17 @@
           prod.quantity -= 1;
           ord.status = "Order Confirmed - Shipping";
           saveData();
-          renderProducts();
-          renderDevProducts();
-          renderUserOrders();
-          renderDevOrders();
-
+          refreshAllUI();
+          
           setTimeout(() => {
-            ord.status = "Delivered";
-            saveData();
-            renderUserOrders();
-            renderDevOrders();
+            // Reload orders and products before modifying
+            orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+            const ordToUpdate = orders.find(o => o.orderId === ord.orderId);
+            if (ordToUpdate) {
+              ordToUpdate.status = "Delivered";
+              saveData();
+              refreshAllUI();
+            }
           }, 5000);
         } else {
           alert("Product out of stock!");
@@ -517,8 +564,7 @@
       } else if (action === 'reject') {
         ord.status = "Product is Unavailable";
         saveData();
-        renderUserOrders();
-        renderDevOrders();
+        refreshAllUI();
       }
     }
 
@@ -542,7 +588,9 @@
 
     function renderChatMessages() {
       const body = document.getElementById('chatBody');
+      if (!body) return;
       body.innerHTML = '';
+      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
       chatMessages.forEach(msg => {
         body.innerHTML += `
           <div class="chat-message ${msg.sender}">
@@ -558,8 +606,30 @@
       document.getElementById(id).classList.toggle('open');
     }
 
-    window.onload = initializeRoute;
+    // Make sure to refresh UI on page load and when hash changes
+    window.onload = () => {
+      // Pre-load any stored data
+      initializeRoute();
+      // Ensure dev user list is populated if we are already on dev route (handled inside initializeRoute)
+    };
     window.onhashchange = initializeRoute;
+
+    // Also periodic refresh to sync across tabs (every 2 seconds) as an extra measure
+    setInterval(() => {
+      // Only refresh if not in the middle of editing product fields (to avoid losing focus)
+      if (!isDevMode || (document.activeElement && !document.activeElement.closest('.drawer'))) {
+        refreshAllUI();
+      } else {
+        // Still refresh users and orders but not product editor fields
+        userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+        orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+        chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
+        renderDevUsers();
+        renderDevOrders();
+        renderChatMessages();
+        if (!isDevMode) renderUserOrders();
+      }
+    }, 2000);
   </script>
 </body>
 </html>
