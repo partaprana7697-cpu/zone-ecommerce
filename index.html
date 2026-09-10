@@ -8,21 +8,19 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { background-color: #eaeded; color: #0f1111; }
 
-    /* Auth Overlay */
     .auth-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
     .auth-card { width: 380px; border: 1px solid #ddd; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .auth-logo { font-size: 28px; font-weight: bold; color: #131921; text-align: center; margin-bottom: 20px; }
     .auth-logo span { color: #ff9900; }
-    
+
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
     .form-group input { width: 100%; padding: 10px; border: 1px solid #a6a6a6; border-radius: 4px; outline: none; }
-    
+
     .btn-primary { width: 100%; background-color: #ffd814; border: 1px solid #fcd200; border-radius: 8px; padding: 10px; font-weight: bold; cursor: pointer; }
     .btn-primary:hover { background-color: #f7ca00; }
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 12px; color: #0066c0; cursor: pointer; }
 
-    /* Navbar */
     .navbar { background-color: #131921; color: white; display: flex; align-items: center; padding: 8px 16px; gap: 15px; }
     .nav-logo { font-size: 24px; font-weight: bold; color: #ff9900; }
     .nav-search { display: flex; flex: 1; max-width: 800px; height: 40px; border-radius: 4px; overflow: hidden; }
@@ -32,7 +30,6 @@
     .nav-link { color: white; text-decoration: none; font-size: 14px; cursor: pointer; }
     .nav-link span { display: block; font-size: 12px; color: #ccc; }
 
-    /* Layout & Cards */
     .main-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .product-card { background-color: white; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -41,11 +38,10 @@
     .product-price { font-size: 20px; font-weight: bold; color: #b12704; }
     .product-stock { font-size: 12px; color: #007600; margin-bottom: 10px; font-weight: bold; }
 
-    /* Drawers */
     .drawer { position: fixed; top: 0; right: -420px; width: 400px; height: 100%; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: right 0.3s ease; z-index: 1100; padding: 20px; overflow-y: auto; }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eaeded; padding-bottom: 10px; margin-bottom: 15px; }
-    
+
     .item-card { border: 1px solid #ddd; padding: 10px; border-radius: 6px; margin-bottom: 10px; background: #fdfdfd; }
     .badge { padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; }
     .bg-pending { background-color: #f39c12; }
@@ -59,7 +55,6 @@
     .btn-delete { background-color: #e74c3c; }
     .btn-add { background-color: #3498db; }
 
-    /* Chat Widget */
     .chat-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
     .chat-toggle-btn { background-color: #232f3e; color: #ff9900; border: 2px solid #ff9900; padding: 12px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; }
     .chat-box { display: none; width: 320px; height: 420px; background-color: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; position: fixed; bottom: 80px; right: 20px; z-index: 1200; }
@@ -75,11 +70,10 @@
 </head>
 <body>
 
-  <!-- AUTH OVERLAY FOR CUSTOMER LINK -->
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
       <div class="auth-logo">zone<span>.in</span></div>
-      
+
       <div id="loginForm">
         <h3>Customer Sign In</h3><br>
         <div class="form-group">
@@ -110,7 +104,6 @@
     </div>
   </div>
 
-  <!-- NAVBAR -->
   <header>
     <div class="navbar">
       <div class="nav-logo">zone.in</div>
@@ -136,13 +129,11 @@
     </div>
   </header>
 
-  <!-- PRODUCT STOREFRONT -->
   <div class="main-container">
     <h2>Catalog Items</h2><br>
     <div class="product-grid" id="productGrid"></div>
   </div>
 
-  <!-- DRAWERS -->
   <div class="drawer" id="cartDrawer">
     <div class="drawer-header">
       <h3>Shopping Cart</h3>
@@ -182,7 +173,6 @@
     <div id="devOrdersContainer"></div>
   </div>
 
-  <!-- SUPPORT CHAT -->
   <div class="chat-widget-container">
     <button class="chat-toggle-btn" onclick="toggleChat()">💬 Chat Support</button>
     <div class="chat-box" id="chatBox">
@@ -201,18 +191,55 @@
   <script>
     let isDevMode = false;
     let currentUser = null;
-    
-    // PERSISTENT MEMORY STORAGE
-    let userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
-    let cart = [];
-    let orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
-    let chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
 
-    let products = JSON.parse(localStorage.getItem('zone_products')) || [
+    // ---------- ROBUST PERSISTENT STORAGE ----------
+    const DEFAULT_PRODUCTS = [
       { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 10, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", size: "Standard" },
       { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80", size: "Medium" }
     ];
 
+    // Safe loader — reads products from localStorage or seeds defaults
+    function loadProducts() {
+      try {
+        const raw = localStorage.getItem('zone_products');
+        if (raw === null) {
+          // First time — seed defaults and persist immediately
+          localStorage.setItem('zone_products', JSON.stringify(DEFAULT_PRODUCTS));
+          return [...DEFAULT_PRODUCTS];
+        }
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+          localStorage.setItem('zone_products', JSON.stringify(DEFAULT_PRODUCTS));
+          return [...DEFAULT_PRODUCTS];
+        }
+        return parsed;
+      } catch (e) {
+        console.error("Failed to load products, reseeding defaults:", e);
+        localStorage.setItem('zone_products', JSON.stringify(DEFAULT_PRODUCTS));
+        return [...DEFAULT_PRODUCTS];
+      }
+    }
+
+    function loadJSON(key, fallback = []) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw === null) return fallback;
+        const parsed = JSON.parse(raw);
+        return parsed == null ? fallback : parsed;
+      } catch (e) {
+        console.error(`Failed to load ${key}:`, e);
+        return fallback;
+      }
+    }
+
+    // State
+    let userAccounts = loadJSON('zone_users', []);
+    let cart = [];
+    let orders = loadJSON('zone_orders', []);
+    let chatMessages = loadJSON('zone_chat', []);
+    let products = loadProducts();
+
+    // Save only what's needed; always writes products too
     function saveData() {
       localStorage.setItem('zone_users', JSON.stringify(userAccounts));
       localStorage.setItem('zone_orders', JSON.stringify(orders));
@@ -220,12 +247,12 @@
       localStorage.setItem('zone_products', JSON.stringify(products));
     }
 
-    // Refresh all UI components
+    // Full re-sync from storage and repaint UI
     function refreshAllUI() {
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
-      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
-      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      userAccounts = loadJSON('zone_users', []);
+      orders = loadJSON('zone_orders', []);
+      chatMessages = loadJSON('zone_chat', []);
+      products = loadProducts();
 
       renderProducts();
       renderDevUsers();
@@ -238,28 +265,30 @@
       }
     }
 
-    // Real-time sync
-    window.addEventListener('storage', () => {
-      refreshAllUI();
+    window.addEventListener('storage', (e) => {
+      // Only react to our keys
+      if (!e.key || e.key.startsWith('zone_')) {
+        refreshAllUI();
+      }
     });
 
-    // Routing
+    // ---------- ROUTING ----------
     function initializeRoute() {
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
-      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
-      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      userAccounts = loadJSON('zone_users', []);
+      orders = loadJSON('zone_orders', []);
+      chatMessages = loadJSON('zone_chat', []);
+      products = loadProducts();
 
       if (window.location.hash === "#dev") {
         isDevMode = true;
         currentUser = { email: "Developer Administrator", isVerified: true };
-        
+
         document.getElementById('authOverlay').style.display = 'none';
         document.getElementById('devModeBtn').style.display = 'block';
         document.getElementById('navUserRole').textContent = "Role: Developer";
         document.getElementById('navUserEmail').textContent = "Admin Access";
         document.getElementById('chatTitle').textContent = "Developer Support Console";
-        
+
         renderProducts();
         renderDevUsers();
         renderDevProducts();
@@ -275,7 +304,7 @@
       }
     }
 
-    // Auth
+    // ---------- AUTH ----------
     function toggleAuthView(view) {
       document.getElementById('registerForm').style.display = view === 'register' ? 'block' : 'none';
       document.getElementById('loginForm').style.display = view === 'login' ? 'block' : 'none';
@@ -286,8 +315,8 @@
       const password = document.getElementById('regPassword').value;
 
       if (!email || !password) return alert("Please fill all registration fields.");
-      
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+
+      userAccounts = loadJSON('zone_users', []);
       if (userAccounts.find(u => u.email === email)) return alert("Account already exists.");
 
       userAccounts.push({ email, password, isVerified: false });
@@ -297,7 +326,6 @@
       document.getElementById('regEmail').value = '';
       document.getElementById('regPassword').value = '';
       toggleAuthView('login');
-      
       refreshAllUI();
     }
 
@@ -305,9 +333,9 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
 
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      userAccounts = loadJSON('zone_users', []);
       const acc = userAccounts.find(u => u.email === email && u.password === password);
-      
+
       if (!acc) return alert("Invalid Email or Password!");
       if (!acc.isVerified) return alert("Account Approval Pending! The Developer has not yet verified your account.");
 
@@ -317,23 +345,26 @@
       document.getElementById('navUserEmail').textContent = currentUser.email;
       renderProducts();
       renderUserOrders();
-      cart = []; 
+      cart = [];
       updateCartUI();
     }
 
-    // Store Catalog
+    // ---------- STORE CATALOG ----------
     function renderProducts() {
       const grid = document.getElementById('productGrid');
+      if (!grid) return;
       grid.innerHTML = '';
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
-      
+
+      // Always reload freshest products before rendering
+      products = loadProducts();
+
       products.forEach(p => {
         grid.innerHTML += `
           <div class="product-card">
             <div>
-              <img src="${p.image}" class="product-image" alt="${p.title}">
+              <img src="${p.image}" class="product-image" alt="${p.title}" onerror="this.src='https://via.placeholder.com/200'">
               <div class="product-title">${p.title}</div>
-              <div class="product-price">$${p.price.toFixed(2)}</div>
+              <div class="product-price">$${Number(p.price).toFixed(2)}</div>
               <div class="product-stock">Size: ${p.size || 'N/A'} | Stock: ${p.quantity} units</div>
             </div>
             ${!isDevMode ? `
@@ -348,8 +379,9 @@
 
     function addToCart(productId) {
       if (isDevMode) return alert("Cannot add to cart in developer mode.");
+      products = loadProducts();
       const product = products.find(p => p.id === productId);
-      if (product.quantity <= 0) return alert("Out of stock!");
+      if (!product || product.quantity <= 0) return alert("Out of stock!");
       cart.push(product);
       updateCartUI();
       toggleDrawer('cartDrawer');
@@ -359,7 +391,7 @@
       document.getElementById('cartCount').textContent = cart.length;
       const container = document.getElementById('cartItemsContainer');
       container.innerHTML = '';
-      
+
       let total = 0;
       if (cart.length === 0) {
         container.innerHTML = '<p>Cart is empty.</p>';
@@ -368,8 +400,8 @@
       }
 
       cart.forEach(item => {
-        total += item.price;
-        container.innerHTML += `<div class="item-card"><strong>${item.title}</strong> - $${item.price.toFixed(2)}</div>`;
+        total += Number(item.price);
+        container.innerHTML += `<div class="item-card"><strong>${item.title}</strong> - $${Number(item.price).toFixed(2)}</div>`;
       });
 
       document.getElementById('cartTotal').textContent = total.toFixed(2);
@@ -379,7 +411,8 @@
     function placeOrder() {
       if (cart.length === 0) return;
       if (!currentUser) return alert("Please sign in to place an order.");
-      
+
+      orders = loadJSON('zone_orders', []);
       cart.forEach(item => {
         orders.push({
           orderId: "ORD" + Math.floor(1000 + Math.random() * 9000),
@@ -387,7 +420,7 @@
           productId: item.id,
           price: item.price,
           userEmail: currentUser.email,
-          status: "Pending Developer Verification"  // Changed status
+          status: "Pending Developer Verification"
         });
       });
       cart = [];
@@ -397,11 +430,11 @@
       renderDevOrders();
       toggleDrawer('cartDrawer');
       toggleDrawer('ordersDrawer');
-      refreshAllUI();
     }
 
     function renderUserOrders() {
       if (isDevMode) return;
+      orders = loadJSON('zone_orders', []);
       const userOrders = orders.filter(o => o.userEmail === (currentUser ? currentUser.email : ''));
       document.getElementById('ordersCount').textContent = userOrders.length;
       const container = document.getElementById('userOrdersContainer');
@@ -416,19 +449,19 @@
         container.innerHTML += `
           <div class="item-card">
             <div><strong>${ord.productTitle}</strong> (${ord.orderId})</div>
-            <div>Price: $${ord.price.toFixed(2)}</div>
+            <div>Price: $${Number(ord.price).toFixed(2)}</div>
             <div style="margin-top:5px;">Status: <span class="badge ${badgeClass}">${ord.status}</span></div>
           </div>
         `;
       });
     }
 
-    // Developer: User Verification
+    // ---------- DEVELOPER: USERS ----------
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
-      
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+
+      userAccounts = loadJSON('zone_users', []);
       container.innerHTML = '';
 
       if (userAccounts.length === 0) {
@@ -448,7 +481,7 @@
     }
 
     function verifyUser(index) {
-      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      userAccounts = loadJSON('zone_users', []);
       if (index >= 0 && index < userAccounts.length) {
         userAccounts[index].isVerified = true;
         saveData();
@@ -461,15 +494,15 @@
       }
     }
 
-    // Developer: Product Management (Add/Delete/Edit)
+    // ---------- DEVELOPER: PRODUCTS (PERSISTENT) ----------
     function renderDevProducts() {
       const container = document.getElementById('devProductEditorContainer');
       if (!container) return;
       container.innerHTML = '';
 
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      products = loadProducts();
 
-      // Add New Product Form
+      // Add new product form
       container.innerHTML += `
         <div class="item-card" style="background: #e8f4fd; border-color: #3498db;">
           <strong>➕ Add New Product</strong>
@@ -535,48 +568,58 @@
         return alert("Please fill all required fields correctly.");
       }
 
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      // Always read freshest list first
+      products = loadProducts();
       const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-      
-      products.push({ id: newId, title, price, quantity, image, size });
-      saveData();
-      renderProducts();
-      renderDevProducts();
-      alert("Product added successfully!");
+
+      products.push({
+        id: newId,
+        title,
+        price,
+        quantity,
+        image,
+        size
+      });
+
+      saveData();                 // persist immediately
+      renderProducts();           // customer view
+      renderDevProducts();        // dev editor
+      alert("Product added successfully! It will persist across restarts.");
     }
 
     function deleteProduct(productId) {
       if (!confirm("Are you sure you want to delete this product?")) return;
-      
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+
+      products = loadProducts();
       products = products.filter(p => p.id !== productId);
-      saveData();
+      saveData();                 // persist deletion
       renderProducts();
       renderDevProducts();
       alert("Product deleted.");
     }
 
     function saveProductChanges(productId) {
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      products = loadProducts();
       const p = products.find(prod => prod.id === productId);
-      if (p) {
-        p.price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
-        p.quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
-        p.size = document.getElementById(`devSize_${productId}`).value.trim() || 'Standard';
-        p.image = document.getElementById(`devImg_${productId}`).value;
-        saveData();
-        renderProducts();
-        renderDevProducts();
-        alert("Product changes saved!");
-      }
+      if (!p) return alert("Product not found — refreshing.");
+
+      p.price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
+      p.quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
+      p.size = document.getElementById(`devSize_${productId}`).value.trim() || 'Standard';
+      p.image = document.getElementById(`devImg_${productId}`).value.trim() || 'https://via.placeholder.com/200';
+
+      saveData();                 // persist changes
+      renderProducts();
+      renderDevProducts();
+      alert("Product changes saved!");
     }
 
-    // Developer: Order Verification
+    // ---------- DEVELOPER: ORDERS ----------
     function renderDevOrders() {
       const container = document.getElementById('devOrdersContainer');
       if (!container) return;
-      
-      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+
+      orders = loadJSON('zone_orders', []);
       container.innerHTML = orders.length === 0 ? '<p style="font-size:12px;">No incoming orders.</p>' : '';
 
       orders.forEach((ord, index) => {
@@ -595,24 +638,23 @@
     }
 
     function developerAction(orderIndex, action) {
-      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
-      products = JSON.parse(localStorage.getItem('zone_products')) || [];
-      
+      orders = loadJSON('zone_orders', []);
+      products = loadProducts();
+
       const ord = orders[orderIndex];
       if (!ord) return;
-      
+
       const prod = products.find(p => p.id === ord.productId);
 
       if (action === 'confirm') {
         if (prod && prod.quantity > 0) {
-          // Reduce stock
           prod.quantity -= 1;
           ord.status = "Order Confirmed - Shipping";
           saveData();
           refreshAllUI();
-          
+
           setTimeout(() => {
-            orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+            orders = loadJSON('zone_orders', []);
             const ordToUpdate = orders.find(o => o.orderId === ord.orderId);
             if (ordToUpdate) {
               ordToUpdate.status = "Delivered";
@@ -630,7 +672,7 @@
       }
     }
 
-    // Chat
+    // ---------- CHAT ----------
     function toggleChat() {
       const box = document.getElementById('chatBox');
       box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
@@ -641,6 +683,7 @@
       const text = input.value.trim();
       if (!text) return;
 
+      chatMessages = loadJSON('zone_chat', []);
       const sender = isDevMode ? 'developer' : 'customer';
       chatMessages.push({ sender, text, user: currentUser ? currentUser.email : 'Guest' });
       saveData();
@@ -652,7 +695,7 @@
       const body = document.getElementById('chatBody');
       if (!body) return;
       body.innerHTML = '';
-      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
+      chatMessages = loadJSON('zone_chat', []);
       chatMessages.forEach(msg => {
         body.innerHTML += `
           <div class="chat-message ${msg.sender}">
@@ -668,26 +711,28 @@
       document.getElementById(id).classList.toggle('open');
     }
 
-    // Initialization
+    // ---------- INIT ----------
     window.onload = () => {
+      // Ensure products exist in storage on first load
+      loadProducts();
       initializeRoute();
     };
     window.onhashchange = initializeRoute;
 
-    // Periodic refresh to keep data in sync
+    // Gentle periodic sync (won't overwrite fields while editing)
     setInterval(() => {
       if (!isDevMode || (document.activeElement && !document.activeElement.closest('.drawer'))) {
         refreshAllUI();
       } else {
-        userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
-        orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
-        chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
+        userAccounts = loadJSON('zone_users', []);
+        orders = loadJSON('zone_orders', []);
+        chatMessages = loadJSON('zone_chat', []);
         renderDevUsers();
         renderDevOrders();
         renderChatMessages();
         if (!isDevMode) renderUserOrders();
       }
-    }, 2000);
+    }, 3000);
   </script>
 </body>
 </html>
