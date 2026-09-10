@@ -56,6 +56,8 @@
     .btn-action { border: none; padding: 6px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; margin-top: 5px; font-size: 12px; }
     .btn-confirm { background-color: #2ecc71; }
     .btn-reject { background-color: #e74c3c; }
+    .btn-delete { background-color: #e74c3c; }
+    .btn-add { background-color: #3498db; }
 
     /* Chat Widget */
     .chat-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
@@ -200,15 +202,15 @@
     let isDevMode = false;
     let currentUser = null;
     
-    // PERSISTENT MEMORY STORAGE (USING LOCAL STORAGE)
+    // PERSISTENT MEMORY STORAGE
     let userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
     let cart = [];
     let orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
     let chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
 
     let products = JSON.parse(localStorage.getItem('zone_products')) || [
-      { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 10, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" },
-      { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" }
+      { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 10, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80", size: "Standard" },
+      { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80", size: "Medium" }
     ];
 
     function saveData() {
@@ -218,9 +220,8 @@
       localStorage.setItem('zone_products', JSON.stringify(products));
     }
 
-    // FIX: robust refresh of all relevant UI components after any data change
+    // Refresh all UI components
     function refreshAllUI() {
-      // Re-read from localStorage to ensure latest (especially for multi-tab)
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
       chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
@@ -237,15 +238,13 @@
       }
     }
 
-    // REAL-TIME SYNC BETWEEN DEV AND USER TABS
-    window.addEventListener('storage', (e) => {
-      // When localStorage changes from another tab, refresh everything
+    // Real-time sync
+    window.addEventListener('storage', () => {
       refreshAllUI();
     });
 
-    // ROUTING ENGINE
+    // Routing
     function initializeRoute() {
-      // Always load fresh data from storage when route changes
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
       chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
@@ -276,7 +275,7 @@
       }
     }
 
-    // CUSTOMER REGISTRATION & LOGIN
+    // Auth
     function toggleAuthView(view) {
       document.getElementById('registerForm').style.display = view === 'register' ? 'block' : 'none';
       document.getElementById('loginForm').style.display = view === 'login' ? 'block' : 'none';
@@ -288,20 +287,17 @@
 
       if (!email || !password) return alert("Please fill all registration fields.");
       
-      // Reload from storage to avoid stale array
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       if (userAccounts.find(u => u.email === email)) return alert("Account already exists.");
 
-      // Push account request to memory & storage
       userAccounts.push({ email, password, isVerified: false });
       saveData();
 
-      alert("Account request submitted! Developer must verify your account on the Developer Website before you can sign in.");
+      alert("Account request submitted! Developer must verify your account before you can sign in.");
       document.getElementById('regEmail').value = '';
       document.getElementById('regPassword').value = '';
       toggleAuthView('login');
       
-      // Immediately refresh dev user list if developer view is active in another tab, but also refresh locally
       refreshAllUI();
     }
 
@@ -313,7 +309,7 @@
       const acc = userAccounts.find(u => u.email === email && u.password === password);
       
       if (!acc) return alert("Invalid Email or Password!");
-      if (!acc.isVerified) return alert("Account Approval Pending! The Developer has not yet verified your account request on the Dev website.");
+      if (!acc.isVerified) return alert("Account Approval Pending! The Developer has not yet verified your account.");
 
       currentUser = acc;
       document.getElementById('authOverlay').style.display = 'none';
@@ -321,29 +317,30 @@
       document.getElementById('navUserEmail').textContent = currentUser.email;
       renderProducts();
       renderUserOrders();
-      // Ensure cart display updates (if any items were added as guest? cart is kept in memory, but we reset for new user)
       cart = []; 
       updateCartUI();
     }
 
-    // STORE CATALOG
+    // Store Catalog
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      
       products.forEach(p => {
         grid.innerHTML += `
           <div class="product-card">
             <div>
-              <img src="${p.image}" class="product-image">
+              <img src="${p.image}" class="product-image" alt="${p.title}">
               <div class="product-title">${p.title}</div>
               <div class="product-price">$${p.price.toFixed(2)}</div>
-              <div class="product-stock">Stock: ${p.quantity} units</div>
+              <div class="product-stock">Size: ${p.size || 'N/A'} | Stock: ${p.quantity} units</div>
             </div>
             ${!isDevMode ? `
               <button class="btn-primary" onclick="addToCart(${p.id})" ${p.quantity === 0 ? 'disabled style="background:#ccc;"' : ''}>
                 ${p.quantity > 0 ? 'Add to Cart' : 'Out of Stock'}
               </button>
-            ` : '<p style="font-size:12px; color:#555;">(In Developer View Mode)</p>'}
+            ` : '<p style="font-size:12px; color:#555;">(Developer Mode - Edit in Console)</p>'}
           </div>
         `;
       });
@@ -390,7 +387,7 @@
           productId: item.id,
           price: item.price,
           userEmail: currentUser.email,
-          status: "Pending Developer Confirmation"
+          status: "Pending Developer Verification"  // Changed status
         });
       });
       cart = [];
@@ -400,11 +397,11 @@
       renderDevOrders();
       toggleDrawer('cartDrawer');
       toggleDrawer('ordersDrawer');
-      refreshAllUI(); // ensures dev orders updated in other tab
+      refreshAllUI();
     }
 
     function renderUserOrders() {
-      if (isDevMode) return; // not needed for dev
+      if (isDevMode) return;
       const userOrders = orders.filter(o => o.userEmail === (currentUser ? currentUser.email : ''));
       document.getElementById('ordersCount').textContent = userOrders.length;
       const container = document.getElementById('userOrdersContainer');
@@ -426,12 +423,11 @@
       });
     }
 
-    // DEVELOPER WEBSITE VERIFICATION REQUESTS — NOW CORRECTLY SHOWS ALL UNVERIFIED USERS
+    // Developer: User Verification
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
       
-      // Always fetch latest
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       container.innerHTML = '';
 
@@ -452,14 +448,12 @@
     }
 
     function verifyUser(index) {
-      // Reload to ensure index matches current array
       userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       if (index >= 0 && index < userAccounts.length) {
         userAccounts[index].isVerified = true;
         saveData();
         renderDevUsers();
-        alert(`Account approved! ${userAccounts[index].email} can now sign in on the Customer website.`);
-        // Also refresh any other views that might depend on users
+        alert(`Account approved! ${userAccounts[index].email} can now sign in.`);
         refreshAllUI();
       } else {
         alert("User index out of bounds, refreshing list.");
@@ -467,12 +461,41 @@
       }
     }
 
+    // Developer: Product Management (Add/Delete/Edit)
     function renderDevProducts() {
       const container = document.getElementById('devProductEditorContainer');
       if (!container) return;
       container.innerHTML = '';
 
       products = JSON.parse(localStorage.getItem('zone_products')) || [];
+
+      // Add New Product Form
+      container.innerHTML += `
+        <div class="item-card" style="background: #e8f4fd; border-color: #3498db;">
+          <strong>➕ Add New Product</strong>
+          <div class="form-group" style="margin-top:5px;">
+            <label>Title</label>
+            <input type="text" id="newProdTitle" placeholder="Product name">
+          </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="newProdPrice" step="0.01" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="newProdQty" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>Size</label>
+            <input type="text" id="newProdSize" placeholder="e.g. Small, Large, 10 inch">
+          </div>
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="text" id="newProdImg" placeholder="https://...">
+          </div>
+          <button class="btn-action btn-add" onclick="addNewProduct()">Add Product</button>
+        </div>
+      `;
 
       products.forEach(p => {
         container.innerHTML += `
@@ -487,13 +510,50 @@
               <input type="number" id="devQty_${p.id}" value="${p.quantity}">
             </div>
             <div class="form-group">
+              <label>Size</label>
+              <input type="text" id="devSize_${p.id}" value="${p.size || ''}">
+            </div>
+            <div class="form-group">
               <label>Image URL</label>
               <input type="text" id="devImg_${p.id}" value="${p.image}">
             </div>
             <button class="btn-action btn-confirm" onclick="saveProductChanges(${p.id})">Save Changes</button>
+            <button class="btn-action btn-delete" onclick="deleteProduct(${p.id})" style="margin-left:5px;">Delete Product</button>
           </div>
         `;
       });
+    }
+
+    function addNewProduct() {
+      const title = document.getElementById('newProdTitle').value.trim();
+      const price = parseFloat(document.getElementById('newProdPrice').value);
+      const quantity = parseInt(document.getElementById('newProdQty').value);
+      const size = document.getElementById('newProdSize').value.trim() || 'Standard';
+      const image = document.getElementById('newProdImg').value.trim() || 'https://via.placeholder.com/200';
+
+      if (!title || isNaN(price) || isNaN(quantity)) {
+        return alert("Please fill all required fields correctly.");
+      }
+
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+      
+      products.push({ id: newId, title, price, quantity, image, size });
+      saveData();
+      renderProducts();
+      renderDevProducts();
+      alert("Product added successfully!");
+    }
+
+    function deleteProduct(productId) {
+      if (!confirm("Are you sure you want to delete this product?")) return;
+      
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+      products = products.filter(p => p.id !== productId);
+      saveData();
+      renderProducts();
+      renderDevProducts();
+      alert("Product deleted.");
     }
 
     function saveProductChanges(productId) {
@@ -502,6 +562,7 @@
       if (p) {
         p.price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
         p.quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
+        p.size = document.getElementById(`devSize_${productId}`).value.trim() || 'Standard';
         p.image = document.getElementById(`devImg_${productId}`).value;
         saveData();
         renderProducts();
@@ -510,6 +571,7 @@
       }
     }
 
+    // Developer: Order Verification
     function renderDevOrders() {
       const container = document.getElementById('devOrdersContainer');
       if (!container) return;
@@ -523,8 +585,8 @@
             <div><strong>${ord.productTitle}</strong> (${ord.orderId})</div>
             <div>Customer: ${ord.userEmail}</div>
             <div>Status: <em>${ord.status}</em></div>
-            ${ord.status === "Pending Developer Confirmation" ? `
-              <button class="btn-action btn-confirm" onclick="developerAction(${index}, 'confirm')">Confirm Order</button>
+            ${ord.status === "Pending Developer Verification" ? `
+              <button class="btn-action btn-confirm" onclick="developerAction(${index}, 'confirm')">Verify & Confirm Order</button>
               <button class="btn-action btn-reject" onclick="developerAction(${index}, 'reject')">Reject (Unavailable)</button>
             ` : ''}
           </div>
@@ -543,13 +605,13 @@
 
       if (action === 'confirm') {
         if (prod && prod.quantity > 0) {
+          // Reduce stock
           prod.quantity -= 1;
           ord.status = "Order Confirmed - Shipping";
           saveData();
           refreshAllUI();
           
           setTimeout(() => {
-            // Reload orders and products before modifying
             orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
             const ordToUpdate = orders.find(o => o.orderId === ord.orderId);
             if (ordToUpdate) {
@@ -559,7 +621,7 @@
             }
           }, 5000);
         } else {
-          alert("Product out of stock!");
+          alert("Product out of stock! Cannot confirm.");
         }
       } else if (action === 'reject') {
         ord.status = "Product is Unavailable";
@@ -568,7 +630,7 @@
       }
     }
 
-    // SUPPORT CHAT
+    // Chat
     function toggleChat() {
       const box = document.getElementById('chatBox');
       box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
@@ -606,21 +668,17 @@
       document.getElementById(id).classList.toggle('open');
     }
 
-    // Make sure to refresh UI on page load and when hash changes
+    // Initialization
     window.onload = () => {
-      // Pre-load any stored data
       initializeRoute();
-      // Ensure dev user list is populated if we are already on dev route (handled inside initializeRoute)
     };
     window.onhashchange = initializeRoute;
 
-    // Also periodic refresh to sync across tabs (every 2 seconds) as an extra measure
+    // Periodic refresh to keep data in sync
     setInterval(() => {
-      // Only refresh if not in the middle of editing product fields (to avoid losing focus)
       if (!isDevMode || (document.activeElement && !document.activeElement.closest('.drawer'))) {
         refreshAllUI();
       } else {
-        // Still refresh users and orders but not product editor fields
         userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
         orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
         chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
