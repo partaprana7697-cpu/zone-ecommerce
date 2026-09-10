@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body { background-color: #eaeded; color: #0f1111; }
 
-    /* Auth Screens Overlay */
+    /* Auth Overlay */
     .auth-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
     .auth-card { width: 380px; border: 1px solid #ddd; border-radius: 8px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .auth-logo { font-size: 28px; font-weight: bold; color: #131921; text-align: center; margin-bottom: 20px; }
@@ -22,7 +22,7 @@
     .btn-primary:hover { background-color: #f7ca00; }
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 12px; color: #0066c0; cursor: pointer; }
 
-    /* Navigation Bar */
+    /* Navbar */
     .navbar { background-color: #131921; color: white; display: flex; align-items: center; padding: 8px 16px; gap: 15px; }
     .nav-logo { font-size: 24px; font-weight: bold; color: #ff9900; }
     .nav-search { display: flex; flex: 1; max-width: 800px; height: 40px; border-radius: 4px; overflow: hidden; }
@@ -32,7 +32,7 @@
     .nav-link { color: white; text-decoration: none; font-size: 14px; cursor: pointer; }
     .nav-link span { display: block; font-size: 12px; color: #ccc; }
 
-    /* Layout & Product Cards */
+    /* Layout & Cards */
     .main-container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     .product-card { background-color: white; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -57,7 +57,7 @@
     .btn-confirm { background-color: #2ecc71; }
     .btn-reject { background-color: #e74c3c; }
 
-    /* Live Support Chat */
+    /* Chat Widget */
     .chat-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
     .chat-toggle-btn { background-color: #232f3e; color: #ff9900; border: 2px solid #ff9900; padding: 12px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; }
     .chat-box { display: none; width: 320px; height: 420px; background-color: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; position: fixed; bottom: 80px; right: 20px; z-index: 1200; }
@@ -73,7 +73,7 @@
 </head>
 <body>
 
-  <!-- AUTH OVERLAY FOR CUSTOMERS ONLY -->
+  <!-- AUTH OVERLAY FOR CUSTOMER LINK -->
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
       <div class="auth-logo">zone<span>.in</span></div>
@@ -129,16 +129,14 @@
           <span>Cart</span>
           <strong>🛒 Cart (<span id="cartCount">0</span>)</strong>
         </div>
-        
-        <!-- DEV CONTROL BUTTON (Strictly Hidden on Customer Link) -->
         <button id="devModeBtn" class="btn-primary" style="padding: 6px 12px; width:auto; display:none;" onclick="toggleDrawer('devDrawer')">🛠 Dev Console</button>
       </div>
     </div>
   </header>
 
-  <!-- STORE CATALOG -->
+  <!-- PRODUCT STOREFRONT -->
   <div class="main-container">
-    <h2 id="catalogTitle">Catalog Items</h2><br>
+    <h2>Catalog Items</h2><br>
     <div class="product-grid" id="productGrid"></div>
   </div>
 
@@ -182,7 +180,7 @@
     <div id="devOrdersContainer"></div>
   </div>
 
-  <!-- CHAT WIDGET -->
+  <!-- SUPPORT CHAT -->
   <div class="chat-widget-container">
     <button class="chat-toggle-btn" onclick="toggleChat()">💬 Chat Support</button>
     <div class="chat-box" id="chatBox">
@@ -202,27 +200,46 @@
     let isDevMode = false;
     let currentUser = null;
     
-    let userAccounts = [];
+    // PERSISTENT MEMORY STORAGE (USING LOCAL STORAGE)
+    let userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
     let cart = [];
-    let orders = [];
-    let chatMessages = [];
+    let orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+    let chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
 
-    let products = [
+    let products = JSON.parse(localStorage.getItem('zone_products')) || [
       { id: 1, title: "Wireless Headphones", price: 99.99, quantity: 10, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80" },
       { id: 2, title: "Smartwatch", price: 49.99, quantity: 5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80" }
     ];
 
-    // ROUTING ENGINE (HANDLES SEPARATE LINKS)
+    function saveData() {
+      localStorage.setItem('zone_users', JSON.stringify(userAccounts));
+      localStorage.setItem('zone_orders', JSON.stringify(orders));
+      localStorage.setItem('zone_chat', JSON.stringify(chatMessages));
+      localStorage.setItem('zone_products', JSON.stringify(products));
+    }
+
+    // REAL-TIME SYNC BETWEEN DEV AND USER TABS
+    window.addEventListener('storage', () => {
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+      orders = JSON.parse(localStorage.getItem('zone_orders')) || [];
+      chatMessages = JSON.parse(localStorage.getItem('zone_chat')) || [];
+      products = JSON.parse(localStorage.getItem('zone_products')) || [];
+
+      renderDevUsers();
+      renderDevOrders();
+      renderDevProducts();
+      renderProducts();
+      renderChatMessages();
+      renderUserOrders();
+    });
+
+    // ROUTING ENGINE
     function initializeRoute() {
       if (window.location.hash === "#dev") {
-        // DEVELOPER DIRECT ACCESS MODE
         isDevMode = true;
         currentUser = { email: "Developer Administrator", isVerified: true };
         
-        // Hide Customer Login Overlay
         document.getElementById('authOverlay').style.display = 'none';
-        
-        // Show Dev Controls
         document.getElementById('devModeBtn').style.display = 'block';
         document.getElementById('navUserRole').textContent = "Role: Developer";
         document.getElementById('navUserEmail').textContent = "Admin Access";
@@ -235,16 +252,15 @@
         renderChatMessages();
         toggleDrawer('devDrawer');
       } else {
-        // CUSTOMER MODE (No Developer Icons Allowed)
         isDevMode = false;
-        document.getElementById('devModeBtn').style.display = 'none'; // REMOVE DEV ICON
+        document.getElementById('devModeBtn').style.display = 'none';
         document.getElementById('authOverlay').style.display = 'flex';
         document.getElementById('chatTitle').textContent = "Chat with Developer Support";
         renderProducts();
       }
     }
 
-    // AUTH FOR CUSTOMERS
+    // CUSTOMER REGISTRATION & LOGIN
     function toggleAuthView(view) {
       document.getElementById('registerForm').style.display = view === 'register' ? 'block' : 'none';
       document.getElementById('loginForm').style.display = view === 'login' ? 'block' : 'none';
@@ -254,12 +270,20 @@
       const email = document.getElementById('regEmail').value.trim();
       const password = document.getElementById('regPassword').value;
 
-      if (!email || !password) return alert("Please fill all fields.");
+      if (!email || !password) return alert("Please fill all registration fields.");
+      
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       if (userAccounts.find(u => u.email === email)) return alert("Account already exists.");
 
+      // Push account request to memory & storage
       userAccounts.push({ email, password, isVerified: false });
-      alert("Account submitted! Requires Developer verification before sign in.");
+      saveData();
+
+      alert("Account request submitted! Developer must verify your account on the Developer Website before you can sign in.");
+      document.getElementById('regEmail').value = '';
+      document.getElementById('regPassword').value = '';
       toggleAuthView('login');
+      
       renderDevUsers();
     }
 
@@ -267,18 +291,21 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
 
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
       const acc = userAccounts.find(u => u.email === email && u.password === password);
-      if (!acc) return alert("Invalid credentials.");
-      if (!acc.isVerified) return alert("Account verification pending from Developer.");
+      
+      if (!acc) return alert("Invalid Email or Password!");
+      if (!acc.isVerified) return alert("Account Approval Pending! The Developer has not yet verified your account request on the Dev website.");
 
       currentUser = acc;
       document.getElementById('authOverlay').style.display = 'none';
       document.getElementById('navUserRole').textContent = "Role: Customer";
       document.getElementById('navUserEmail').textContent = currentUser.email;
       renderProducts();
+      renderUserOrders();
     }
 
-    // STORE LOGIC
+    // STORE CATALOG
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
@@ -343,6 +370,7 @@
         });
       });
       cart = [];
+      saveData();
       updateCartUI();
       renderUserOrders();
       renderDevOrders();
@@ -372,18 +400,25 @@
       });
     }
 
-    // DEV OPERATIONS
+    // DEVELOPER WEBSITE VERIFICATION REQUESTS
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
-      container.innerHTML = userAccounts.length === 0 ? '<p style="font-size:12px;">No user account registrations.</p>' : '';
+      container.innerHTML = '';
+
+      userAccounts = JSON.parse(localStorage.getItem('zone_users')) || [];
+
+      if (userAccounts.length === 0) {
+        container.innerHTML = '<p style="font-size:12px; color:#666;">No account verification requests.</p>';
+        return;
+      }
 
       userAccounts.forEach((acc, idx) => {
         container.innerHTML += `
           <div class="item-card">
-            <div><strong>Email:</strong> ${acc.email}</div>
-            <div>Status: <em>${acc.isVerified ? '✅ Approved' : '⏳ Awaiting Approval'}</em></div>
-            ${!acc.isVerified ? `<button class="btn-action btn-confirm" onclick="verifyUser(${idx})">Verify & Approve Account</button>` : ''}
+            <div><strong>Email Request:</strong> ${acc.email}</div>
+            <div>Status: <em>${acc.isVerified ? '✅ Approved' : '⏳ Pending Approval'}</em></div>
+            ${!acc.isVerified ? `<button class="btn-action btn-confirm" onclick="verifyUser(${idx})">Verify & Approve Request</button>` : ''}
           </div>
         `;
       });
@@ -391,8 +426,9 @@
 
     function verifyUser(index) {
       userAccounts[index].isVerified = true;
+      saveData();
       renderDevUsers();
-      alert(`Account verified: ${userAccounts[index].email}`);
+      alert(`Account approved! ${userAccounts[index].email} can now sign in on the Customer website.`);
     }
 
     function renderDevProducts() {
@@ -428,9 +464,10 @@
         p.price = parseFloat(document.getElementById(`devPrice_${productId}`).value);
         p.quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
         p.image = document.getElementById(`devImg_${productId}`).value;
+        saveData();
         renderProducts();
         renderDevProducts();
-        alert("Product updated!");
+        alert("Product changes saved!");
       }
     }
 
@@ -462,6 +499,7 @@
         if (prod && prod.quantity > 0) {
           prod.quantity -= 1;
           ord.status = "Order Confirmed - Shipping";
+          saveData();
           renderProducts();
           renderDevProducts();
           renderUserOrders();
@@ -469,6 +507,7 @@
 
           setTimeout(() => {
             ord.status = "Delivered";
+            saveData();
             renderUserOrders();
             renderDevOrders();
           }, 5000);
@@ -477,6 +516,7 @@
         }
       } else if (action === 'reject') {
         ord.status = "Product is Unavailable";
+        saveData();
         renderUserOrders();
         renderDevOrders();
       }
@@ -495,6 +535,7 @@
 
       const sender = isDevMode ? 'developer' : 'customer';
       chatMessages.push({ sender, text, user: currentUser ? currentUser.email : 'Guest' });
+      saveData();
       input.value = '';
       renderChatMessages();
     }
@@ -517,7 +558,6 @@
       document.getElementById(id).classList.toggle('open');
     }
 
-    // Launch routing on load or URL change
     window.onload = initializeRoute;
     window.onhashchange = initializeRoute;
   </script>
