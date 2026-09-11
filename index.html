@@ -69,6 +69,33 @@
     .sync-badge.syncing { background: rgba(245, 158, 11, 0.85); }
     .sync-badge.error { background: rgba(239, 68, 68, 0.85); }
 
+    /* ⭐ NEW: quick refresh button (patient side) */
+    .patient-refresh-btn {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .patient-refresh-btn:hover {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 14px rgba(16, 185, 129, 0.35);
+      transform: translateY(-1px);
+    }
+    .patient-refresh-btn:active {
+      transform: scale(0.97);
+    }
+
     .main-container { max-width: 1600px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
     .section { display: none; }
     .section.active { display: block; }
@@ -445,6 +472,10 @@
         <div class="nav-section emergency" data-section="emergency" onclick="switchSection('emergency')">🚨 Emergency</div>
       </div>
       <div class="nav-right">
+        <!-- ⭐ QUICK REFRESH BUTTON (PATIENT SIDE) -->
+        <button class="patient-refresh-btn" id="patientRefreshBtn" onclick="manualPatientRefresh()">
+          🔄 Refresh
+        </button>
         <div class="nav-link" onclick="openProfile()"><span id="navUserRole">Role: Guest</span><strong id="navUserEmail">Not Signed In</strong></div>
         <div class="nav-link" onclick="toggleDrawer('appointmentsDrawer')"><span>Visits</span><strong>📅 <span id="appointmentsCount">0</span></strong></div>
         <div class="nav-link" onclick="toggleDrawer('cartDrawer')"><span>Cart</span><strong>🛒 <span id="cartCount">0</span></strong></div>
@@ -1113,24 +1144,23 @@
 
   <script>
     // ============================================================
-    // MEDIZONE — MAIN SCRIPT WITH FULL AUTO-SYNC
+    // MEDIZONE — MAIN SCRIPT WITH FULL AUTO-SYNC + PATIENT REFRESH
     // Sync: npoint.io + BroadcastChannel + Visibility + Focus
+    // ⭐ NEW: Quick refresh button on patient side (header)
     // ============================================================
 
-    // ⭐ CHANGE THIS to your own npoint bin ID (optional)
     const NPOINT_BIN_ID = "YOUR_NPOINT_BIN_ID_HERE";
     const NPOINT_URL = `https://api.npoint.io/${NPOINT_BIN_ID}`;
     const CLOUD_ENABLED = true;
 
     const DEV_KEY = 'DOCTOR-2026';
-    const POLL_MS = 2000;             // Poll cloud every 2 seconds
+    const POLL_MS = 2000;
     const CHANNEL_NAME = 'medizone_sync';
 
-    // ---------- AUTO-SYNC CHANNELS ----------
     let syncChannel = null;
     let lastSyncHash = '';
     let isSyncing = false;
-    let syncPaused = false;           // Pause during form edits
+    let syncPaused = false;
 
     // ---------- DEFAULT DATA ----------
     const DEFAULT_DOCTORS = [
@@ -1194,7 +1224,6 @@
       return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
     }
 
-    // ---------- AUTO-SYNC HASH (detects real changes) ----------
     function computeHash(){
       const str = JSON.stringify({
         u: userAccounts.map(u => u.email + u.isVerified),
@@ -1215,7 +1244,6 @@
       return h.toString(36);
     }
 
-    // ---------- STORAGE ----------
     function saveLocal(){
       try{
         const payload = {
@@ -1273,9 +1301,6 @@
       const db = $('devSyncBadge'); if(db){ db.className = 'dev-sync-badge ' + status; db.textContent = text; }
     }
 
-    // ============================================================
-    // CLOUD SYNC — npoint.io
-    // ============================================================
     async function cloudLoad(silent){
       silent = !!silent;
       if(!CLOUD_ENABLED){ loadLocal(); if(!silent)setSync('error','⚠️ Local mode'); return false; }
@@ -1331,8 +1356,6 @@
         if(!res.ok) throw Error('HTTP ' + res.status);
         setSync('ok','☁️ Synced');
         lastSyncHash = computeHash();
-
-        // ⭐ Notify other tabs on the same browser to refresh immediately
         if(syncChannel){
           try { syncChannel.postMessage({ type: 'cloud-save', at: Date.now() }); } catch(e){}
         }
@@ -1344,20 +1367,15 @@
       }
     }
 
-    // ============================================================
-    // AUTO-SYNC ORCHESTRATOR
-    // Fetches cloud data, re-renders only if something changed.
-    // ============================================================
     async function autoSync(){
-      if(processingKeys.size > 0) return;      // don't interfere with user actions
-      if(syncPaused) return;                    // pause during form edits
+      if(processingKeys.size > 0) return;
+      if(syncPaused) return;
       try{
-        const ok = await cloudLoad(true);       // silent fetch
+        const ok = await cloudLoad(true);
         if(!ok) return;
         const newHash = computeHash();
         if(newHash !== lastSyncHash){
           lastSyncHash = newHash;
-          // Re-render appropriate view
           if(isDevMode && isDevUnlocked){
             renderDevAll();
           } else if(!isDevMode){
@@ -1382,6 +1400,18 @@
       }catch(e){
         console.error('Auto-sync failed:', e);
       }
+    }
+
+    // ---------- ⭐ NEW: PATIENT-SIDE QUICK REFRESH ----------
+    async function manualPatientRefresh(){
+      const btn = $('patientRefreshBtn');
+      if(btn){ btn.disabled = true; btn.textContent = '⏳ Refreshing...'; }
+      setSync('syncing','🔄 Refreshing...');
+      await cloudLoad(true);
+      lastSyncHash = computeHash();
+      if(!isDevMode) renderCustomerAll();
+      setSync('ok','☁️ Synced');
+      if(btn){ setTimeout(() => { btn.disabled = false; btn.textContent = '🔄 Refresh'; }, 600); }
     }
 
     // ---------- ROUTING ----------
@@ -2363,7 +2393,6 @@
       $('devKey').value = '';
     }
 
-    // Manual refresh — still available if you want it, but not required
     async function manualRefresh(){
       const btn = $('refreshBtn');
       if(btn) btn.textContent = '🔄 Refreshing...';
@@ -3030,9 +3059,6 @@
 
     // ============================================================
     // AUTO-SYNC: 3 triggers
-    // 1. setInterval every 2s (pulls cloud)
-    // 2. BroadcastChannel message (same-browser instant)
-    // 3. visibility/focus event (on tab switch)
     // ============================================================
     function setupBroadcastChannel(){
       if(typeof BroadcastChannel === 'undefined') return;
@@ -3040,10 +3066,8 @@
         syncChannel = new BroadcastChannel(CHANNEL_NAME);
         syncChannel.onmessage = (e) => {
           if(e.data && e.data.type === 'cloud-save'){
-            // Another tab just saved — pull fresh data
             autoSync();
           } else if(e.data && e.data.type === 'local-save'){
-            // Same-browser different-tab update
             loadLocal();
             const newHash = computeHash();
             if(newHash !== lastSyncHash){
@@ -3056,7 +3080,6 @@
       }catch(e){ console.warn('BroadcastChannel not available'); }
     }
 
-    // Pause auto-sync while user is typing (prevents losing form data)
     document.addEventListener('focusin', (e) => {
       const t = e.target;
       if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')){
@@ -3064,7 +3087,6 @@
       }
     });
     document.addEventListener('focusout', () => {
-      // Resume after a short delay
       setTimeout(() => { syncPaused = false; }, 500);
     });
 
@@ -3077,18 +3099,13 @@
       lastSyncHash = computeHash();
       setSync('ok', CLOUD_ENABLED ? '☁️ Synced' : '💾 Local mode');
 
-      // ⭐ 1. Poll cloud every 2 seconds
       setInterval(autoSync, POLL_MS);
 
-      // ⭐ 2. Sync when tab becomes visible
       document.addEventListener('visibilitychange', () => {
         if(document.visibilityState === 'visible') autoSync();
       });
 
-      // ⭐ 3. Sync on window focus
       window.addEventListener('focus', autoSync);
-
-      // ⭐ 4. Sync on browser online event (network recovered)
       window.addEventListener('online', autoSync);
     });
 
