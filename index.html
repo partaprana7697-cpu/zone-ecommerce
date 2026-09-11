@@ -10,46 +10,41 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, 'Inter', BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
     :root {
-      --primary: #10b981; --primary-dark: #059669; --primary-light: #34d399;
-      --accent: #3b82f6; --accent-dark: #2563eb; --danger: #ef4444;
-      --warning: #f59e0b; --info: #0ea5e9; --pink: #ec4899; --purple: #8b5cf6;
+      --primary: #10b981; --primary-dark: #059669;
+      --accent: #3b82f6; --accent-dark: #2563eb;
+      --danger: #ef4444; --warning: #f59e0b; --info: #0ea5e9; --purple: #8b5cf6;
       --dark: #0f172a; --grey: #64748b;
       --glass-border: rgba(255, 255, 255, 0.6);
       --glass-blur: blur(28px) saturate(180%);
       --glass-blur-strong: blur(40px) saturate(200%);
-      --glass-blur-light: blur(18px) saturate(160%);
       --gradient-primary: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
-      --gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --gradient-heart: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow-glass-lg: 0 20px 60px rgba(31, 38, 135, 0.18), 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.12);
+      --shadow-glass-lg: 0 20px 60px rgba(31, 38, 135, 0.18);
       --radius: 20px; --radius-sm: 14px; --radius-lg: 28px; --radius-pill: 999px;
     }
     html, body { min-height: 100vh; }
     body { color: var(--dark); background: #eef7f4; position: relative; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.35) 0px, transparent 45%), radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.35) 0px, transparent 45%), radial-gradient(circle at 75% 80%, rgba(236, 72, 153, 0.25) 0px, transparent 45%), radial-gradient(circle at 25% 85%, rgba(139, 92, 246, 0.3) 0px, transparent 45%), radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.2) 0px, transparent 60%), linear-gradient(180deg, #f0fdfa 0%, #eef7f4 100%); z-index: -2; animation: meshMove 20s ease-in-out infinite alternate; }
-    body::after { content: ''; position: fixed; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); z-index: -1; pointer-events: none; }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.35) 0px, transparent 45%), radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.35) 0px, transparent 45%), radial-gradient(circle at 75% 80%, rgba(236, 72, 153, 0.25) 0px, transparent 45%), radial-gradient(circle at 25% 85%, rgba(139, 92, 246, 0.3) 0px, transparent 45%), linear-gradient(180deg, #f0fdfa 0%, #eef7f4 100%); z-index: -2; animation: meshMove 20s ease-in-out infinite alternate; }
+    @keyframes meshMove { 0% { transform: scale(1); } 100% { transform: scale(1.15) translate(-3%, -2%); } }
     body.admin-mode::before { background: radial-gradient(circle at 15% 20%, rgba(30, 41, 59, 0.85) 0px, transparent 45%), radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.6) 0px, transparent 45%), radial-gradient(circle at 75% 80%, rgba(14, 165, 233, 0.5) 0px, transparent 45%), radial-gradient(circle at 25% 85%, rgba(139, 92, 246, 0.4) 0px, transparent 45%), linear-gradient(180deg, #1e293b 0%, #0f172a 100%); }
-    body.admin-mode::after { opacity: 0.3; }
-    @keyframes meshMove { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.15) translate(-3%, -2%); } }
 
-    .auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.15); backdrop-filter: blur(24px) saturate(180%); animation: fadeIn 0.4s ease; }
-    .auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.7); backdrop-filter: var(--glass-blur-strong); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-glass-lg); border: 1px solid var(--glass-border); animation: slideUp 0.55s; }
+    .auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.15); backdrop-filter: blur(24px); animation: fadeIn 0.4s; }
+    .auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur-strong); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-glass-lg); border: 1px solid var(--glass-border); animation: slideUp 0.55s; }
     .auth-logo { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 800; text-align: center; margin-bottom: 6px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.2px; }
     .auth-tagline { text-align: center; font-size: 13px; color: var(--grey); margin-bottom: 28px; font-weight: 500; }
     .auth-card h3 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 22px; font-family: 'Space Grotesk', sans-serif; }
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 7px; color: #334155; text-transform: uppercase; letter-spacing: 0.8px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 15px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); outline: none; font-size: 14px; transition: all 0.25s ease; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: var(--dark); font-family: inherit; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 15px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); outline: none; font-size: 14px; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: var(--dark); font-family: inherit; transition: all 0.25s; }
     .form-group textarea { resize: vertical; min-height: 90px; }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: #94a3b8; }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); background: rgba(255, 255, 255, 0.95); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
-    .btn-primary { width: 100%; padding: 14px; background: var(--gradient-primary); border: none; border-radius: var(--radius-sm); color: white; font-weight: 700; font-size: 14px; cursor: pointer; letter-spacing: 0.3px; transition: all 0.25s; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
+    .btn-primary { width: 100%; padding: 14px; background: var(--gradient-primary); border: none; border-radius: var(--radius-sm); color: white; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45); }
-    .btn-primary:disabled { background: rgba(148, 163, 184, 0.5); cursor: not-allowed; }
+    .btn-primary:disabled { background: rgba(148, 163, 184, 0.5); cursor: not-allowed; transform: none; }
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 18px; color: var(--primary); cursor: pointer; font-weight: 600; }
 
-    header { position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(28px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 24px rgba(31, 38, 135, 0.06); }
+    header { position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(28px); border-bottom: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 4px 24px rgba(31, 38, 135, 0.06); }
     .navbar { display: flex; align-items: center; padding: 12px 24px; gap: 16px; max-width: 1600px; margin: 0 auto; }
     .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; flex-shrink: 0; letter-spacing: -0.6px; display: flex; align-items: center; gap: 8px; }
     .nav-logo::before { content: '⚕️'; font-size: 24px; -webkit-text-fill-color: initial; }
@@ -58,11 +53,11 @@
     .nav-section:hover { background: rgba(16, 185, 129, 0.08); }
     .nav-section.active { background: rgba(16, 185, 129, 0.15); color: var(--primary-dark); border-color: rgba(16, 185, 129, 0.3); }
     .nav-right { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
-    .nav-link { color: var(--dark); font-size: 13px; cursor: pointer; padding: 10px 14px; border-radius: var(--radius-sm); transition: all 0.2s; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
-    .nav-link:hover { background: rgba(255, 255, 255, 0.7); transform: translateY(-1px); }
+    .nav-link { color: var(--dark); font-size: 13px; cursor: pointer; padding: 10px 14px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5); }
+    .nav-link:hover { background: rgba(255, 255, 255, 0.7); }
     .nav-link span { display: block; font-size: 10px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-    .nav-link strong { font-size: 13px; font-weight: 700; white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; }
-    .sync-badge { position: fixed; top: 72px; right: 24px; background: rgba(16, 185, 129, 0.85); backdrop-filter: blur(20px); color: white; padding: 8px 15px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; z-index: 1500; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 8px 24px rgba(16,185,129,0.3); }
+    .nav-link strong { font-size: 13px; font-weight: 700; }
+    .sync-badge { position: fixed; top: 72px; right: 24px; background: rgba(16, 185, 129, 0.85); color: white; padding: 8px 15px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; z-index: 1500; display: flex; align-items: center; gap: 6px; }
     .sync-badge.syncing { background: rgba(245, 158, 11, 0.85); }
     .sync-badge.error { background: rgba(239, 68, 68, 0.85); }
 
@@ -70,20 +65,17 @@
     .section { display: none; animation: fadeIn 0.4s; }
     .section.active { display: block; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
-    .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -1.2px; color: var(--dark); display: flex; align-items: center; gap: 14px; }
-    .section-header h2::before { content: ''; width: 6px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-pill); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
-    .section-header .subtitle { font-size: 14px; color: var(--grey); font-weight: 500; margin-top: 4px; }
-    .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .count-pill { font-size: 13px; color: var(--dark); font-weight: 600; background: rgba(255, 255, 255, 0.65); backdrop-filter: var(--glass-blur); padding: 9px 18px; border-radius: var(--radius-pill); box-shadow: var(--shadow-glass); border: 1px solid var(--glass-border); white-space: nowrap; }
+    .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -1.2px; display: flex; align-items: center; gap: 14px; }
+    .section-header h2::before { content: ''; width: 6px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-pill); }
+    .subtitle { font-size: 14px; color: var(--grey); font-weight: 500; margin-top: 4px; }
+    .count-pill { font-size: 13px; font-weight: 600; background: rgba(255, 255, 255, 0.65); backdrop-filter: var(--glass-blur); padding: 9px 18px; border-radius: var(--radius-pill); border: 1px solid var(--glass-border); }
 
-    /* DOCTORS */
     .doctor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
-    .doctor-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; box-shadow: var(--shadow-glass); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s; overflow: hidden; }
-    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(31, 38, 135, 0.18); border-color: rgba(255, 255, 255, 0.85); }
+    .doctor-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; box-shadow: var(--shadow-glass); transition: all 0.35s; }
+    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(31, 38, 135, 0.18); }
     .doctor-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
-    .doctor-avatar { width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #10b981, #0ea5e9); display: flex; align-items: center; justify-content: center; font-size: 30px; color: white; font-weight: 800; box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35); border: 2px solid rgba(255,255,255,0.8); }
-    .doctor-meta { flex: 1; min-width: 0; }
-    .doctor-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 800; color: var(--dark); margin-bottom: 3px; }
+    .doctor-avatar { width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #10b981, #0ea5e9); display: flex; align-items: center; justify-content: center; font-size: 30px; color: white; font-weight: 800; border: 2px solid rgba(255,255,255,0.8); }
+    .doctor-name { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 3px; }
     .doctor-spec { font-size: 12px; color: var(--primary-dark); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
     .doctor-qual { font-size: 11px; color: var(--grey); }
     .doctor-stats { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
@@ -94,31 +86,28 @@
     .doctor-actions { display: flex; gap: 8px; margin-top: auto; }
     .btn-sm { padding: 11px 14px; border-radius: var(--radius-sm); border: none; font-weight: 700; font-size: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1; }
     .btn-sm:hover { transform: translateY(-2px); }
-    .btn-book { background: var(--gradient-primary); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+    .btn-book { background: var(--gradient-primary); color: white; }
     .btn-chat { background: rgba(59, 130, 246, 0.1); color: var(--accent-dark); border: 1px solid rgba(59, 130, 246, 0.3); }
 
-    /* MEDICINES */
     .filters-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
-    .filter-chip { padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.5); color: var(--dark); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(10px); }
-    .filter-chip:hover { background: rgba(255, 255, 255, 0.8); }
-    .filter-chip.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-    .search-med { display: flex; flex: 1; max-width: 400px; height: 42px; border-radius: var(--radius-pill); overflow: hidden; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+    .filter-chip { padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.5); color: var(--dark); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .filter-chip.active { background: var(--gradient-primary); color: white; border-color: transparent; }
+    .search-med { display: flex; flex: 1; max-width: 400px; height: 42px; border-radius: var(--radius-pill); overflow: hidden; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.7); }
     .search-med input { flex: 1; border: none; padding: 0 18px; font-size: 13px; outline: none; background: transparent; }
-    .search-med button { background: transparent; border: none; width: 44px; color: var(--primary-dark); cursor: pointer; font-size: 15px; }
+    .search-med button { background: transparent; border: none; width: 44px; cursor: pointer; font-size: 15px; }
     .medicine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-    .med-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); display: flex; flex-direction: column; box-shadow: var(--shadow-glass); overflow: hidden; transition: transform 0.35s, box-shadow 0.35s; }
+    .med-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); display: flex; flex-direction: column; box-shadow: var(--shadow-glass); overflow: hidden; transition: all 0.35s; }
     .med-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(31, 38, 135, 0.18); }
     .med-image-wrapper { width: calc(100% - 24px); height: 160px; margin: 12px 12px 0; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.08)); display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.7); }
-    .med-emoji { font-size: 72px; filter: drop-shadow(0 8px 20px rgba(16, 185, 129, 0.25)); transition: transform 0.5s; }
-    .med-card:hover .med-emoji { transform: scale(1.15) rotate(-5deg); }
+    .med-emoji { font-size: 72px; }
     .med-info { padding: 16px 18px 10px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
     .med-brand { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--primary-dark); font-weight: 800; }
-    .med-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.35; }
+    .med-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; line-height: 1.35; }
     .med-desc { font-size: 11px; color: var(--grey); line-height: 1.4; }
     .med-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
     .med-price { font-size: 22px; font-weight: 800; background: var(--gradient-heart); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-family: 'Space Grotesk', sans-serif; }
     .med-mrp { font-size: 12px; color: var(--grey); text-decoration: line-through; }
-    .med-rx { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 3px 8px; border-radius: var(--radius-pill); font-weight: 700; border: 1px solid; width: fit-content; margin-top: 2px; }
+    .med-rx { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 3px 8px; border-radius: var(--radius-pill); font-weight: 700; border: 1px solid; width: fit-content; }
     .med-rx.otc { color: var(--primary-dark); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
     .med-rx.prescription { color: var(--warning); background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
     .med-actions { padding: 0 18px 18px; margin-top: auto; }
@@ -126,68 +115,57 @@
     .btn-med:hover:not(:disabled) { transform: translateY(-2px); }
     .btn-med:disabled { background: rgba(226, 232, 240, 0.6); color: #94a3b8; cursor: not-allowed; }
 
-    /* BARRIERS */
     .barriers-container { display: grid; gap: 20px; }
     .intro-text { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-glass); }
     .intro-text h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 10px; }
     .intro-text p { font-size: 14px; color: #334155; line-height: 1.7; }
     .barrier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
-    .barrier-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-glass); transition: all 0.3s; }
-    .barrier-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(31, 38, 135, 0.15); }
+    .barrier-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-glass); }
     .barrier-icon { width: 54px; height: 54px; border-radius: 16px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(14, 165, 233, 0.2)); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
     .barrier-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-    .barrier-card p { font-size: 13px; color: var(--grey); line-height: 1.6; margin-bottom: 12px; }
+    .barrier-card p { font-size: 13px; color: var(--grey); line-height: 1.6; }
     .barrier-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(100, 116, 139, 0.25); }
-    .barrier-stat { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(16, 185, 129, 0.1); color: var(--primary-dark); border: 1px solid rgba(16, 185, 129, 0.2); }
+    .barrier-stat { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(16, 185, 129, 0.1); color: var(--primary-dark); }
 
-    /* 3D BODY */
     .body-3d-explorer { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
     .body-3d-canvas-wrapper { background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(240,253,250,0.4)); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--shadow-glass); position: relative; overflow: hidden; min-height: 640px; }
     #bodyCanvas3D { width: 100%; height: 640px; display: block; cursor: grab; }
     #bodyCanvas3D:active { cursor: grabbing; }
-    .canvas-overlay-top { position: absolute; top: 18px; left: 18px; right: 18px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; pointer-events: none; flex-wrap: wrap; }
-    .body-tip { background: rgba(16, 185, 129, 0.9); color: white; padding: 8px 14px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); pointer-events: auto; }
-    .canvas-controls { display: flex; gap: 6px; pointer-events: auto; flex-wrap: wrap; }
-    .canvas-btn { background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); color: var(--dark); padding: 8px 12px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .canvas-btn:hover { background: rgba(255, 255, 255, 1); transform: translateY(-1px); }
+    .canvas-overlay-top { position: absolute; top: 18px; left: 18px; right: 18px; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; flex-wrap: wrap; }
+    .body-tip { background: rgba(16, 185, 129, 0.9); color: white; padding: 8px 14px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; pointer-events: auto; }
+    .canvas-controls { display: flex; gap: 6px; pointer-events: auto; }
+    .canvas-btn { background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.7); color: var(--dark); padding: 8px 12px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; cursor: pointer; }
     .canvas-btn.active { background: var(--gradient-primary); color: white; border-color: transparent; }
     .canvas-overlay-bottom { position: absolute; bottom: 18px; left: 18px; right: 18px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; pointer-events: none; }
-    .organ-chip { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.7); backdrop-filter: blur(14px); color: var(--dark); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); pointer-events: auto; }
-    .organ-chip:hover { background: rgba(255, 255, 255, 1); transform: translateY(-2px); }
-    .organ-chip.selected { background: var(--gradient-primary); color: white; border-color: transparent; }
-    .loading-3d { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(240, 253, 250, 0.85); backdrop-filter: blur(12px); z-index: 5; color: var(--primary-dark); font-weight: 700; font-size: 13px; }
+    .organ-chip { background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.7); color: var(--dark); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; cursor: pointer; pointer-events: auto; }
+    .organ-chip.selected { background: var(--gradient-primary); color: white; }
+    .loading-3d { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(240, 253, 250, 0.85); z-index: 5; color: var(--primary-dark); font-weight: 700; font-size: 13px; }
     .spinner-3d { width: 40px; height: 40px; border: 3px solid rgba(16, 185, 129, 0.2); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .body-sidebar { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-glass); position: sticky; top: 100px; }
-    .body-sidebar h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .body-sidebar h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; margin-bottom: 14px; }
     .selected-organ-display { padding: 14px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
     .selected-organ-icon { font-size: 32px; }
-    .selected-organ-info { flex: 1; }
-    .selected-organ-name { font-weight: 800; color: var(--dark); font-size: 15px; }
-    .selected-organ-hint { font-size: 11px; color: var(--grey); margin-top: 2px; }
+    .selected-organ-name { font-weight: 800; font-size: 15px; }
+    .selected-organ-hint { font-size: 11px; color: var(--grey); }
     .empty-organ { padding: 30px 16px; text-align: center; color: var(--grey); font-size: 12px; background: rgba(241, 245, 249, 0.5); border: 1px dashed rgba(100, 116, 139, 0.3); border-radius: var(--radius-sm); margin-bottom: 16px; }
-    .empty-organ .icon { font-size: 40px; opacity: 0.4; margin-bottom: 8px; display: block; }
     .severity-row { display: flex; gap: 6px; margin-bottom: 14px; }
-    .severity-btn { flex: 1; padding: 8px 6px; border-radius: var(--radius-sm); border: 1px solid rgba(100, 116, 139, 0.25); background: rgba(255, 255, 255, 0.7); font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .severity-btn.selected { color: white; border-color: transparent; }
-    .severity-btn.selected.low { background: linear-gradient(135deg, #10b981, #059669); }
-    .severity-btn.selected.medium { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    .severity-btn.selected.high { background: linear-gradient(135deg, #ef4444, #dc2626); }
-    .severity-btn.selected.critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); }
+    .severity-btn { flex: 1; padding: 8px 6px; border-radius: var(--radius-sm); border: 1px solid rgba(100, 116, 139, 0.25); background: rgba(255, 255, 255, 0.7); font-size: 11px; font-weight: 700; cursor: pointer; }
+    .severity-btn.selected.low { background: linear-gradient(135deg, #10b981, #059669); color: white; border-color: transparent; }
+    .severity-btn.selected.medium { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border-color: transparent; }
+    .severity-btn.selected.high { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border-color: transparent; }
+    .severity-btn.selected.critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); color: white; border-color: transparent; }
 
-    /* DRAWERS */
-    .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.9); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
+    .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.92); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
     .drawer.open { right: 0; }
-    .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(24px); z-index: 10; }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); z-index: 10; }
     .drawer-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; }
-    .drawer-header button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.6); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px; color: var(--dark); display: flex; align-items: center; justify-content: center; }
-    .drawer-header button:hover { background: rgba(255, 255, 255, 0.95); transform: rotate(90deg); }
+    .drawer-header button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.6); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px; }
     .drawer-body { padding: 20px 24px 40px; flex: 1; }
-    .item-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: var(--glass-blur-light); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; transition: all 0.25s; }
-    .item-card:hover { background: rgba(255, 255, 255, 0.9); border-color: rgba(16, 185, 129, 0.3); }
-    .item-card strong { color: var(--dark); font-weight: 700; }
+    .item-card { background: rgba(255, 255, 255, 0.7); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; }
+    .item-card strong { font-weight: 700; }
     .item-card .muted { color: var(--grey); font-size: 12px; }
-    .badge { display: inline-flex; align-items: center; padding: 4px 11px; border-radius: var(--radius-pill); font-size: 10px; font-weight: 700; color: white; letter-spacing: 0.4px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); }
+    .badge { display: inline-flex; align-items: center; padding: 4px 11px; border-radius: var(--radius-pill); font-size: 10px; font-weight: 700; color: white; text-transform: uppercase; }
     .bg-pending { background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9)); }
     .bg-confirmed { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
     .bg-rejected { background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(220,38,38,0.9)); }
@@ -195,25 +173,23 @@
     .empty-state { text-align: center; padding: 40px 20px; color: var(--grey); font-size: 13px; }
     .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
     .cart-item { background: rgba(255, 255, 255, 0.75); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; display: flex; gap: 14px; align-items: center; }
-    .cart-item-thumb { width: 60px; height: 60px; flex-shrink: 0; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(14, 165, 233, 0.1)); border: 1px solid rgba(255,255,255,0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+    .cart-item-thumb { width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
     .cart-item-body { flex: 1; min-width: 0; }
-    .cart-item-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
     .cart-item-price { font-size: 11px; color: var(--grey); margin-bottom: 6px; }
     .cart-item-subtotal { font-size: 12px; font-weight: 800; color: var(--primary-dark); }
     .cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
     .qty-control { display: flex; align-items: center; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: var(--radius-pill); padding: 2px; }
-    .qty-btn { width: 26px; height: 26px; border: none; background: transparent; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--primary-dark); display: flex; align-items: center; justify-content: center; }
+    .qty-btn { width: 26px; height: 26px; border: none; background: transparent; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--primary-dark); }
     .qty-btn:hover { background: rgba(16, 185, 129, 0.15); }
-    .qty-display { min-width: 24px; text-align: center; font-size: 12px; font-weight: 800; padding: 0 3px; }
-    .cart-item-remove { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--danger); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 11px; display: flex; align-items: center; justify-content: center; }
+    .qty-display { min-width: 24px; text-align: center; font-size: 12px; font-weight: 800; }
+    .cart-item-remove { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--danger); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 11px; }
     .cart-item-remove:hover { background: rgba(239, 68, 68, 0.9); color: white; }
-    .cart-total-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px; margin-top: 16px; }
+    .cart-total-card { background: rgba(255, 255, 255, 0.75); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px; margin-top: 16px; }
     .cart-total-label { font-size: 10px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 6px; }
     .cart-total-amount { font-size: 30px; font-weight: 800; background: var(--gradient-heart); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px; font-family: 'Space Grotesk', sans-serif; }
     .cart-summary-line { display: flex; justify-content: space-between; font-size: 12px; color: var(--grey); margin-bottom: 5px; }
-    .cart-summary-line strong { color: var(--dark); font-weight: 700; }
 
-    /* MODALS */
     .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.4); backdrop-filter: blur(12px); z-index: 1900; display: none; align-items: center; justify-content: center; padding: 18px; }
     .modal-overlay.open { display: flex; }
     .modal { width: 720px; max-width: 100%; max-height: 92vh; overflow: auto; background: rgba(255,255,255,.97); border-radius: 24px; box-shadow: 0 30px 80px rgba(15,23,42,.25); padding: 28px; }
@@ -221,82 +197,77 @@
     .modal-head h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800; }
     .close-btn { border: 0; background: #f1f5f9; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 16px; }
     .modal-body { font-size: 14px; color: #334155; line-height: 1.6; }
-    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .notice { padding: 12px 14px; border-radius: 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--primary-dark); font-size: 12px; font-weight: 600; margin: 14px 0; }
     .notice.info { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); color: var(--accent-dark); }
     .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin: 12px 0; }
     .slot-btn { padding: 10px 6px; border-radius: var(--radius-sm); border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.06); font-size: 12px; font-weight: 700; cursor: pointer; color: var(--primary-dark); }
     .slot-btn.selected { background: var(--gradient-primary); color: white; border-color: transparent; }
 
-    /* CHAT */
     .chat-widget-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
     .chat-toggle-btn { background: var(--gradient-primary); color: white; border: none; padding: 14px 22px; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; box-shadow: 0 12px 32px rgba(16,185,129,0.4); font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    .chat-toggle-btn:hover { transform: translateY(-3px) scale(1.03); }
-    .chat-box { display: none; width: 380px; height: 560px; background: rgba(255, 255, 255, 0.92); backdrop-filter: var(--glass-blur-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-glass-lg); flex-direction: column; overflow: hidden; position: fixed; bottom: 92px; right: 24px; z-index: 1200; }
-    .chat-header { background: rgba(255, 255, 255, 0.75); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
+    .chat-toggle-btn:hover { transform: translateY(-3px); }
+    .chat-box { display: none; width: 380px; height: 560px; background: rgba(255, 255, 255, 0.95); backdrop-filter: var(--glass-blur-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-glass-lg); flex-direction: column; overflow: hidden; position: fixed; bottom: 92px; right: 24px; z-index: 1200; }
+    .chat-box.open { display: flex; }
+    .chat-header { background: rgba(255, 255, 255, 0.8); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
     .chat-header span:last-child { cursor: pointer; opacity: 0.6; font-size: 18px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.5); }
-    .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-    .chat-message { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.45; }
+    .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: rgba(248, 250, 252, 0.5); }
+    .chat-message { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.45; word-wrap: break-word; }
     .chat-message.customer { background: var(--gradient-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .chat-message.developer { background: rgba(255, 255, 255, 0.9); color: var(--dark); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+    .chat-message.developer { background: rgba(255, 255, 255, 0.95); color: var(--dark); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
     .chat-meta { font-size: 10px; opacity: 0.75; margin-bottom: 3px; font-weight: 700; text-transform: uppercase; }
-    .chat-footer { display: flex; padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.7); gap: 8px; }
+    .chat-footer { display: flex; padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.8); gap: 8px; }
     .chat-input { flex: 1; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: var(--radius-pill); padding: 11px 16px; outline: none; font-size: 13px; background: rgba(255, 255, 255, 0.9); }
     .chat-send-btn { background: var(--gradient-primary); border: none; color: white; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 15px; }
+    .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* DEV CONSOLE */
     #devSite { display: none; color: white; min-height: 100vh; }
     #devSite.active { display: block; }
-    .dev-auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(24px) saturate(180%); }
-    .dev-auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.98); border-radius: var(--radius-lg); padding: 44px 38px; box-shadow: var(--shadow-glass-lg); animation: slideUp 0.55s; }
+    .dev-auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(24px); }
+    .dev-auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.98); border-radius: var(--radius-lg); padding: 44px 38px; box-shadow: var(--shadow-glass-lg); }
     .dev-auth-logo { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; text-align: center; margin-bottom: 6px; background: linear-gradient(135deg, #0f172a, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1.2px; }
     .dev-auth-tagline { text-align: center; font-size: 13px; color: var(--grey); margin-bottom: 28px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
     .dev-auth-card h3 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 22px; font-family: 'Space Grotesk', sans-serif; }
-    .dev-header { position: sticky; top: 0; z-index: 900; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(28px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .dev-header { position: sticky; top: 0; z-index: 900; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(28px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
     .dev-navbar { display: flex; align-items: center; padding: 14px 28px; gap: 20px; max-width: 1800px; margin: 0 auto; }
-    .dev-nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800; color: white; letter-spacing: -0.6px; display: flex; align-items: center; gap: 10px; }
+    .dev-nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800; color: white; display: flex; align-items: center; gap: 10px; }
     .dev-nav-logo::before { content: '⚕️'; font-size: 22px; }
     .dev-nav-badge { background: linear-gradient(135deg, #10b981, #059669); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; color: white; text-transform: uppercase; }
     .dev-nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-    .dev-nav-user { color: white; padding: 8px 14px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.08); font-size: 12px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); }
-    .dev-sync-badge { background: rgba(16, 185, 129, 0.9); color: white; padding: 8px 14px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .dev-nav-user { color: white; padding: 8px 14px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.08); font-size: 12px; font-weight: 600; }
+    .dev-sync-badge { background: rgba(16, 185, 129, 0.9); color: white; padding: 8px 14px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; }
     .dev-sync-badge.syncing { background: rgba(245, 158, 11, 0.9); }
     .dev-sync-badge.error { background: rgba(239, 68, 68, 0.9); }
-    .dev-btn-refresh { background: rgba(16, 185, 129, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .dev-btn-refresh.spinning span:first-child { display: inline-block; animation: spin 0.8s linear infinite; }
+    .dev-btn-refresh { background: rgba(16, 185, 129, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-btn-logout { background: rgba(239, 68, 68, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-container { max-width: 1800px; margin: 0 auto; padding: 28px 28px 80px; }
     .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
-    .stat-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 20px; color: white; transition: all 0.25s; }
-    .stat-card:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-3px); }
+    .stat-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 20px; color: white; }
     .stat-card small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); font-weight: 700; }
     .stat-card strong { display: block; font-size: 26px; font-weight: 800; margin-top: 6px; font-family: 'Space Grotesk', sans-serif; }
-    .tabs-bar { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; margin-bottom: 22px; backdrop-filter: blur(20px); overflow-x: auto; }
-    .dev-tab { flex: 1; min-width: 130px; padding: 11px 14px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 12px; transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
-    .dev-tab:hover { background: rgba(255, 255, 255, 0.08); color: white; }
+    .tabs-bar { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; margin-bottom: 22px; overflow-x: auto; }
+    .dev-tab { flex: 1; min-width: 130px; padding: 11px 14px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
     .dev-tab.active { background: rgba(255, 255, 255, 0.15); color: white; }
     .dev-tab .tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; }
     .dev-tab .tab-badge.green { background: #10b981; }
     .dev-tab .tab-badge.purple { background: #8b5cf6; }
     .dev-tab .tab-badge.blue { background: #3b82f6; }
     .dev-tab .tab-badge:empty, .dev-tab .tab-badge[data-count="0"] { display: none; }
-    .panel { display: none; animation: fadeIn 0.3s; }
+    .panel { display: none; }
     .panel.active { display: block; }
     .panel h3 { color: white; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
     .panel h3 .count { background: rgba(255, 255, 255, 0.15); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
     .chip { padding: 7px 14px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.8); font-size: 11px; font-weight: 700; cursor: pointer; }
-    .chip:hover { background: rgba(255, 255, 255, 0.12); }
     .chip.active { background: #10b981; color: white; border-color: #10b981; }
     .card-list { display: grid; gap: 12px; }
-    .dev-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius-sm); padding: 16px 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); transition: all 0.25s; }
-    .dev-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2); }
+    .dev-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius-sm); padding: 16px 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
     .dev-card.verified { background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(255, 255, 255, 0.95)); }
     .dev-card.doctor-role { background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(255, 255, 255, 0.95)); }
     .dev-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
-    .dev-card-title { font-weight: 800; color: var(--dark); font-size: 14px; word-break: break-all; }
+    .dev-card-title { font-weight: 800; color: var(--dark); font-size: 14px; }
     .dev-card-meta { color: var(--grey); font-size: 11px; margin-top: 3px; }
-    .dev-card-badge { padding: 4px 10px; border-radius: 20px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+    .dev-card-badge { padding: 4px 10px; border-radius: 20px; font-size: 9px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
     .badge-pending { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
     .badge-verified { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .badge-confirmed { background: linear-gradient(135deg, #10b981, #059669); color: white; }
@@ -305,57 +276,40 @@
     .badge-doctor { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .badge-admin { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
     .dev-card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
-    .btn-sm-dev { padding: 8px 13px; border-radius: 9px; border: none; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
-    .btn-sm-dev:hover { transform: translateY(-2px); }
-    .btn-sm-dev:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .btn-sm-dev { padding: 8px 13px; border-radius: 9px; border: none; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+    .btn-sm-dev:hover { transform: translateY(-1px); }
+    .btn-sm-dev:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .btn-info { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
-    .btn-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
     .btn-primary-sm { background: linear-gradient(135deg, #10b981, #0ea5e9); color: white; }
     .empty-panel { background: rgba(255, 255, 255, 0.06); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius); padding: 50px 30px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 13px; }
-    .empty-panel .icon { font-size: 48px; opacity: 0.4; margin-bottom: 12px; display: block; }
     .form-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius); padding: 20px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
     .form-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 14px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .form-group-dev { margin-bottom: 10px; }
     .form-group-dev label { display: block; font-size: 10px; font-weight: 700; margin-bottom: 5px; color: #334155; text-transform: uppercase; letter-spacing: 0.6px; }
     .form-group-dev input, .form-group-dev textarea, .form-group-dev select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 9px; outline: none; font-size: 12px; background: #f8fafc; color: var(--dark); font-family: inherit; }
-    .form-group-dev input:focus, .form-group-dev textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12); }
+    .form-group-dev input:focus, .form-group-dev textarea:focus, .form-group-dev select:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12); }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
 
     @media (max-width: 1100px) { .body-3d-explorer { grid-template-columns: 1fr; } .body-sidebar { position: relative; top: 0; } .stats-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 900px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-sections { order: 3; flex-basis: 100%; justify-content: flex-start; overflow-x: auto; padding: 6px 0; }
-    }
+    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .form-row { grid-template-columns: 1fr; } .nav-sections { order: 3; flex-basis: 100%; justify-content: flex-start; overflow-x: auto; } }
     @media (max-width: 768px) {
       .navbar { padding: 10px 16px; gap: 10px; flex-wrap: wrap; }
       .section-header h2 { font-size: 26px; }
-      .section-header h2::before { height: 26px; }
-      .doctor-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-      .medicine-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+      .doctor-grid, .medicine-grid { grid-template-columns: 1fr; }
       .drawer { width: 100%; }
       .chat-box { width: calc(100vw - 32px); right: 16px; bottom: 80px; height: calc(100vh - 120px); }
       .auth-card { padding: 30px 24px; }
-      .sync-badge { top: auto; bottom: 90px; right: 16px; font-size: 10px; padding: 6px 12px; }
       .dev-navbar { padding: 10px 16px; flex-wrap: wrap; }
       .dev-container { padding: 18px 14px 60px; }
       .dev-nav-user { display: none; }
-      .modal { padding: 20px; }
       #bodyCanvas3D { height: 480px; }
-    }
-    @media (max-width: 520px) {
-      .modal-row { grid-template-columns: 1fr; }
-      .medicine-grid, .doctor-grid { grid-template-columns: 1fr; }
-      .organ-chip { font-size: 10px; padding: 5px 9px; }
     }
   </style>
   <script type="importmap">
@@ -380,7 +334,7 @@
           <h3>Welcome back 👋</h3>
           <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="user@example.com"></div>
           <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter')handleLogin()"></div>
-          <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+          <button class="btn-primary" id="loginBtn" onclick="handleLogin()">Sign In</button>
           <div class="auth-toggle" onclick="toggleAuthView('register')">Don't have an account? Register →</div>
         </div>
         <div id="registerForm" style="display:none;">
@@ -389,7 +343,7 @@
           <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="user@example.com"></div>
           <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="Minimum 6 characters"></div>
           <div class="form-group"><label>Confirm Password</label><input type="password" id="regPassword2" placeholder="Repeat password"></div>
-          <button class="btn-primary" onclick="handleRegister()">Create Account</button>
+          <button class="btn-primary" id="registerBtn" onclick="handleRegister()">Create Account</button>
           <div class="auth-toggle" onclick="toggleAuthView('login')">← Back to Sign In</div>
         </div>
       </div>
@@ -415,8 +369,8 @@
       <section class="section active" id="section-doctors">
         <div class="section-header">
           <div><h2>Our Specialists</h2><div class="subtitle">Verified doctors — book an appointment or consult via chat</div></div>
-          <div class="header-actions">
-            <select class="filter-chip" id="doctorSpecFilter" onchange="renderDoctors()" style="padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.5);font-weight:700;font-size:12px;cursor:pointer;"><option value="all">All specialisations</option></select>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <select class="filter-chip" id="doctorSpecFilter" onchange="renderDoctors()" style="padding:8px 14px;font-weight:700;font-size:12px;cursor:pointer;"><option value="all">All specialisations</option></select>
             <div class="count-pill" id="doctorsCount">0 doctors</div>
           </div>
         </div>
@@ -469,12 +423,12 @@
           <div class="body-sidebar">
             <h4>🩺 Symptom Report</h4>
             <div id="organSelectionArea">
-              <div class="empty-organ"><span class="icon">🧬</span>Click any organ on the 3D body to report your symptoms</div>
+              <div class="empty-organ"><span style="font-size:40px;opacity:0.4;display:block;margin-bottom:8px;">🧬</span>Click any organ on the 3D body to report your symptoms</div>
             </div>
             <div id="organFormArea" style="display:none;">
               <div class="selected-organ-display">
                 <div class="selected-organ-icon" id="selectedOrganIcon">❤️</div>
-                <div class="selected-organ-info">
+                <div>
                   <div class="selected-organ-name" id="selectedOrganName">Heart</div>
                   <div class="selected-organ-hint">You selected this organ</div>
                 </div>
@@ -527,7 +481,7 @@
     <div class="drawer" id="appointmentsDrawer">
       <div class="drawer-header"><h3>📅 My Appointments & Reports</h3><button onclick="toggleDrawer('appointmentsDrawer')">✕</button></div>
       <div class="drawer-body">
-        <div class="filter-row" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
           <button class="filter-chip active" data-appt-filter="all" onclick="setApptFilter('all', this)">All</button>
           <button class="filter-chip" data-appt-filter="upcoming" onclick="setApptFilter('upcoming', this)">Upcoming</button>
           <button class="filter-chip" data-appt-filter="reports" onclick="setApptFilter('reports', this)">Symptom Reports</button>
@@ -548,7 +502,7 @@
         <div class="chat-body" id="chatBody"></div>
         <div class="chat-footer">
           <input type="text" id="chatInput" class="chat-input" placeholder="Describe your symptoms..." onkeydown="if(event.key==='Enter')sendChatMessage()">
-          <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+          <button class="chat-send-btn" id="chatSendBtn" onclick="sendChatMessage()">➤</button>
         </div>
       </div>
     </div>
@@ -575,7 +529,7 @@
         <div class="dev-nav-right">
           <div class="dev-sync-badge" id="devSyncBadge">💾 Local mode</div>
           <div class="dev-nav-user" id="devNavUser">Doctor Access</div>
-          <button class="dev-btn-refresh" id="refreshBtn" onclick="manualRefresh()"><span>🔄</span> Refresh</button>
+          <button class="dev-btn-refresh" id="refreshBtn" onclick="manualRefresh()">🔄 Refresh</button>
           <button class="dev-btn-logout" onclick="devLogout()">Logout</button>
         </div>
       </div></header>
@@ -594,7 +548,7 @@
           <button class="dev-tab" data-tab="doctors" onclick="switchTab('doctors')">🩺 Doctors <span class="tab-badge blue" id="tabDoctorsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="medicines" onclick="switchTab('medicines')">💊 Pharmacy</button>
           <button class="dev-tab" data-tab="orders" onclick="switchTab('orders')">📅 Appointments <span class="tab-badge green" id="tabOrdersBadge" data-count="0">0</span></button>
-          <button class="dev-tab" data-tab="reports" onclick="switchTab('reports')">🧬 Symptom Reports <span class="tab-badge purple" id="tabReportsBadge" data-count="0">0</span></button>
+          <button class="dev-tab" data-tab="reports" onclick="switchTab('reports')">🧬 Reports <span class="tab-badge purple" id="tabReportsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="support" onclick="switchTab('support')">💬 Chats <span class="tab-badge" id="tabSupportBadge" data-count="0">0</span></button>
         </div>
 
@@ -608,14 +562,13 @@
           <div class="card-list" id="accountsList"></div>
         </div>
 
-        <!-- ============ NEW: DOCTORS MANAGEMENT TAB ============ -->
         <div class="panel" id="panel-doctors">
           <h3>🩺 Doctor Management <span class="count" id="doctorsAdminCount">0</span></h3>
           <div class="form-card">
             <h4>➕ Add New Doctor</h4>
             <div class="form-row">
               <div class="form-group-dev"><label>Full Name</label><input id="ndName" placeholder="e.g. Dr. Rohan Gupta"></div>
-              <div class="form-group-dev"><label>Specialisation / Role</label>
+              <div class="form-group-dev"><label>Specialisation</label>
                 <select id="ndSpec">
                   <option value="Cardiologist">Cardiologist</option>
                   <option value="Neurologist">Neurologist</option>
@@ -651,7 +604,7 @@
               </div>
             </div>
             <div class="form-group-dev"><label>Short Bio</label><textarea id="ndBio" rows="2" placeholder="Brief description of expertise..."></textarea></div>
-            <button class="btn-sm-dev btn-primary-sm" onclick="devAddDoctor()">+ Add Doctor</button>
+            <button class="btn-sm-dev btn-primary-sm" id="addDoctorBtn" onclick="devAddDoctor()">+ Add Doctor</button>
           </div>
           <div class="card-list" id="doctorsList"></div>
         </div>
@@ -676,7 +629,7 @@
             </div>
             <div class="form-group-dev"><label>Icon (Emoji)</label><input id="nmIcon" placeholder="💊" maxlength="4"></div>
             <div class="form-group-dev"><label>Description</label><textarea id="nmDesc" rows="2"></textarea></div>
-            <button class="btn-sm-dev btn-primary-sm" onclick="devAddMedicine()">+ Add Medicine</button>
+            <button class="btn-sm-dev btn-primary-sm" id="addMedicineBtn" onclick="devAddMedicine()">+ Add Medicine</button>
           </div>
           <div class="card-list" id="medicinesList"></div>
         </div>
@@ -711,7 +664,7 @@
     </div>
   </div>
 
-  <!-- ============ THREE.JS MODULE ============ -->
+  <!-- ============ THREE.JS 3D BODY ============ -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -731,7 +684,7 @@
       { id:'nose',      name:'Nose & Sinuses',  icon:'👃', y: 3.6,  color:0xfca5a5, emissive:0xf87171 },
       { id:'mouth',     name:'Mouth & Dental',  icon:'🦷', y: 3.36, color:0xfda4af, emissive:0xfb7185 },
       { id:'thyroid',   name:'Thyroid',         icon:'🦋', y: 3.05, color:0xc4b5fd, emissive:0xa78bfa },
-      { id:'trachea',   name:'Trachea & Airways',icon:'🌬️',y: 2.7,  color:0xbae6fd, emissive:0x7dd3fc },
+      { id:'trachea',   name:'Trachea',         icon:'🌬️', y: 2.7,  color:0xbae6fd, emissive:0x7dd3fc },
       { id:'lungs',     name:'Lungs',           icon:'🫁', y: 2.35, color:0xfbcfe8, emissive:0xf9a8d4 },
       { id:'heart',     name:'Heart',           icon:'❤️', y: 2.35, color:0xef4444, emissive:0xdc2626 },
       { id:'liver',     name:'Liver',           icon:'🫀', y: 1.9,  color:0x92400e, emissive:0x78350f },
@@ -739,8 +692,8 @@
       { id:'kidneys',   name:'Kidneys',         icon:'🫘', y: 1.78, color:0x9a3412, emissive:0x7c2d12 },
       { id:'intestines',name:'Intestines',      icon:'🌀', y: 1.15, color:0xfdba74, emissive:0xfb923c },
       { id:'spine',     name:'Spine',           icon:'🦴', y: 1.9,  color:0xe2e8f0, emissive:0x94a3b8 },
-      { id:'arms',      name:'Arms & Joints',   icon:'💪', y: 2.1,  color:0xfbcfe8, emissive:0xf9a8d4 },
-      { id:'legs',      name:'Legs & Knees',    icon:'🦵', y: 0,    color:0xfbcfe8, emissive:0xf9a8d4 },
+      { id:'arms',      name:'Arms',            icon:'💪', y: 2.1,  color:0xfbcfe8, emissive:0xf9a8d4 },
+      { id:'legs',      name:'Legs',            icon:'🦵', y: 0,    color:0xfbcfe8, emissive:0xf9a8d4 },
       { id:'skin',      name:'Skin',            icon:'🩹', y: 2,    color:0xbae6fd, emissive:0x7dd3fc }
     ];
 
@@ -847,8 +800,7 @@
       const armGeo = new THREE.CapsuleGeometry(0.18, 1.5, 12, 24);
       [-1, 1].forEach(side => {
         const arm = new THREE.Mesh(armGeo, glassMaterial);
-        arm.position.set(side * 0.95, 2.35, 0);
-        arm.rotation.z = -side * 0.16;
+        arm.position.set(side * 0.95, 2.35, 0); arm.rotation.z = -side * 0.16;
         arm.userData = { isSurfaceMesh: true };
         bodyGlass.add(arm); clickableMeshes.push(arm);
       });
@@ -856,8 +808,7 @@
       const handGeo = new THREE.SphereGeometry(0.2, 20, 20);
       [-1, 1].forEach(side => {
         const hand = new THREE.Mesh(handGeo, glassMaterial);
-        hand.position.set(side * 1.16, 1.55, 0);
-        hand.scale.set(1, 1.15, 0.6);
+        hand.position.set(side * 1.16, 1.55, 0); hand.scale.set(1, 1.15, 0.6);
         hand.userData = { isSurfaceMesh: true };
         bodyGlass.add(hand); clickableMeshes.push(hand);
       });
@@ -878,158 +829,112 @@
         bodyGlass.add(foot); clickableMeshes.push(foot);
       });
 
-      buildBrain(); buildEyes(); buildNose(); buildMouth();
-      buildThyroid(); buildTrachea(); buildLungs(); buildHeart();
-      buildLiver(); buildStomach(); buildKidneys(); buildIntestines(); buildSpine();
-    }
-
-    function buildBrain(){
-      const group = new THREE.Group();
-      const mat = makeOrganMaterial(0xff9eb3, 0xff6b8a);
+      // Brain
+      const brainGroup = new THREE.Group();
+      const brainMat = makeOrganMaterial(0xff9eb3, 0xff6b8a);
       [-0.15, 0.15].forEach(x => {
-        const hemi = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 24), mat);
-        hemi.position.set(x, 0, 0); hemi.scale.set(1, 0.85, 1); group.add(hemi);
+        const hemi = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 24), brainMat);
+        hemi.position.set(x, 0, 0); hemi.scale.set(1, 0.85, 1); brainGroup.add(hemi);
       });
-      for(let i = 0; i < 8; i++){
-        const angle = (i / 8) * Math.PI * 2;
-        const w = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.012, 8, 16, Math.PI), mat);
-        w.position.set(Math.cos(angle) * 0.24, 0.08, Math.sin(angle) * 0.24);
-        w.rotation.set(Math.PI / 2, 0, angle);
-        group.add(w);
-      }
-      const cb = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 16), mat);
-      cb.position.set(0, -0.15, -0.2); cb.scale.set(1.2, 0.7, 0.9); group.add(cb);
-      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.055, 0.2, 12), mat);
-      stem.position.set(0, -0.24, -0.1); group.add(stem);
-      group.position.set(0, 4.05, 0);
-      group.traverse(o => { if(o.isMesh){ o.userData = { organId: 'brain', organName: 'Brain', organIcon: '🧠', isOrgan: true }; clickableMeshes.push(o); } });
-      bodyGroup.add(group);
-    }
+      const cb = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 16), brainMat);
+      cb.position.set(0, -0.15, -0.2); cb.scale.set(1.2, 0.7, 0.9); brainGroup.add(cb);
+      brainGroup.position.set(0, 4.05, 0);
+      brainGroup.traverse(o => { if(o.isMesh){ o.userData = { organId: 'brain', organName: 'Brain', organIcon: '🧠', isOrgan: true }; clickableMeshes.push(o); } });
+      bodyGroup.add(brainGroup);
 
-    function buildEyes(){
-      const mat = makeOrganMaterial(0x60a5fa, 0x3b82f6);
+      // Eyes
+      const eyeMat = makeOrganMaterial(0x60a5fa, 0x3b82f6);
       [-0.18, 0.18].forEach(x => {
-        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.09, 20, 20), mat);
+        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.09, 20, 20), eyeMat);
         eye.position.set(x, 3.78, 0.38);
         eye.userData = { organId: 'eyes', organName: 'Eyes', organIcon: '👁️', isOrgan: true };
         bodyGroup.add(eye); clickableMeshes.push(eye);
-        const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 16), new THREE.MeshBasicMaterial({ color: 0x0f172a }));
-        pupil.position.set(x, 3.78, 0.46); bodyGroup.add(pupil);
       });
-    }
 
-    function buildNose(){
-      const mat = makeOrganMaterial(0xfca5a5, 0xf87171);
-      const nose = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.22, 12), mat);
+      // Nose
+      const nose = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.22, 12), makeOrganMaterial(0xfca5a5, 0xf87171));
       nose.position.set(0, 3.6, 0.42); nose.rotation.x = Math.PI / 2.4;
       nose.userData = { organId: 'nose', organName: 'Nose & Sinuses', organIcon: '👃', isOrgan: true };
       bodyGroup.add(nose); clickableMeshes.push(nose);
-    }
 
-    function buildMouth(){
-      const mat = makeOrganMaterial(0xfda4af, 0xfb7185);
-      const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.08, 0.14), mat);
+      // Mouth
+      const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.08, 0.14), makeOrganMaterial(0xfda4af, 0xfb7185));
       mouth.position.set(0, 3.36, 0.4);
       mouth.userData = { organId: 'mouth', organName: 'Mouth & Dental', organIcon: '🦷', isOrgan: true };
       bodyGroup.add(mouth); clickableMeshes.push(mouth);
-    }
 
-    function buildThyroid(){
-      const mat = makeOrganMaterial(0xc4b5fd, 0xa78bfa);
+      // Thyroid
+      const thyroidMat = makeOrganMaterial(0xc4b5fd, 0xa78bfa);
       [-0.09, 0.09].forEach(x => {
-        const lobe = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), mat);
+        const lobe = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), thyroidMat);
         lobe.position.set(x, 3.05, 0.14); lobe.scale.set(0.8, 1.3, 0.8);
         lobe.userData = { organId: 'thyroid', organName: 'Thyroid', organIcon: '🦋', isOrgan: true };
         bodyGroup.add(lobe); clickableMeshes.push(lobe);
       });
-      const isthmus = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.06, 0.08), mat);
-      isthmus.position.set(0, 3.05, 0.14); bodyGroup.add(isthmus);
-    }
 
-    function buildTrachea(){
-      const mat = makeOrganMaterial(0xbae6fd, 0x7dd3fc);
-      const trachea = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.55, 16), mat);
+      // Trachea
+      const tracheaMat = makeOrganMaterial(0xbae6fd, 0x7dd3fc);
+      const trachea = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.55, 16), tracheaMat);
       trachea.position.set(0, 2.7, 0.1);
       trachea.userData = { organId: 'trachea', organName: 'Trachea & Airways', organIcon: '🌬️', isOrgan: true };
       bodyGroup.add(trachea); clickableMeshes.push(trachea);
-      for(let i = 0; i < 5; i++){
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.01, 8, 16), mat);
-        ring.position.set(0, 2.5 + i * 0.11, 0.1); ring.rotation.x = Math.PI / 2;
-        bodyGroup.add(ring);
-      }
-    }
 
-    function buildLungs(){
-      const mat = makeOrganMaterial(0xfbcfe8, 0xf9a8d4);
+      // Lungs
+      const lungMat = makeOrganMaterial(0xfbcfe8, 0xf9a8d4);
       [-1, 1].forEach(side => {
         const lung = new THREE.Group();
-        const main = new THREE.Mesh(new THREE.SphereGeometry(0.4, 24, 24), mat);
+        const main = new THREE.Mesh(new THREE.SphereGeometry(0.4, 24, 24), lungMat);
         main.scale.set(0.85, 1.15, 0.7); lung.add(main);
-        const upper = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), mat);
+        const upper = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), lungMat);
         upper.position.set(0, 0.3, 0); upper.scale.set(0.9, 0.75, 0.75); lung.add(upper);
         lung.position.set(side * 0.42, 2.35, 0.08);
         lung.traverse(o => { if(o.isMesh){ o.userData = { organId: 'lungs', organName: 'Lungs', organIcon: '🫁', isOrgan: true }; clickableMeshes.push(o); } });
         bodyGroup.add(lung);
       });
-    }
 
-    function buildHeart(){
-      const mat = makeOrganMaterial(0xef4444, 0xdc2626);
+      // Heart
+      const heartMat = makeOrganMaterial(0xef4444, 0xdc2626);
       const heart = new THREE.Group();
-      const la = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), mat); la.position.set(-0.06, 0.14, 0); heart.add(la);
-      const ra = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), mat); ra.position.set(0.08, 0.16, 0); heart.add(ra);
-      const main = new THREE.Mesh(new THREE.SphereGeometry(0.2, 24, 24), mat); main.scale.set(0.95, 1.2, 0.85); main.position.set(0.02, -0.05, 0); heart.add(main);
-      const point = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.2, 16), mat); point.position.set(0.02, -0.24, 0); point.rotation.x = Math.PI; heart.add(point);
+      const la = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), heartMat); la.position.set(-0.06, 0.14, 0); heart.add(la);
+      const ra = new THREE.Mesh(new THREE.SphereGeometry(0.14, 20, 20), heartMat); ra.position.set(0.08, 0.16, 0); heart.add(ra);
+      const hMain = new THREE.Mesh(new THREE.SphereGeometry(0.2, 24, 24), heartMat); hMain.scale.set(0.95, 1.2, 0.85); hMain.position.set(0.02, -0.05, 0); heart.add(hMain);
+      const point = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.2, 16), heartMat); point.position.set(0.02, -0.24, 0); point.rotation.x = Math.PI; heart.add(point);
       heart.position.set(-0.14, 2.35, 0.28);
       heart.traverse(o => { if(o.isMesh){ o.userData = { organId: 'heart', organName: 'Heart', organIcon: '❤️', isOrgan: true }; clickableMeshes.push(o); } });
       bodyGroup.add(heart);
-    }
 
-    function buildLiver(){
-      const mat = makeOrganMaterial(0x92400e, 0x78350f);
-      const liver = new THREE.Mesh(new THREE.SphereGeometry(0.38, 24, 24), mat);
+      // Liver
+      const liver = new THREE.Mesh(new THREE.SphereGeometry(0.38, 24, 24), makeOrganMaterial(0x92400e, 0x78350f));
       liver.scale.set(1.3, 0.55, 0.85); liver.position.set(-0.18, 1.9, 0.12);
       liver.userData = { organId: 'liver', organName: 'Liver', organIcon: '🫀', isOrgan: true };
       bodyGroup.add(liver); clickableMeshes.push(liver);
-    }
 
-    function buildStomach(){
-      const mat = makeOrganMaterial(0xfcd34d, 0xf59e0b);
-      const stomach = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), mat);
+      // Stomach
+      const stomach = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), makeOrganMaterial(0xfcd34d, 0xf59e0b));
       stomach.scale.set(1.05, 0.85, 0.9); stomach.position.set(0.28, 1.82, 0.14); stomach.rotation.z = -0.3;
       stomach.userData = { organId: 'stomach', organName: 'Stomach', organIcon: '🫃', isOrgan: true };
       bodyGroup.add(stomach); clickableMeshes.push(stomach);
-    }
 
-    function buildKidneys(){
-      const mat = makeOrganMaterial(0x9a3412, 0x7c2d12);
+      // Kidneys
+      const kidneyMat = makeOrganMaterial(0x9a3412, 0x7c2d12);
       [-0.28, 0.28].forEach(x => {
-        const k = new THREE.Mesh(new THREE.SphereGeometry(0.16, 18, 18), mat);
+        const k = new THREE.Mesh(new THREE.SphereGeometry(0.16, 18, 18), kidneyMat);
         k.position.set(x, 1.78, -0.2); k.scale.set(0.85, 1.35, 0.7);
         k.userData = { organId: 'kidneys', organName: 'Kidneys', organIcon: '🫘', isOrgan: true };
         bodyGroup.add(k); clickableMeshes.push(k);
       });
-    }
 
-    function buildIntestines(){
-      const mat = makeOrganMaterial(0xfdba74, 0xfb923c);
-      const large = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.055, 12, 40), mat);
+      // Intestines
+      const intestineMat = makeOrganMaterial(0xfdba74, 0xfb923c);
+      const large = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.055, 12, 40), intestineMat);
       large.position.set(0, 1.15, 0.12); large.rotation.x = Math.PI / 2; large.scale.set(1.05, 0.75, 1);
       large.userData = { organId: 'intestines', organName: 'Intestines', organIcon: '🌀', isOrgan: true };
       bodyGroup.add(large); clickableMeshes.push(large);
-      for(let i = 0; i < 5; i++){
-        const coil = new THREE.Mesh(new THREE.TorusGeometry(0.11 + i * 0.015, 0.028, 8, 24), mat);
-        coil.position.set(Math.cos(i * 1.3) * 0.08, 1.1 + i * 0.02, 0.14 + Math.sin(i * 1.3) * 0.05);
-        coil.rotation.x = Math.PI / 2 + i * 0.2;
-        coil.userData = { organId: 'intestines', isOrgan: true };
-        bodyGroup.add(coil); clickableMeshes.push(coil);
-      }
-    }
 
-    function buildSpine(){
-      const mat = makeOrganMaterial(0xe2e8f0, 0x94a3b8);
+      // Spine
+      const spineMat = makeOrganMaterial(0xe2e8f0, 0x94a3b8);
       for(let i = 0; i < 14; i++){
-        const vert = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 12), mat);
+        const vert = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 12), spineMat);
         vert.position.set(0, 0.75 + i * 0.16, -0.26);
         vert.userData = { organId: 'spine', organName: 'Spine', organIcon: '🦴', isOrgan: true };
         bodyGroup.add(vert); clickableMeshes.push(vert);
@@ -1178,7 +1083,7 @@
     setTimeout(() => {
       if(!threeReady){
         const el = document.getElementById('loading3D');
-        if(el) el.innerHTML = '<div style="text-align:center;padding:20px;color:#ef4444;"><div style="font-size:40px;">⚠️</div><div style="margin-top:8px;">Could not load 3D engine.</div><div style="font-size:11px;color:#64748b;margin-top:6px;">Check your internet connection.</div></div>';
+        if(el) el.innerHTML = '<div style="text-align:center;padding:20px;color:#ef4444;"><div style="font-size:40px;">⚠️</div><div style="margin-top:8px;">Could not load 3D engine.</div></div>';
       }
     }, 8000);
 
@@ -1188,7 +1093,7 @@
 
   <script>
     // ============================================================
-    // MEDIZONE MAIN SCRIPT — WITH DOCTOR MANAGEMENT + FIXES
+    // MEDIZONE — MAIN SCRIPT (ALL BUGS FIXED)
     // ============================================================
     const JSONBIN_BIN_ID = "6aa30871ac6210605abdfb81";
     const JSONBIN_API_KEY = "$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.";
@@ -1211,12 +1116,12 @@
     const DEFAULT_MEDICINES = [
       {id:1,name:'Paracetamol 500mg',brand:'Cipla',price:25,mrp:35,quantity:200,type:'otc',category:'Pain Relief',icon:'💊',desc:'For fever, headache and mild body pain'},
       {id:2,name:'Cetirizine 10mg',brand:'Dr. Reddy\'s',price:35,mrp:50,quantity:150,type:'otc',category:'Allergy',icon:'🌿',desc:'Antihistamine for allergies and cold'},
-      {id:3,name:'Amoxicillin 500mg',brand:'Sun Pharma',price:120,mrp:160,quantity:80,type:'prescription',category:'Antibiotic',icon:'💉',desc:'Broad-spectrum antibiotic for bacterial infections'},
-      {id:4,name:'Vitamin D3 60K',brand:'Abbott',price:80,mrp:110,quantity:120,type:'otc',category:'Supplement',icon:'☀️',desc:'Weekly vitamin D supplement for bone health'},
-      {id:5,name:'Metformin 500mg',brand:'USV',price:45,mrp:60,quantity:180,type:'prescription',category:'Diabetes',icon:'🩸',desc:'Blood sugar control for type 2 diabetes'},
-      {id:6,name:'Omeprazole 20mg',brand:'Zydus',price:65,mrp:85,quantity:100,type:'otc',category:'Digestive',icon:'🌀',desc:'For acidity, heartburn and acid reflux'},
-      {id:7,name:'Atorvastatin 10mg',brand:'Ranbaxy',price:95,mrp:130,quantity:90,type:'prescription',category:'Cholesterol',icon:'💓',desc:'Lowers cholesterol and cardiovascular risk'},
-      {id:8,name:'ORS Powder',brand:'FDC',price:20,mrp:25,quantity:300,type:'otc',category:'Hydration',icon:'💧',desc:'Oral rehydration for dehydration and diarrhea'}
+      {id:3,name:'Amoxicillin 500mg',brand:'Sun Pharma',price:120,mrp:160,quantity:80,type:'prescription',category:'Antibiotic',icon:'💉',desc:'Broad-spectrum antibiotic'},
+      {id:4,name:'Vitamin D3 60K',brand:'Abbott',price:80,mrp:110,quantity:120,type:'otc',category:'Supplement',icon:'☀️',desc:'Weekly vitamin D supplement'},
+      {id:5,name:'Metformin 500mg',brand:'USV',price:45,mrp:60,quantity:180,type:'prescription',category:'Diabetes',icon:'🩸',desc:'Blood sugar control'},
+      {id:6,name:'Omeprazole 20mg',brand:'Zydus',price:65,mrp:85,quantity:100,type:'otc',category:'Digestive',icon:'🌀',desc:'For acidity and heartburn'},
+      {id:7,name:'Atorvastatin 10mg',brand:'Ranbaxy',price:95,mrp:130,quantity:90,type:'prescription',category:'Cholesterol',icon:'💓',desc:'Lowers cholesterol'},
+      {id:8,name:'ORS Powder',brand:'FDC',price:20,mrp:25,quantity:300,type:'otc',category:'Hydration',icon:'💧',desc:'Oral rehydration'}
     ];
 
     const BARRIERS = [
@@ -1233,12 +1138,12 @@
 
     let userAccounts=[], doctors=[], medicines=[], appointments=[], cart=[], chatMessages=[], symptomReports=[];
     let currentUser=null;
-    let userFilter='all', adminOrderFilter='all', orderFilter='all', medFilter='all', apptFilter='all', reportFilter='all';
+    let userFilter='all', adminOrderFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
     let selectedOrgan=null, selectedSeverity='medium';
     let isSyncing=false, isDevMode=false, isDevUnlocked=false;
     let activeSection='doctors';
-    // ⭐ Bug fix: track in-flight approvals to prevent double-clicks
-    let processingActions = new Set();
+    // ⭐ FIX: track which actions are processing to prevent double-fire
+    const processingKeys = new Set();
 
     const $=id=>document.getElementById(id);
     const money=n=>Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -1251,6 +1156,7 @@
       return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
     }
 
+    // ============ STORAGE ============
     function saveLocal(){
       try{
         localStorage.setItem('mz_users',JSON.stringify(userAccounts));
@@ -1263,7 +1169,7 @@
           localStorage.setItem('mz_session',currentUser.email);
           localStorage.setItem('mz_cart_'+currentUser.email,JSON.stringify(cart));
         }
-      }catch(e){}
+      }catch(e){console.error('Save local failed:',e);}
     }
 
     function loadLocal(){
@@ -1277,7 +1183,8 @@
         if(!Array.isArray(doctors)||!doctors.length) doctors=structuredClone(DEFAULT_DOCTORS);
         if(!Array.isArray(medicines)||!medicines.length) medicines=structuredClone(DEFAULT_MEDICINES);
       }catch(e){
-        userAccounts=[];doctors=structuredClone(DEFAULT_DOCTORS);medicines=structuredClone(DEFAULT_MEDICINES);appointments=[];chatMessages=[];symptomReports=[];
+        userAccounts=[];doctors=structuredClone(DEFAULT_DOCTORS);medicines=structuredClone(DEFAULT_MEDICINES);
+        appointments=[];chatMessages=[];symptomReports=[];
       }
     }
 
@@ -1291,17 +1198,14 @@
       return true;
     }
 
+    // ============ SYNC ============
     function setSync(status,text){
       const b=$('syncBadge');if(b){b.className='sync-badge '+status;b.textContent=text}
       const db=$('devSyncBadge');if(db){db.className='dev-sync-badge '+status;db.textContent=text}
     }
 
     async function cloudLoad(silent=false){
-      if(!CLOUD_ENABLED){
-        loadLocal();
-        if(!silent)setSync('error','⚠️ Local mode');
-        return true;
-      }
+      if(!CLOUD_ENABLED){loadLocal();if(!silent)setSync('error','⚠️ Local mode');return true;}
       try{
         if(!silent)setSync('syncing','⬇️ Loading...');
         const res=await fetch(JSONBIN_URL+'/latest',{
@@ -1339,7 +1243,14 @@
         const res=await fetch(JSONBIN_URL,{
           method:'PUT',
           headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
-          body:JSON.stringify({users:userAccounts,doctors,medicines,appointments,chat:chatMessages,reports:symptomReports})
+          body:JSON.stringify({
+            users: userAccounts,
+            doctors,
+            medicines,
+            appointments,
+            chat: chatMessages,
+            reports: symptomReports
+          })
         });
         if(!res.ok)throw Error('HTTP '+res.status);
         setSync('ok','☁️ Synced');
@@ -1351,6 +1262,7 @@
 
     async function persist(){saveLocal();await cloudSave();renderAll();}
 
+    // ============ ROUTING ============
     function route(){
       const hash=(window.location.hash||'').toLowerCase();
       if(hash==='#doctor'||hash==='#admin'){
@@ -1419,27 +1331,59 @@
       if(!/^\S+@\S+\.\S+$/.test(email))return alert('Enter a valid email address.');
       if(pass.length<6)return alert('Password must be at least 6 characters.');
       if(pass!==pass2)return alert('Passwords do not match.');
-      await cloudLoad(true);
-      if(userAccounts.some(u=>u.email===email))return alert('An account with this email already exists.');
-      userAccounts.push({email,name,passwordHash:await hashPassword(pass),isVerified:false,createdAt:new Date().toISOString()});
-      saveLocal();
-      await cloudSave();
-      alert('✅ Account created!\n\nA doctor must approve your account before you can sign in.');
-      $('regName').value=$('regEmail').value=$('regPassword').value=$('regPassword2').value='';
-      toggleAuthView('login');
+
+      const btn = $('registerBtn');
+      if(btn) btn.disabled = true;
+
+      try {
+        await cloudLoad(true);
+        if(userAccounts.some(u=>u.email===email)){
+          alert('An account with this email already exists.');
+          return;
+        }
+        userAccounts.push({
+          email, name,
+          passwordHash: await hashPassword(pass),
+          isVerified: false,
+          createdAt: new Date().toISOString()
+        });
+        saveLocal();
+        await cloudSave();
+        alert('✅ Account created!\n\nA doctor must approve your account before you can sign in.');
+        $('regName').value=$('regEmail').value=$('regPassword').value=$('regPassword2').value='';
+        toggleAuthView('login');
+      } catch(e) {
+        console.error(e);
+        alert('Registration failed. Please try again.');
+      } finally {
+        if(btn) btn.disabled = false;
+      }
     }
 
     async function handleLogin(){
       const email=$('loginEmail').value.trim().toLowerCase();
       const pass=$('loginPassword').value;
       if(!email||!pass)return alert('Enter your email and password.');
-      await cloudLoad(true);
-      const acc=userAccounts.find(u=>u.email===email);
-      if(!acc)return alert('Invalid email or password.');
-      if(!acc.isVerified)return alert('⏳ Account approval is still pending.\n\nA doctor must approve your account before you can sign in.');
-      const hash=await hashPassword(pass);
-      if(acc.passwordHash!==hash)return alert('Invalid email or password.');
-      loginAsUser(acc);
+
+      const btn = $('loginBtn');
+      if(btn) btn.disabled = true;
+
+      try {
+        await cloudLoad(true);
+        const acc = userAccounts.find(u => u.email === email);
+        if(!acc) return alert('Invalid email or password.');
+        if(!acc.isVerified) return alert('⏳ Account approval is still pending.\n\nA doctor must approve your account before you can sign in.');
+
+        const hash = await hashPassword(pass);
+        if(acc.passwordHash !== hash) return alert('Invalid email or password.');
+
+        loginAsUser(acc);
+      } catch(e) {
+        console.error(e);
+        alert('Login failed. Please try again.');
+      } finally {
+        if(btn) btn.disabled = false;
+      }
     }
 
     function loginAsUser(acc){
@@ -1465,6 +1409,7 @@
       renderCustomerAll();
     }
 
+    // ============ DOCTORS (Customer View) ============
     function renderDoctorSpecFilter(){
       const previous=$('doctorSpecFilter').value||'all';
       const specs=[...new Set(doctors.map(d=>d.spec))].sort();
@@ -1486,7 +1431,7 @@
         <div class="doctor-card">
           <div class="doctor-top">
             <div class="doctor-avatar">${d.icon||'👨‍⚕️'}</div>
-            <div class="doctor-meta">
+            <div>
               <div class="doctor-name">${esc(d.name)}</div>
               <div class="doctor-spec">${esc(d.spec)}</div>
               <div class="doctor-qual">${esc(d.qual)}</div>
@@ -1549,28 +1494,41 @@
     }
 
     async function confirmBooking(doctorId){
-      const d=doctors.find(x=>x.id===doctorId);
-      if(!d)return;
-      const date=$('bkDate').value;
-      const slot=document.querySelector('#slotGrid .slot-btn.selected')?.textContent||'09:00 AM';
-      const reason=$('bkReason').value.trim();
-      if(!reason)return alert('Please describe the reason for your visit.');
-      await cloudLoad(true);
-      const appt={
-        id:uid('APT-'), doctorId:d.id, doctorName:d.name, doctorSpec:d.spec,
-        doctorIcon:d.icon||'👨‍⚕️', fee:d.fee,
-        patientEmail:currentUser.email, patientName:currentUser.name||currentUser.email,
-        date, slot, reason, type:'appointment', status:'Pending Confirmation',
-        createdAt:new Date().toISOString()
-      };
-      appointments.unshift(appt);
-      saveLocal();
-      await cloudSave();
-      closeModal('bookingModal');
-      renderCustomerAll();
-      alert(`✅ Appointment booked with ${d.name}\n\nDate: ${date}\nTime: ${slot}`);
+      const key = 'booking_' + doctorId;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+      try {
+        const d=doctors.find(x=>x.id===doctorId);
+        if(!d)return;
+        const date=$('bkDate').value;
+        const slot=document.querySelector('#slotGrid .slot-btn.selected')?.textContent||'09:00 AM';
+        const reason=$('bkReason').value.trim();
+        if(!reason)return alert('Please describe the reason for your visit.');
+
+        await cloudLoad(true);
+        const appt={
+          id:uid('APT-'),
+          doctorId:d.id, doctorName:d.name, doctorSpec:d.spec,
+          doctorIcon:d.icon||'👨‍⚕️', fee:d.fee,
+          patientEmail:currentUser.email,
+          patientName:currentUser.name||currentUser.email,
+          date, slot, reason,
+          type:'appointment',
+          status:'Pending Confirmation',
+          createdAt:new Date().toISOString()
+        };
+        appointments.unshift(appt);
+        saveLocal();
+        await cloudSave();
+        closeModal('bookingModal');
+        renderCustomerAll();
+        alert(`✅ Appointment booked with ${d.name}\n\nDate: ${date}\nTime: ${slot}`);
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
+    // ============ MEDICINES ============
     function setMedFilter(f,el){
       medFilter=f;
       document.querySelectorAll('[data-med-filter]').forEach(x=>x.classList.remove('active'));
@@ -1621,9 +1579,7 @@
       const item=cart.find(x=>x.id===id);
       if(item){if(item.quantity>=m.quantity)return alert(`Only ${m.quantity} units available.`);item.quantity++}
       else cart.push({id:m.id,quantity:1});
-      saveLocal();
-      updateCartUI();
-      toggleDrawer('cartDrawer');
+      saveLocal();updateCartUI();toggleDrawer('cartDrawer');
     }
 
     function increaseQty(id){
@@ -1711,35 +1667,46 @@
     }
 
     async function submitMedicineOrder(){
-      const name=$('coName').value.trim();
-      const phone=$('coPhone').value.trim();
-      const pin=$('coPin').value.trim();
-      const address=$('coAddress').value.trim();
-      const city=$('coCity').value.trim();
-      const state=$('coState').value.trim();
-      if(!name||!/^\d{10}$/.test(phone)||!pin||!address||!city||!state)return alert('Please complete all delivery fields.');
-      await cloudLoad(true);
-      const items=cart.map(i=>{
-        const m=medicines.find(x=>x.id===i.id);
-        return m?{medicineId:m.id,name:m.name,price:m.price,quantity:i.quantity,icon:m.icon,type:m.type}:null;
-      }).filter(Boolean);
-      const t=cartTotals();
-      const order={
-        id:uid('ORD-'), type:'medicine', patientEmail:currentUser.email,
-        items, total:t.total,
-        address:{name,phone,pin,address,city,state},
-        status:'Pending Verification', createdAt:new Date().toISOString()
-      };
-      appointments.unshift(order);
-      cart=[];
-      saveLocal();
-      await cloudSave();
-      closeModal('checkoutModal');
-      renderCustomerAll();
-      toggleDrawer('appointmentsDrawer');
-      alert('✅ Medicine order placed!');
+      const key = 'checkout';
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+      try {
+        const name=$('coName').value.trim();
+        const phone=$('coPhone').value.trim();
+        const pin=$('coPin').value.trim();
+        const address=$('coAddress').value.trim();
+        const city=$('coCity').value.trim();
+        const state=$('coState').value.trim();
+        if(!name||!/^\d{10}$/.test(phone)||!pin||!address||!city||!state)return alert('Please complete all delivery fields.');
+
+        await cloudLoad(true);
+        const items=cart.map(i=>{
+          const m=medicines.find(x=>x.id===i.id);
+          return m?{medicineId:m.id,name:m.name,price:m.price,quantity:i.quantity,icon:m.icon,type:m.type}:null;
+        }).filter(Boolean);
+        const t=cartTotals();
+        const order={
+          id:uid('ORD-'), type:'medicine',
+          patientEmail:currentUser.email,
+          items, total:t.total,
+          address:{name,phone,pin,address,city,state},
+          status:'Pending Verification',
+          createdAt:new Date().toISOString()
+        };
+        appointments.unshift(order);
+        cart=[];
+        saveLocal();
+        await cloudSave();
+        closeModal('checkoutModal');
+        renderCustomerAll();
+        toggleDrawer('appointmentsDrawer');
+        alert('✅ Medicine order placed!');
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
+    // ============ BARRIERS ============
     function renderBarriers(){
       const grid=$('barrierGrid');
       grid.innerHTML=BARRIERS.map(b=>`
@@ -1752,6 +1719,7 @@
       `).join('');
     }
 
+    // ============ 3D BODY SIDEBAR ============
     function renderBodySidebar(){
       if(!selectedOrgan){
         $('organSelectionArea').style.display='block';
@@ -1787,35 +1755,44 @@
     }
 
     async function submitSymptomReport(){
-      if(!currentUser)return alert('Please sign in first.');
-      if(!selectedOrgan)return alert('Please click an organ first.');
-      const description=$('symptomDescription').value.trim();
-      if(!description)return alert('Please describe your symptoms.');
-      const duration=$('symptomDuration').value;
-      const doctorId=$('preferredDoctor').value;
-      const doctor=doctorId?doctors.find(d=>d.id==doctorId):null;
+      const key = 'symptom';
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+      try {
+        if(!currentUser)return alert('Please sign in first.');
+        if(!selectedOrgan)return alert('Please click an organ first.');
+        const description=$('symptomDescription').value.trim();
+        if(!description)return alert('Please describe your symptoms.');
+        const duration=$('symptomDuration').value;
+        const doctorId=$('preferredDoctor').value;
+        const doctor=doctorId?doctors.find(d=>d.id==doctorId):null;
 
-      await cloudLoad(true);
-      const report={
-        id:uid('RPT-'),
-        patientEmail:currentUser.email,
-        patientName:currentUser.name||currentUser.email,
-        organ:selectedOrgan.id,
-        organName:selectedOrgan.name,
-        organIcon:selectedOrgan.icon,
-        severity:selectedSeverity,
-        description, duration,
-        preferredDoctor:doctor?{id:doctor.id,name:doctor.name,spec:doctor.spec,icon:doctor.icon}:null,
-        status:'New', createdAt:new Date().toISOString()
-      };
-      symptomReports.unshift(report);
-      saveLocal();
-      await cloudSave();
-      alert(`✅ Symptom report submitted!\n\nOrgan: ${selectedOrgan.name}\nSeverity: ${selectedSeverity.toUpperCase()}\n\n${doctor?`Sent to ${doctor.name}.`:'A doctor will review it shortly.'}`);
-      $('symptomDescription').value='';
-      resetOrganSelection();
+        await cloudLoad(true);
+        const report={
+          id:uid('RPT-'),
+          patientEmail:currentUser.email,
+          patientName:currentUser.name||currentUser.email,
+          organ:selectedOrgan.id,
+          organName:selectedOrgan.name,
+          organIcon:selectedOrgan.icon,
+          severity:selectedSeverity,
+          description, duration,
+          preferredDoctor: doctor ? { id:doctor.id, name:doctor.name, spec:doctor.spec, icon:doctor.icon } : null,
+          status:'New',
+          createdAt: new Date().toISOString()
+        };
+        symptomReports.unshift(report);
+        saveLocal();
+        await cloudSave();
+        alert(`✅ Symptom report submitted!\n\nOrgan: ${selectedOrgan.name}\nSeverity: ${selectedSeverity.toUpperCase()}\n\n${doctor?`Sent to ${doctor.name}.`:'A doctor will review it shortly.'}`);
+        $('symptomDescription').value='';
+        resetOrganSelection();
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
+    // ============ APPOINTMENTS DRAWER ============
     function setApptFilter(f,el){
       apptFilter=f;
       document.querySelectorAll('[data-appt-filter]').forEach(x=>x.classList.remove('active'));
@@ -1878,6 +1855,7 @@
       }).join('');
     }
 
+    // ============ PROFILE ============
     function openProfile(){
       if(!currentUser)return alert('Please sign in first.');
       $('profileContainer').innerHTML=`
@@ -1900,37 +1878,100 @@
       toggleDrawer('profileDrawer');
     }
 
-    function toggleChat(){const b=$('chatBox');b.style.display=b.style.display==='flex'?'none':'flex';renderChat();}
+    // ============ CHAT (⭐ FIXED) ============
+    function toggleChat(){
+      const b=$('chatBox');
+      b.classList.toggle('open');
+      if(b.classList.contains('open')) {
+        renderChat();
+        setTimeout(()=>{ const i=$('chatInput'); if(i) i.focus(); }, 100);
+      }
+    }
+
     function openChatWithDoctor(doctorId){
       if(!currentUser)return alert('Please sign in first.');
       const d=doctors.find(x=>x.id===doctorId);
       if(!d)return;
-      toggleChat();
+      const b=$('chatBox');
+      if(!b.classList.contains('open')){
+        b.classList.add('open');
+      }
       $('chatTitle').textContent=`💬 ${d.name} — ${d.spec}`;
-    }
-    async function sendChatMessage(){
-      const text=$('chatInput').value.trim();
-      if(!text)return;
-      if(!currentUser)return alert('Please sign in first.');
-      await cloudLoad(true);
-      chatMessages.push({id:uid('MSG-'),sender:'customer',user:currentUser.email,text,time:new Date().toISOString()});
-      saveLocal();
-      await cloudSave();
-      $('chatInput').value='';
       renderChat();
+      setTimeout(()=>{ const i=$('chatInput'); if(i) i.focus(); }, 100);
     }
+
+    async function sendChatMessage(){
+      const input = $('chatInput');
+      const btn = $('chatSendBtn');
+      const text = (input.value || '').trim();
+
+      if(!text){ return; }
+      if(!currentUser){ return alert('Please sign in first.'); }
+      if(processingKeys.has('chat')){ return; }
+
+      processingKeys.add('chat');
+      if(btn) btn.disabled = true;
+
+      try {
+        // ⭐ CRITICAL FIX: Add the message locally FIRST so it appears instantly
+        const newMsg = {
+          id: uid('MSG-'),
+          sender: 'customer',
+          user: currentUser.email,
+          text: text,
+          time: new Date().toISOString()
+        };
+
+        // Push to in-memory first
+        chatMessages.push(newMsg);
+
+        // Clear input & re-render IMMEDIATELY (before any network call)
+        input.value = '';
+        renderChat();
+
+        // Now save to local + cloud (fire and forget, but awaited for correctness)
+        saveLocal();
+        await cloudSave();
+      } catch(e) {
+        console.error('Chat send failed:', e);
+      } finally {
+        processingKeys.delete('chat');
+        if(btn) btn.disabled = false;
+        // Re-focus input for next message
+        if(input) input.focus();
+      }
+    }
+
     function renderChat(){
       const body=$('chatBody');
-      if(!chatMessages.length){body.innerHTML='<div class="empty-state">Start a conversation.</div>';return;}
-      body.innerHTML=chatMessages.filter(m=>!currentUser||m.user===currentUser.email||m.sender==='developer').map(m=>`
+      if(!body) return;
+
+      // ⭐ FIX: Show messages from THIS user OR doctor replies to them
+      const visible = chatMessages.filter(m => {
+        if(!currentUser) return false;
+        if(m.sender === 'customer' && m.user === currentUser.email) return true;
+        if(m.sender === 'developer' && m.user === currentUser.email) return true;
+        return false;
+      }).sort((a,b) => new Date(a.time) - new Date(b.time));
+
+      if(!visible.length){
+        body.innerHTML='<div class="empty-state" style="padding:30px 10px;text-align:center;color:#94a3b8;font-size:12px;"><div style="font-size:32px;margin-bottom:6px;">💬</div>Start a conversation with a doctor</div>';
+        return;
+      }
+
+      body.innerHTML = visible.map(m => `
         <div class="chat-message ${m.sender}">
-          <div class="chat-meta">${esc(m.sender==='customer'?m.user:'Doctor')}</div>
+          <div class="chat-meta">${esc(m.sender === 'customer' ? (currentUser.name || currentUser.email) : 'Doctor')}</div>
           ${esc(m.text)}
         </div>
       `).join('');
-      body.scrollTop=body.scrollHeight;
+
+      // Auto-scroll to bottom
+      setTimeout(()=>{ body.scrollTop = body.scrollHeight; }, 30);
     }
 
+    // ============ MODALS & DRAWERS ============
     function openModal(id){$(id).classList.add('open');}
     function closeModal(id){$(id).classList.remove('open');}
     function toggleDrawer(id){
@@ -1938,6 +1979,7 @@
       $(id).classList.toggle('open');
     }
 
+    // ============ RENDER ALL ============
     function renderCustomerAll(){
       renderDoctors();
       renderMedicines();
@@ -1949,9 +1991,7 @@
     }
     function renderAll(){isDevMode?renderDevAll():renderCustomerAll();}
 
-    // ============================================================
-    // DOCTOR CONSOLE
-    // ============================================================
+    // ============ DOCTOR CONSOLE ============
     function devLogin(){
       const key=$('devKey').value.trim();
       if(key!==DEV_KEY){alert('Invalid doctor key.');return;}
@@ -1968,12 +2008,12 @@
     }
     async function manualRefresh(){
       const btn=$('refreshBtn');
-      if(btn)btn.classList.add('spinning');
+      if(btn)btn.textContent='🔄 Refreshing...';
       setSync('syncing','🔄 Refreshing...');
       await cloudLoad(true);
       renderDevAll();
       setSync('ok','☁️ Synced');
-      if(btn)setTimeout(()=>btn.classList.remove('spinning'),600);
+      if(btn)setTimeout(()=>btn.textContent='🔄 Refresh',600);
     }
     function switchTab(tab){
       document.querySelectorAll('.dev-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
@@ -1983,45 +2023,44 @@
     function setOrderFilter(f,el){adminOrderFilter=f;document.querySelectorAll('#panel-orders [data-order-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevOrders();}
     function setReportFilter(f,el){reportFilter=f;document.querySelectorAll('#panel-reports [data-report-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevReports();}
 
-    // ============================================================
-    // ⭐ BUG FIX: verifyUser now processes only once, works first click
-    // ============================================================
+    // ⭐ FIX: Verify user with processing guard
     async function devVerifyUser(email){
-      const actionKey = 'verify_' + email;
-      if(processingActions.has(actionKey)) return; // prevent double-click
-      processingActions.add(actionKey);
+      const key = 'verify_' + email;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
 
       try {
-        // Fetch fresh from cloud first
+        // Disable all approve buttons for this email
+        document.querySelectorAll(`button[data-email="${email}"]`).forEach(b => {
+          b.disabled = true;
+          b.textContent = '⏳ Approving...';
+        });
+
         await cloudLoad(true);
-
-        // Find user in fresh data
-        const idx = userAccounts.findIndex(x => x.email === email);
-        if(idx === -1) {
-          alert('User not found. Refreshing list.');
+        const idx = userAccounts.findIndex(u => u.email === email);
+        if(idx === -1){
+          alert('User not found.');
           renderDevAll();
           return;
         }
 
-        // Already verified? Skip
-        if(userAccounts[idx].isVerified) {
+        if(userAccounts[idx].isVerified){
           renderDevAll();
           return;
         }
 
-        // Verify + save
         userAccounts[idx].isVerified = true;
         saveLocal();
         await cloudSave();
-
-        // Re-render immediately
         renderDevAll();
-        alert(`✅ ${email} approved successfully.`);
+
+        // Show success only once
+        console.log(`✅ ${email} approved`);
       } catch(e) {
         console.error('Approval failed:', e);
         alert('Failed to approve. Please try again.');
       } finally {
-        processingActions.delete(actionKey);
+        processingKeys.delete(key);
       }
     }
 
@@ -2034,38 +2073,82 @@
       saveLocal();await cloudSave();renderDevAll();
     }
 
-    // ============================================================
-    // ⭐ NEW: DOCTOR MANAGEMENT
-    // ============================================================
+    // ⭐ FIX: Doctor add with full validation & reset
     async function devAddDoctor(){
-      const name=$('ndName').value.trim();
-      const spec=$('ndSpec').value;
-      const qual=$('ndQual').value.trim()||'MBBS';
-      const exp=Number($('ndExp').value)||0;
-      const fee=Number($('ndFee').value)||500;
-      const rating=Number($('ndRating').value)||4.5;
-      const icon=$('ndIcon').value.trim()||'👨‍⚕️';
-      const role=$('ndRole').value;
-      const bio=$('ndBio').value.trim()||`Specialist in ${spec.toLowerCase()}.`;
+      const key = 'addDoctor';
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
 
-      if(!name){return alert('Please enter the doctor\'s name.');}
-      if(!name.startsWith('Dr.')){return alert('Name must start with "Dr." (e.g., Dr. Rohan Gupta).');}
+      const btn = $('addDoctorBtn');
+      if(btn) btn.disabled = true;
 
-      await cloudLoad(true);
-      const newId = doctors.length ? Math.max(...doctors.map(d => Number(d.id) || 0)) + 1 : 1;
-      doctors.push({
-        id: newId, name, spec, qual, exp, fee, rating, icon, bio, role,
-        createdAt: new Date().toISOString()
-      });
-      saveLocal();
-      await cloudSave();
-      ['ndName','ndQual','ndBio'].forEach(id=>$(id).value='');
-      $('ndExp').value='5';
-      $('ndFee').value='500';
-      $('ndRating').value='4.5';
-      $('ndIcon').value='👨‍⚕️';
-      renderDevAll();
-      alert(`✅ ${name} (${spec}) added successfully.`);
+      try {
+        const name = $('ndName').value.trim();
+        const spec = $('ndSpec').value;
+        const qual = $('ndQual').value.trim() || 'MBBS';
+        const exp = Number($('ndExp').value) || 0;
+        const fee = Number($('ndFee').value) || 500;
+        const rating = Number($('ndRating').value) || 4.5;
+        const icon = $('ndIcon').value.trim() || '👨‍⚕️';
+        const role = $('ndRole').value;
+        const bio = $('ndBio').value.trim() || `Specialist in ${spec.toLowerCase()}.`;
+
+        // Validate
+        if(!name){
+          alert('Please enter the doctor\'s name.');
+          return;
+        }
+        if(!name.toLowerCase().startsWith('dr')){
+          alert('Name should start with "Dr." (e.g., Dr. Rohan Gupta).');
+          return;
+        }
+
+        // Pull fresh data
+        await cloudLoad(true);
+
+        // Generate new ID
+        const newId = doctors.length ? Math.max(...doctors.map(d => Number(d.id) || 0)) + 1 : 1;
+
+        // Add doctor
+        const newDoctor = {
+          id: newId,
+          name,
+          spec,
+          qual,
+          exp: Number.isFinite(exp) ? exp : 0,
+          fee: Number.isFinite(fee) ? fee : 500,
+          rating: Number.isFinite(rating) ? rating : 4.5,
+          icon,
+          bio,
+          role,
+          createdAt: new Date().toISOString()
+        };
+        doctors.push(newDoctor);
+
+        // Save
+        saveLocal();
+        await cloudSave();
+
+        // Clear form
+        $('ndName').value = '';
+        $('ndQual').value = '';
+        $('ndBio').value = '';
+        $('ndExp').value = '5';
+        $('ndFee').value = '500';
+        $('ndRating').value = '4.5';
+        $('ndIcon').value = '👨‍⚕️';
+
+        // Re-render
+        renderDevAll();
+
+        alert(`✅ ${name} (${spec}) added successfully.`);
+      } catch(e) {
+        console.error('Add doctor failed:', e);
+        alert('Failed to add doctor. Please check console for details.');
+      } finally {
+        processingKeys.delete(key);
+        if(btn) btn.disabled = false;
+      }
     }
 
     async function devRemoveDoctor(id){
@@ -2073,113 +2156,197 @@
       if(!d) return;
       if(!confirm(`Remove ${d.name} (${d.spec})?`)) return;
 
-      await cloudLoad(true);
-      doctors = doctors.filter(x => x.id !== id);
-      saveLocal();
-      await cloudSave();
-      renderDevAll();
-      alert(`✅ ${d.name} removed.`);
+      const key = 'removeDoctor_' + id;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      try {
+        await cloudLoad(true);
+        doctors = doctors.filter(x => x.id !== id);
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
+        alert(`✅ ${d.name} removed.`);
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
-    async function devUpdateDoctorRole(id, newRole){
-      await cloudLoad(true);
-      const d = doctors.find(x => x.id === id);
-      if(!d) return;
-      d.role = newRole;
-      saveLocal();
-      await cloudSave();
-      renderDevAll();
-    }
-
+    // ⭐ FIX: Save doctor edit with proper validation
     async function devSaveDoctor(id){
-      await cloudLoad(true);
-      const d = doctors.find(x => x.id === id);
-      if(!d) return;
+      const key = 'saveDoctor_' + id;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
 
-      const name = $('edName_'+id).value.trim();
-      const spec = $('edSpec_'+id).value;
-      const qual = $('edQual_'+id).value.trim();
-      const exp = Number($('edExp_'+id).value);
-      const fee = Number($('edFee_'+id).value);
-      const rating = Number($('edRating_'+id).value);
-      const icon = $('edIcon_'+id).value.trim() || '👨‍⚕️';
-      const role = $('edRole_'+id).value;
-      const bio = $('edBio_'+id).value.trim();
+      try {
+        await cloudLoad(true);
+        const d = doctors.find(x => x.id === id);
+        if(!d) {
+          alert('Doctor not found. Refreshing list.');
+          renderDevAll();
+          return;
+        }
 
-      if(!name){return alert('Name cannot be empty.');}
+        const name = ($('edName_'+id).value || '').trim();
+        const spec = $('edSpec_'+id).value;
+        const qual = ($('edQual_'+id).value || '').trim();
+        const exp = Number($('edExp_'+id).value);
+        const fee = Number($('edFee_'+id).value);
+        const rating = Number($('edRating_'+id).value);
+        const icon = ($('edIcon_'+id).value || '').trim() || '👨‍⚕️';
+        const role = $('edRole_'+id).value;
+        const bio = ($('edBio_'+id).value || '').trim();
 
-      d.name = name;
-      d.spec = spec;
-      d.qual = qual || d.qual;
-      d.exp = Number.isFinite(exp) ? exp : d.exp;
-      d.fee = Number.isFinite(fee) ? fee : d.fee;
-      d.rating = Number.isFinite(rating) ? rating : d.rating;
-      d.icon = icon;
-      d.role = role;
-      d.bio = bio || d.bio;
+        if(!name){
+          alert('Name cannot be empty.');
+          return;
+        }
 
-      saveLocal();
-      await cloudSave();
-      renderDevAll();
-      alert(`✅ ${name}'s profile updated.`);
+        d.name = name;
+        d.spec = spec;
+        d.qual = qual || d.qual;
+        d.exp = Number.isFinite(exp) ? exp : d.exp;
+        d.fee = Number.isFinite(fee) ? fee : d.fee;
+        d.rating = Number.isFinite(rating) ? rating : d.rating;
+        d.icon = icon;
+        d.role = role;
+        d.bio = bio || d.bio;
+
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
+        alert(`✅ ${name}'s profile updated.`);
+      } catch(e) {
+        console.error('Save doctor failed:', e);
+        alert('Failed to save. Please try again.');
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
     async function devAddMedicine(){
-      const name=$('nmName').value.trim();
-      const brand=$('nmBrand').value.trim();
-      const price=Number($('nmPrice').value);
-      const quantity=Number($('nmQty').value);
-      const category=$('nmCategory').value.trim()||'General';
-      const type=$('nmType').value;
-      const icon=$('nmIcon').value.trim()||'💊';
-      const desc=$('nmDesc').value.trim()||'';
-      if(!name||!Number.isFinite(price)||price<0||!Number.isInteger(quantity)||quantity<0)return alert('Enter valid details.');
-      await cloudLoad(true);
-      medicines.push({id:medicines.length?Math.max(...medicines.map(m=>Number(m.id)||0))+1:1,name,brand,price,mrp:price*1.3,quantity,category,type,icon,desc});
-      saveLocal();await cloudSave();
-      ['nmName','nmBrand','nmPrice','nmQty','nmCategory','nmIcon','nmDesc'].forEach(id=>$(id).value='');
-      renderDevAll();
+      const key = 'addMedicine';
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      const btn = $('addMedicineBtn');
+      if(btn) btn.disabled = true;
+
+      try {
+        const name=$('nmName').value.trim();
+        const brand=$('nmBrand').value.trim();
+        const price=Number($('nmPrice').value);
+        const quantity=Number($('nmQty').value);
+        const category=$('nmCategory').value.trim()||'General';
+        const type=$('nmType').value;
+        const icon=$('nmIcon').value.trim()||'💊';
+        const desc=$('nmDesc').value.trim()||'';
+
+        if(!name || !Number.isFinite(price) || price<0 || !Number.isInteger(quantity) || quantity<0){
+          alert('Please enter valid medicine details.');
+          return;
+        }
+
+        await cloudLoad(true);
+        const newId = medicines.length ? Math.max(...medicines.map(m => Number(m.id) || 0)) + 1 : 1;
+        medicines.push({
+          id: newId,
+          name, brand,
+          price, mrp: price*1.3,
+          quantity, category, type, icon, desc
+        });
+        saveLocal();
+        await cloudSave();
+
+        ['nmName','nmBrand','nmPrice','nmQty','nmCategory','nmIcon','nmDesc'].forEach(id=>{ $(id).value=''; });
+
+        renderDevAll();
+        alert(`✅ ${name} added to inventory.`);
+      } finally {
+        processingKeys.delete(key);
+        if(btn) btn.disabled = false;
+      }
     }
+
     async function devDeleteMedicine(id){
       if(!confirm('Delete this medicine?'))return;
-      await cloudLoad(true);
-      medicines=medicines.filter(m=>m.id!==id);
-      saveLocal();await cloudSave();renderDevAll();
-    }
-    async function devOrderAction(id,action){
-      const actionKey = 'order_' + id + '_' + action;
-      if(processingActions.has(actionKey)) return;
-      processingActions.add(actionKey);
+      const key = 'delMed_' + id;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
       try {
         await cloudLoad(true);
-        const o=appointments.find(a=>a.id===id);if(!o)return;
+        medicines=medicines.filter(m=>m.id!==id);
+        saveLocal();await cloudSave();renderDevAll();
+      } finally {
+        processingKeys.delete(key);
+      }
+    }
+
+    async function devOrderAction(id,action){
+      const key = 'order_' + id + '_' + action;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      try {
+        await cloudLoad(true);
+        const o = appointments.find(a => a.id === id);
+        if(!o) return;
+
         if(action==='confirm') o.status='Confirmed';
         else if(action==='reject') o.status='Rejected';
         else if(action==='complete') o.status='Completed';
-        saveLocal();await cloudSave();renderDevAll();
+
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
       } finally {
-        processingActions.delete(actionKey);
+        processingKeys.delete(key);
       }
     }
+
     async function devReportStatus(id,status){
-      const actionKey = 'report_' + id + '_' + status;
-      if(processingActions.has(actionKey)) return;
-      processingActions.add(actionKey);
+      const key = 'report_' + id + '_' + status;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
       try {
         await cloudLoad(true);
-        const r=symptomReports.find(x=>x.id===id);if(!r)return;
-        r.status=status;
-        saveLocal();await cloudSave();renderDevAll();
+        const r = symptomReports.find(x => x.id === id);
+        if(!r) return;
+        r.status = status;
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
       } finally {
-        processingActions.delete(actionKey);
+        processingKeys.delete(key);
       }
     }
+
     async function devReplyChat(email){
-      const text=prompt(`Reply to ${email}:`);
-      if(!text||!text.trim())return;
-      await cloudLoad(true);
-      chatMessages.push({id:uid('MSG-'),sender:'developer',user:email,text:text.trim(),time:new Date().toISOString()});
-      saveLocal();await cloudSave();renderDevAll();
+      const text = prompt(`Reply to ${email}:`);
+      if(!text || !text.trim()) return;
+
+      const key = 'reply_' + email;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      try {
+        await cloudLoad(true);
+        chatMessages.push({
+          id: uid('MSG-'),
+          sender: 'developer',
+          user: email,
+          text: text.trim(),
+          time: new Date().toISOString()
+        });
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
+        alert('Reply sent.');
+      } finally {
+        processingKeys.delete(key);
+      }
     }
 
     function devStatusClass(s){
@@ -2195,7 +2362,7 @@
       const pending=userAccounts.filter(u=>!u.isVerified).length;
       const badge=$('tabAccountsBadge');
       badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
-      if(!arr.length){$('accountsList').innerHTML='<div class="empty-panel"><span class="icon">👥</span>No patients found.</div>';return;}
+      if(!arr.length){$('accountsList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">👥</span>No patients found.</div>';return;}
       const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       $('accountsList').innerHTML=sorted.map(u=>`
         <div class="dev-card ${u.isVerified?'verified':''}">
@@ -2215,21 +2382,17 @@
       `).join('');
     }
 
-    // ============================================================
-    // DOCTORS MANAGEMENT RENDER
-    // ============================================================
     function renderDevDoctors(){
       const total = doctors.length;
       $('doctorsAdminCount').textContent = total;
 
-      const adminCount = doctors.filter(d => d.role === 'admin').length;
       const badge = $('tabDoctorsBadge');
       badge.textContent = total;
       badge.dataset.count = total;
       badge.style.display = total ? 'inline-flex' : 'none';
 
       if(!doctors.length){
-        $('doctorsList').innerHTML = '<div class="empty-panel"><span class="icon">🩺</span>No doctors in the system. Add one above.</div>';
+        $('doctorsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🩺</span>No doctors in the system. Add one above.</div>';
         return;
       }
 
@@ -2288,7 +2451,7 @@
     }
 
     function renderDevMedicines(){
-      if(!medicines.length){$('medicinesList').innerHTML='<div class="empty-panel"><span class="icon">💊</span>No medicines in inventory.</div>';return;}
+      if(!medicines.length){$('medicinesList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💊</span>No medicines in inventory.</div>';return;}
       $('medicinesList').innerHTML=medicines.map(m=>`
         <div class="dev-card">
           <div class="dev-card-head">
@@ -2315,7 +2478,7 @@
       $('ordersCount').textContent=arr.length;
       const badge=$('tabOrdersBadge');
       badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
-      if(!arr.length){$('ordersList').innerHTML='<div class="empty-panel"><span class="icon">📅</span>No appointments yet.</div>';return;}
+      if(!arr.length){$('ordersList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">📅</span>No appointments yet.</div>';return;}
       const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       $('ordersList').innerHTML=sorted.map(o=>{
         if(o.type==='medicine'){
@@ -2365,7 +2528,7 @@
       $('reportsCount').textContent=arr.length;
       const badge=$('tabReportsBadge');
       badge.textContent=newCount;badge.dataset.count=newCount;badge.style.display=newCount?'inline-flex':'none';
-      if(!arr.length){$('reportsList').innerHTML='<div class="empty-panel"><span class="icon">🧬</span>No symptom reports yet.</div>';return;}
+      if(!arr.length){$('reportsList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🧬</span>No symptom reports yet.</div>';return;}
       const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       const sevColor={low:'badge-verified',medium:'badge-pending',high:'badge-rejected',critical:'badge-rejected'};
       $('reportsList').innerHTML=sorted.map(r=>`
@@ -2389,10 +2552,18 @@
     }
 
     function renderDevSupport(){
-      if(!chatMessages.length){$('supportList').innerHTML='<div class="empty-panel"><span class="icon">💬</span>No chat messages yet.</div>';$('tabSupportBadge').style.display='none';return;}
+      if(!chatMessages.length){$('supportList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💬</span>No chat messages yet.</div>';$('tabSupportBadge').style.display='none';return;}
       const custMsgs=chatMessages.filter(m=>m.sender==='customer').length;
       const badge=$('tabSupportBadge');
       badge.textContent=custMsgs;badge.dataset.count=custMsgs;badge.style.display=custMsgs?'inline-flex':'none';
+
+      // Group messages by user for clarity
+      const grouped = {};
+      chatMessages.forEach(m => {
+        if(!grouped[m.user]) grouped[m.user] = [];
+        grouped[m.user].push(m);
+      });
+
       $('supportList').innerHTML=[...chatMessages].reverse().map(m=>`
         <div class="dev-card">
           <div class="dev-card-head">
@@ -2426,9 +2597,15 @@
       devUpdateStats();
     }
 
+    // ============ POLLING ============
     async function pollOnce(){
       const wasDev=isDevMode, wasUnlocked=isDevUnlocked;
+
+      // Don't poll while an action is in progress
+      if(processingKeys.size > 0) return;
+
       await cloudLoad(true);
+
       if(wasDev){
         if(wasUnlocked) renderDevAll();
       } else {
@@ -2443,13 +2620,14 @@
       }
     }
 
+    // ============ INIT ============
     window.addEventListener('load',async()=>{
       loadLocal();
       await cloudLoad(true);
       route();
       populateDoctorDropdown();
       setSync('ok',CLOUD_ENABLED?'☁️ Synced':'💾 Local mode');
-      setInterval(pollOnce,POLL_MS);
+      setInterval(pollOnce, POLL_MS);
       document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pollOnce();});
       window.addEventListener('focus',pollOnce);
     });
