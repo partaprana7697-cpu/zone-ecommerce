@@ -140,6 +140,12 @@
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(99, 102, 241, 0.45), inset 0 1px 0 rgba(255,255,255,0.3); }
     .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled {
+      background: rgba(148, 163, 184, 0.5);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
 
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 18px; color: var(--primary); cursor: pointer; font-weight: 600; transition: color 0.2s; }
     .auth-toggle:hover { color: var(--primary-dark); text-decoration: underline; }
@@ -463,25 +469,18 @@
       gap: 2px;
     }
     .segmented-tab {
-      flex: 1;
-      padding: 10px 8px;
-      border: none;
-      background: transparent;
+      flex: 1; padding: 10px 8px;
+      border: none; background: transparent;
       border-radius: 10px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 12px; font-weight: 700;
       color: var(--dark);
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex; align-items: center; justify-content: center;
-      gap: 6px;
-      position: relative;
-      letter-spacing: 0.2px;
+      gap: 6px; position: relative; letter-spacing: 0.2px;
       white-space: nowrap;
     }
-    .segmented-tab:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
+    .segmented-tab:hover { background: rgba(255, 255, 255, 0.4); }
     .segmented-tab.active {
       background: rgba(255, 255, 255, 0.95);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.03);
@@ -489,27 +488,15 @@
     }
     .segmented-tab .tab-badge {
       display: inline-flex; align-items: center; justify-content: center;
-      min-width: 18px; height: 18px;
-      padding: 0 5px;
+      min-width: 18px; height: 18px; padding: 0 5px;
       border-radius: 9px;
       background: rgba(239, 68, 68, 0.9);
-      color: white;
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1;
-      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+      color: white; font-size: 10px; font-weight: 800;
+      line-height: 1; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
     }
-    .segmented-tab.active .tab-badge {
-      background: var(--danger);
-      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
-    }
-    .segmented-tab .tab-badge.green {
-      background: rgba(16, 185, 129, 0.9);
-      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
-    }
-    .segmented-tab.active .tab-badge.green {
-      background: var(--success);
-    }
+    .segmented-tab.active .tab-badge { background: var(--danger); box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4); }
+    .segmented-tab .tab-badge.green { background: rgba(16, 185, 129, 0.9); box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3); }
+    .segmented-tab.active .tab-badge.green { background: var(--success); }
 
     .tab-panel { display: none; animation: fadeIn 0.25s ease; }
     .tab-panel.active { display: block; }
@@ -578,6 +565,137 @@
     .empty-state { text-align: center; padding: 40px 20px; color: var(--grey); font-size: 13px; }
     .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
 
+    /* ============ CART ITEM (with quantity controls) ============ */
+    .cart-item {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: var(--glass-blur-light);
+      -webkit-backdrop-filter: var(--glass-blur-light);
+      border: 1px solid var(--glass-border);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      transition: all 0.25s;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255,255,255,0.7);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .cart-item:hover {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(99, 102, 241, 0.25);
+      box-shadow: 0 8px 20px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255,255,255,0.85);
+    }
+    .cart-item-thumb {
+      width: 64px; height: 64px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(241,245,249,0.5));
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 6px rgba(31, 38, 135, 0.05);
+    }
+    .cart-item-thumb img {
+      max-width: 85%; max-height: 85%;
+      object-fit: contain;
+    }
+    .cart-item-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .cart-item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cart-item-price {
+      font-size: 12px;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .cart-item-subtotal {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .cart-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(31, 38, 135, 0.05);
+    }
+    .qty-btn {
+      width: 28px; height: 28px;
+      border: none;
+      background: transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+      line-height: 1;
+      user-select: none;
+    }
+    .qty-btn:hover {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary);
+      transform: scale(1.1);
+    }
+    .qty-btn:active { transform: scale(0.95); }
+    .qty-btn:disabled {
+      color: #cbd5e1;
+      cursor: not-allowed;
+      background: transparent;
+      transform: none;
+    }
+    .qty-display {
+      min-width: 28px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--dark);
+      padding: 0 4px;
+      user-select: none;
+    }
+    .cart-item-remove {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .cart-item-remove:hover {
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    .cart-item-remove:active { transform: scale(0.95); }
+
     /* ============ CART TOTAL CARD ============ */
     .cart-total-card {
       background: rgba(255, 255, 255, 0.65);
@@ -595,6 +713,17 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 16px; font-family: 'Space Grotesk', sans-serif;
       letter-spacing: -1.2px;
+    }
+    .cart-summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+    .cart-summary-line strong {
+      color: var(--dark);
+      font-weight: 700;
     }
 
     /* ============ CHAT ============ */
@@ -703,6 +832,8 @@
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes floatIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+    .qty-display.pop { animation: pop 0.25s ease; }
 
     /* ============ SCROLLBAR ============ */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -723,10 +854,14 @@
       .sync-badge { top: auto; bottom: 90px; right: 16px; font-size: 11px; padding: 7px 13px; }
       .segmented-tab { font-size: 11px; padding: 9px 6px; gap: 4px; }
       .segmented-tab .tab-badge { min-width: 16px; height: 16px; font-size: 9px; }
+      .cart-item { padding: 12px; gap: 10px; }
+      .cart-item-thumb { width: 52px; height: 52px; }
     }
 
     @supports not (backdrop-filter: blur(1px)) {
-      .auth-card, .product-card, .drawer, .item-card, .chat-box, .cart-total-card { background: rgba(255, 255, 255, 0.95); }
+      .auth-card, .product-card, .drawer, .item-card, .chat-box, .cart-total-card, .cart-item, .qty-control {
+        background: rgba(255, 255, 255, 0.95);
+      }
       header, .drawer-header, .chat-header, .chat-footer { background: rgba(255, 255, 255, 0.95); }
     }
   </style>
@@ -816,6 +951,14 @@
       <div id="cartItemsContainer"></div>
       <div id="cartFooter" style="display:none;">
         <div class="cart-total-card">
+          <div class="cart-summary-line">
+            <span>Items in cart:</span>
+            <strong><span id="cartTotalItems">0</span></strong>
+          </div>
+          <div class="cart-summary-line" style="margin-bottom:14px;">
+            <span>Subtotal:</span>
+            <strong>$<span id="cartSubtotal">0.00</span></strong>
+          </div>
           <div class="cart-total-label">Total Amount</div>
           <div class="cart-total-amount">$<span id="cartTotal">0.00</span></div>
           <button class="btn-primary" onclick="placeOrder()">Place Order Request →</button>
@@ -858,19 +1001,16 @@
         </button>
       </div>
 
-      <!-- TAB: ACCOUNTS -->
       <div class="tab-panel active" id="tabPanel-accounts">
         <h4>🔐 Account Verification & Management</h4>
         <div id="devUsersContainer"></div>
       </div>
 
-      <!-- TAB: PRODUCTS -->
       <div class="tab-panel" id="tabPanel-products">
         <h4>📦 Product Inventory</h4>
         <div id="devProductEditorContainer"></div>
       </div>
 
-      <!-- TAB: ORDERS -->
       <div class="tab-panel" id="tabPanel-orders">
         <h4>✅ Customer Orders</h4>
         <div id="devOrdersContainer"></div>
@@ -899,8 +1039,8 @@
     // ============================================================
     // ☁️  CLOUD SYNC CONFIG — REPLACE THESE TWO LINES
     // ============================================================
-    const JSONBIN_BIN_ID  = "6aa30871ac6210605abdfb81";
-    const JSONBIN_API_KEY = "$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.";
+    const JSONBIN_BIN_ID  = "YOUR_BIN_ID_HERE";
+    const JSONBIN_API_KEY = "YOUR_X_MASTER_KEY";
     // ============================================================
 
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
@@ -916,7 +1056,7 @@
     ];
 
     let userAccounts = [];
-    let cart = [];
+    let cart = [];      // NEW FORMAT: [{ id, title, price, image, size, quantity, maxQty }]
     let orders = [];
     let chatMessages = [];
     let products = [...DEFAULT_PRODUCTS];
@@ -1005,6 +1145,7 @@
         localStorage.setItem('zone_orders',   JSON.stringify(orders));
         localStorage.setItem('zone_chat',     JSON.stringify(chatMessages));
         localStorage.setItem('zone_products', JSON.stringify(products));
+        localStorage.setItem('zone_cart',     JSON.stringify(cart));
       } catch (e) {}
     }
 
@@ -1015,6 +1156,8 @@
         chatMessages = JSON.parse(localStorage.getItem('zone_chat'))   || [];
         const p = JSON.parse(localStorage.getItem('zone_products'));
         products = (Array.isArray(p) && p.length > 0) ? p : [...DEFAULT_PRODUCTS];
+        const c = JSON.parse(localStorage.getItem('zone_cart'));
+        cart = Array.isArray(c) ? c : [];
       } catch (e) { products = [...DEFAULT_PRODUCTS]; }
     }
 
@@ -1040,7 +1183,6 @@
     }
 
     function updateTabBadges() {
-      // Accounts badge = pending (unverified) count
       const pending = userAccounts.filter(u => !u.isVerified).length;
       const acctBadge = document.getElementById('tabAccountsBadge');
       if (acctBadge) {
@@ -1052,7 +1194,6 @@
         }
       }
 
-      // Orders badge = pending orders count
       const pendingOrders = orders.filter(o => o.status === 'Pending Developer Verification').length;
       const ordBadge = document.getElementById('tabOrdersBadge');
       if (ordBadge) {
@@ -1067,6 +1208,7 @@
 
     async function initializeRoute() {
       await cloudLoad();
+      loadFromLocal();  // to restore cart
       lastDataHash = dataHash();
 
       if (window.location.hash === "#dev") {
@@ -1120,7 +1262,8 @@
       document.getElementById('authOverlay').style.display = 'none';
       document.getElementById('navUserRole').textContent = "Role: Customer";
       document.getElementById('navUserEmail').textContent = currentUser.email;
-      cart = [];
+      cart = [];  // fresh cart for new user
+      saveToLocal();
       renderAll();
       updateCartUI();
     }
@@ -1160,30 +1303,131 @@
       document.getElementById('catalogCount').textContent = `${products.length} product${products.length !== 1 ? 's' : ''}`;
     }
 
+    // ============ CART: ADD / INCREASE / DECREASE / REMOVE ============
     function addToCart(productId) {
       if (isDevMode) return alert("Cannot add to cart in developer mode.");
       const product = products.find(p => p.id === productId);
       if (!product || product.quantity <= 0) return alert("Out of stock!");
-      cart.push(product);
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        if (existing.quantity >= product.quantity) {
+          return alert(`Only ${product.quantity} units available in stock.`);
+        }
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          image: product.image,
+          size: product.size,
+          quantity: 1,
+          maxQty: product.quantity
+        });
+      }
+      saveToLocal();
       updateCartUI();
       toggleDrawer('cartDrawer');
     }
 
+    function increaseQty(productId) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      const product = products.find(p => p.id === productId);
+      const maxQty = product ? product.quantity : item.maxQty || 99;
+      if (item.quantity >= maxQty) {
+        return alert(`Only ${maxQty} units available in stock.`);
+      }
+      item.quantity += 1;
+      saveToLocal();
+      updateCartUI();
+      flashQty(productId);
+    }
+
+    function decreaseQty(productId) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      if (item.quantity <= 1) {
+        // At 1 → remove
+        removeFromCart(productId);
+        return;
+      }
+      item.quantity -= 1;
+      saveToLocal();
+      updateCartUI();
+      flashQty(productId);
+    }
+
+    function removeFromCart(productId) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      if (!confirm(`Remove "${item.title}" from cart?`)) return;
+      cart = cart.filter(i => i.id !== productId);
+      saveToLocal();
+      updateCartUI();
+    }
+
+    function clearCart() {
+      if (cart.length === 0) return;
+      if (!confirm("Remove all items from cart?")) return;
+      cart = [];
+      saveToLocal();
+      updateCartUI();
+    }
+
+    function flashQty(productId) {
+      const el = document.querySelector(`.qty-display[data-pid="${productId}"]`);
+      if (el) {
+        el.classList.remove('pop');
+        void el.offsetWidth;  // force reflow
+        el.classList.add('pop');
+      }
+    }
+
     function updateCartUI() {
-      document.getElementById('cartCount').textContent = cart.length;
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalItems;
+
       const container = document.getElementById('cartItemsContainer');
       container.innerHTML = '';
-      let total = 0;
+
       if (cart.length === 0) {
-        container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛒</div>Your cart is empty</div>`;
+        container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛒</div>Your cart is empty<br><span style="font-size:11px; opacity:0.7;">Browse the catalog and add items</span></div>`;
         document.getElementById('cartFooter').style.display = 'none';
         return;
       }
+
+      let subtotal = 0;
       cart.forEach(item => {
-        total += Number(item.price);
-        container.innerHTML += `<div class="item-card"><strong>${item.title}</strong><div class="muted">$${Number(item.price).toFixed(2)}</div></div>`;
+        const lineTotal = Number(item.price) * item.quantity;
+        subtotal += lineTotal;
+        const safeImg = (item.image || '').replace(/"/g, '&quot;');
+        container.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-thumb">
+              <img src="${safeImg}" alt="${item.title}" onerror="this.style.display='none';">
+            </div>
+            <div class="cart-item-body">
+              <div class="cart-item-title" title="${item.title}">${item.title}</div>
+              <div class="cart-item-price">$${Number(item.price).toFixed(2)} each</div>
+              <div class="cart-item-subtotal">Subtotal: $${lineTotal.toFixed(2)}</div>
+            </div>
+            <div class="cart-item-actions">
+              <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Remove item">🗑</button>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="decreaseQty(${item.id})" title="Decrease quantity">−</button>
+                <span class="qty-display" data-pid="${item.id}">${item.quantity}</span>
+                <button class="qty-btn" onclick="increaseQty(${item.id})" title="Increase quantity">+</button>
+              </div>
+            </div>
+          </div>
+        `;
       });
-      document.getElementById('cartTotal').textContent = total.toFixed(2);
+
+      document.getElementById('cartSubtotal').textContent = subtotal.toFixed(2);
+      document.getElementById('cartTotal').textContent = subtotal.toFixed(2);
+      document.getElementById('cartTotalItems').textContent = totalItems;
       document.getElementById('cartFooter').style.display = 'block';
     }
 
@@ -1191,17 +1435,24 @@
       if (cart.length === 0) return;
       if (!currentUser) return alert("Please sign in to place an order.");
       await cloudLoad();
+
+      // Create one order per cart item (with quantity noted in title)
       cart.forEach(item => {
+        const qty = item.quantity;
+        const totalPrice = Number(item.price) * qty;
         orders.push({
           orderId: "ORD" + Math.floor(1000 + Math.random() * 9000),
-          productTitle: item.title,
+          productTitle: qty > 1 ? `${item.title} × ${qty}` : item.title,
           productId: item.id,
-          price: item.price,
+          price: totalPrice,
+          quantity: qty,
           userEmail: currentUser.email,
           status: "Pending Developer Verification"
         });
       });
+
       cart = [];
+      saveToLocal();
       await cloudSave();
       lastDataHash = dataHash();
       renderAll();
@@ -1235,7 +1486,7 @@
       });
     }
 
-    // ============ DEV: USERS (with remove) ============
+    // ============ DEV: USERS ============
     function renderDevUsers() {
       const container = document.getElementById('devUsersContainer');
       if (!container) return;
@@ -1245,7 +1496,6 @@
         return;
       }
 
-      // Sort: pending first, then verified
       const sorted = [...userAccounts].sort((a, b) => {
         if (a.isVerified === b.isVerified) return 0;
         return a.isVerified ? 1 : -1;
@@ -1253,7 +1503,6 @@
 
       container.innerHTML = '';
       sorted.forEach((acc) => {
-        // Find original index for actions
         const realIndex = userAccounts.findIndex(u => u.email === acc.email);
         const verifiedClass = acc.isVerified ? 'verified' : '';
         container.innerHTML += `
@@ -1300,7 +1549,7 @@
         `⚠️ Remove this account permanently?\n\n` +
         `Email: ${user.email}\n` +
         `Status: ${user.isVerified ? 'Verified' : 'Pending'}\n\n` +
-        `This cannot be undone. Any orders placed by this user will remain in the system.`
+        `This cannot be undone.`
       );
       if (!confirmed) return;
 
@@ -1375,6 +1624,9 @@
       if (!confirm("Delete this product?")) return;
       await cloudLoad();
       products = products.filter(p => p.id !== productId);
+      // Also remove from cart if present
+      cart = cart.filter(i => i.id !== productId);
+      saveToLocal();
       await cloudSave();
       lastDataHash = dataHash();
       renderAll();
@@ -1389,6 +1641,17 @@
       p.quantity = parseInt(document.getElementById(`devQty_${productId}`).value);
       p.size     = document.getElementById(`devSize_${productId}`).value.trim() || 'Standard';
       p.image    = document.getElementById(`devImg_${productId}`).value.trim() || 'https://via.placeholder.com/200';
+
+      // Update cart maxQty if item is in cart
+      const cartItem = cart.find(i => i.id === productId);
+      if (cartItem) {
+        cartItem.maxQty = p.quantity;
+        if (cartItem.quantity > p.quantity) {
+          cartItem.quantity = Math.max(1, p.quantity);
+        }
+        saveToLocal();
+      }
+
       await cloudSave();
       lastDataHash = dataHash();
       renderAll();
@@ -1403,7 +1666,6 @@
         container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🛍️</div>No orders yet</div>`;
         return;
       }
-      // Sort: pending first
       const sorted = [...orders].sort((a, b) => {
         const aP = a.status === "Pending Developer Verification" ? 0 : 1;
         const bP = b.status === "Pending Developer Verification" ? 0 : 1;
@@ -1433,8 +1695,8 @@
       if (!ord) return;
       const prod = products.find(p => p.id === ord.productId);
       if (action === 'confirm') {
-        if (prod && prod.quantity > 0) {
-          prod.quantity -= 1;
+        if (prod && prod.quantity >= (ord.quantity || 1)) {
+          prod.quantity -= (ord.quantity || 1);
           ord.status = "Order Confirmed - Shipping";
           await cloudSave();
           lastDataHash = dataHash();
@@ -1449,7 +1711,7 @@
               renderAll();
             }
           }, 5000);
-        } else { alert("Product out of stock!"); }
+        } else { alert("Not enough stock to confirm this order."); }
       } else if (action === 'reject') {
         ord.status = "Product is Unavailable";
         await cloudSave();
@@ -1503,6 +1765,7 @@
     window.addEventListener('load', async () => {
       await initializeRoute();
       lastDataHash = dataHash();
+      updateCartUI();
 
       setInterval(async () => {
         const changed = await cloudLoad(true);
