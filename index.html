@@ -69,33 +69,6 @@
     .sync-badge.syncing { background: rgba(245, 158, 11, 0.85); }
     .sync-badge.error { background: rgba(239, 68, 68, 0.85); }
 
-    /* ⭐ NEW: quick refresh button (patient side) */
-    .patient-refresh-btn {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--primary-dark);
-      font-weight: 700;
-      font-size: 13px;
-      padding: 9px 16px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .patient-refresh-btn:hover {
-      background: var(--gradient-primary);
-      color: white;
-      border-color: transparent;
-      box-shadow: 0 6px 14px rgba(16, 185, 129, 0.35);
-      transform: translateY(-1px);
-    }
-    .patient-refresh-btn:active {
-      transform: scale(0.97);
-    }
-
     .main-container { max-width: 1600px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
     .section { display: none; }
     .section.active { display: block; }
@@ -472,10 +445,6 @@
         <div class="nav-section emergency" data-section="emergency" onclick="switchSection('emergency')">🚨 Emergency</div>
       </div>
       <div class="nav-right">
-        <!-- ⭐ QUICK REFRESH BUTTON (PATIENT SIDE) -->
-        <button class="patient-refresh-btn" id="patientRefreshBtn" onclick="manualPatientRefresh()">
-          🔄 Refresh
-        </button>
         <div class="nav-link" onclick="openProfile()"><span id="navUserRole">Role: Guest</span><strong id="navUserEmail">Not Signed In</strong></div>
         <div class="nav-link" onclick="toggleDrawer('appointmentsDrawer')"><span>Visits</span><strong>📅 <span id="appointmentsCount">0</span></strong></div>
         <div class="nav-link" onclick="toggleDrawer('cartDrawer')"><span>Cart</span><strong>🛒 <span id="cartCount">0</span></strong></div>
@@ -1144,25 +1113,19 @@
 
   <script>
     // ============================================================
-    // MEDIZONE — MAIN SCRIPT WITH FULL AUTO-SYNC + PATIENT REFRESH
-    // Sync: npoint.io + BroadcastChannel + Visibility + Focus
-    // ⭐ NEW: Quick refresh button on patient side (header)
+    // MEDIZONE — MAIN SCRIPT
+    // Sync: npoint.io (public JSON, no API key needed)
     // ============================================================
 
+    // ⭐⭐⭐ CHANGE THIS to your own npoint bin ID if you created one.
+    // Leave as-is to use the built-in public bin (works out of the box).
     const NPOINT_BIN_ID = "f5b83788692ef6eedb9c";
     const NPOINT_URL = `https://www.npoint.io/docs/f5b83788692ef6eedb9c`;
     const CLOUD_ENABLED = true;
 
     const DEV_KEY = 'DOCTOR-2026';
     const POLL_MS = 2000;
-    const CHANNEL_NAME = 'medizone_sync';
 
-    let syncChannel = null;
-    let lastSyncHash = '';
-    let isSyncing = false;
-    let syncPaused = false;
-
-    // ---------- DEFAULT DATA ----------
     const DEFAULT_DOCTORS = [
       {id:1,name:'Dr. Aanya Sharma',spec:'Cardiologist',qual:'MBBS, MD (Cardiology)',exp:12,rating:4.9,fee:800,icon:'❤️',bio:'Specialist in heart disease, hypertension, and preventive cardiology.',role:'senior'},
       {id:2,name:'Dr. Rohan Mehta',spec:'Neurologist',qual:'MBBS, DM (Neurology)',exp:10,rating:4.8,fee:900,icon:'🧠',bio:'Expert in headaches, epilepsy, stroke, and neurodegenerative disorders.',role:'doctor'},
@@ -1204,12 +1167,11 @@
       {icon:'🗣️',title:'Language & Trust',desc:'Migrants can\'t find doctors who speak their language.',stats:['22 languages','Trust gap']}
     ];
 
-    // ---------- STATE ----------
     let userAccounts=[], doctors=[], medicines=[], appointments=[], medicineOrders=[], ambulanceRequests=[], ambulances=[], cart=[], chatMessages=[], symptomReports=[];
     let currentUser=null;
     let userFilter='all', apptAdminFilter='all', orderAdminFilter='all', ambFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
     let selectedOrgan=null, selectedSeverity='medium', selectedEmergencyLevel='urgent';
-    let isDevMode=false, isDevUnlocked=false;
+    let isSyncing=false, isDevMode=false, isDevUnlocked=false;
     let activeSection='doctors';
     const processingKeys = new Set();
 
@@ -1222,26 +1184,6 @@
       const data=new TextEncoder().encode(text);
       const hash=await crypto.subtle.digest('SHA-256',data);
       return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-
-    function computeHash(){
-      const str = JSON.stringify({
-        u: userAccounts.map(u => u.email + u.isVerified),
-        d: doctors.map(d => d.id + d.name + d.fee),
-        m: medicines.map(m => m.id + m.quantity),
-        a: appointments.map(a => a.id + a.status),
-        o: medicineOrders.map(o => o.id + o.status),
-        e: ambulanceRequests.map(r => r.id + r.status),
-        ab: ambulances.map(a => a.id + a.status),
-        c: chatMessages.length,
-        r: symptomReports.map(r => r.id + r.status)
-      });
-      let h = 0;
-      for(let i = 0; i < str.length; i++){
-        h = ((h << 5) - h) + str.charCodeAt(i);
-        h |= 0;
-      }
-      return h.toString(36);
     }
 
     function saveLocal(){
@@ -1301,6 +1243,9 @@
       const db = $('devSyncBadge'); if(db){ db.className = 'dev-sync-badge ' + status; db.textContent = text; }
     }
 
+    // ============================================================
+    // CLOUD SYNC — npoint.io
+    // ============================================================
     async function cloudLoad(silent){
       silent = !!silent;
       if(!CLOUD_ENABLED){ loadLocal(); if(!silent)setSync('error','⚠️ Local mode'); return false; }
@@ -1355,63 +1300,12 @@
         });
         if(!res.ok) throw Error('HTTP ' + res.status);
         setSync('ok','☁️ Synced');
-        lastSyncHash = computeHash();
-        if(syncChannel){
-          try { syncChannel.postMessage({ type: 'cloud-save', at: Date.now() }); } catch(e){}
-        }
       }catch(e){
         console.error('Cloud save failed:', e);
         setSync('error','❌ Save failed');
       } finally {
         isSyncing = false;
       }
-    }
-
-    async function autoSync(){
-      if(processingKeys.size > 0) return;
-      if(syncPaused) return;
-      try{
-        const ok = await cloudLoad(true);
-        if(!ok) return;
-        const newHash = computeHash();
-        if(newHash !== lastSyncHash){
-          lastSyncHash = newHash;
-          if(isDevMode && isDevUnlocked){
-            renderDevAll();
-          } else if(!isDevMode){
-            if(currentUser){
-              const u = userAccounts.find(x => x.email === currentUser.email);
-              if(u){
-                currentUser = u;
-                if(!currentUser.isVerified){
-                  logout();
-                  alert('Your account access has been revoked.');
-                  return;
-                }
-              } else {
-                logout();
-                alert('Your account has been removed.');
-                return;
-              }
-            }
-            renderCustomerAll();
-          }
-        }
-      }catch(e){
-        console.error('Auto-sync failed:', e);
-      }
-    }
-
-    // ---------- ⭐ NEW: PATIENT-SIDE QUICK REFRESH ----------
-    async function manualPatientRefresh(){
-      const btn = $('patientRefreshBtn');
-      if(btn){ btn.disabled = true; btn.textContent = '⏳ Refreshing...'; }
-      setSync('syncing','🔄 Refreshing...');
-      await cloudLoad(true);
-      lastSyncHash = computeHash();
-      if(!isDevMode) renderCustomerAll();
-      setSync('ok','☁️ Synced');
-      if(btn){ setTimeout(() => { btn.disabled = false; btn.textContent = '🔄 Refresh'; }, 600); }
     }
 
     // ---------- ROUTING ----------
@@ -1870,7 +1764,7 @@
       `).join('');
     }
 
-    // ---------- 3D BODY SIDEBAR ----------
+    // ---------- 3D BODY ----------
     function renderBodySidebar(){
       if(!selectedOrgan){
         $('organSelectionArea').style.display = 'block';
@@ -2380,10 +2274,7 @@
       isDevUnlocked = true;
       $('devAuthOverlay').style.display = 'none';
       $('devDashboard').style.display = 'block';
-      cloudLoad(true).then(() => {
-        lastSyncHash = computeHash();
-        renderDevAll();
-      });
+      cloudLoad(true).then(() => renderDevAll());
     }
 
     function devLogout(){
@@ -2398,7 +2289,6 @@
       if(btn) btn.textContent = '🔄 Refreshing...';
       setSync('syncing','🔄 Refreshing...');
       await cloudLoad(true);
-      lastSyncHash = computeHash();
       renderDevAll();
       setSync('ok','☁️ Synced');
       if(btn) setTimeout(() => btn.textContent = '🔄 Refresh', 600);
@@ -2428,7 +2318,6 @@
         if(userAccounts[idx].isVerified){ renderDevAll(); return; }
         userAccounts[idx].isVerified = true;
         await cloudSave();
-        lastSyncHash = computeHash();
         renderDevAll();
       } finally {
         processingKeys.delete(key);
@@ -2443,9 +2332,7 @@
       medicineOrders = medicineOrders.filter(o => o.patientEmail !== email);
       ambulanceRequests = ambulanceRequests.filter(r => r.patientEmail !== email);
       symptomReports = symptomReports.filter(r => r.patientEmail !== email);
-      await cloudSave();
-      lastSyncHash = computeHash();
-      renderDevAll();
+      await cloudSave(); renderDevAll();
     }
 
     async function devAddDoctor(){
@@ -2470,7 +2357,6 @@
         const newId = doctors.length ? Math.max(...doctors.map(d => Number(d.id) || 0)) + 1 : 1;
         doctors.push({ id: newId, name, spec, qual, exp, fee, rating, icon, bio, role, createdAt: new Date().toISOString() });
         await cloudSave();
-        lastSyncHash = computeHash();
         $('ndName').value = ''; $('ndQual').value = ''; $('ndBio').value = '';
         $('ndExp').value = '5'; $('ndFee').value = '500'; $('ndRating').value = '4.5'; $('ndIcon').value = '👨‍⚕️';
         renderDevAll();
@@ -2491,9 +2377,7 @@
       try {
         await cloudLoad(true);
         doctors = doctors.filter(x => x.id !== id);
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
         alert(`✅ ${d.name} removed.`);
       } finally {
         processingKeys.delete(key);
@@ -2518,9 +2402,7 @@
         d.role = $('edRole_' + id).value;
         d.bio = ($('edBio_' + id).value || '').trim() || d.bio;
         if(!d.name){ alert('Name cannot be empty.'); return; }
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
         alert(`✅ ${d.name}'s profile updated.`);
       } finally {
         processingKeys.delete(key);
@@ -2549,7 +2431,6 @@
         const newId = medicines.length ? Math.max(...medicines.map(m => Number(m.id) || 0)) + 1 : 1;
         medicines.push({ id: newId, name, brand, price, mrp: price * 1.3, quantity, category, type, icon, desc });
         await cloudSave();
-        lastSyncHash = computeHash();
         ['nmName','nmBrand','nmPrice','nmQty','nmCategory','nmIcon','nmDesc'].forEach(id => { $(id).value = ''; });
         renderDevAll();
         alert(`✅ ${name} added to inventory.`);
@@ -2567,9 +2448,7 @@
       try {
         await cloudLoad(true);
         medicines = medicines.filter(m => m.id !== id);
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
@@ -2588,9 +2467,7 @@
         else if(action === 'reject') a.status = 'Rejected';
         else if(action === 'complete') a.status = 'Completed';
         a.updatedAt = new Date().toISOString();
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
@@ -2616,9 +2493,7 @@
         else if(action === 'deliver') o.status = 'Delivered';
         else if(action === 'reject') o.status = 'Rejected';
         o.updatedAt = new Date().toISOString();
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
@@ -2662,9 +2537,7 @@
           }
         }
         r.updatedAt = new Date().toISOString();
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
       } catch(e) {
         console.error('Ambulance action failed:', e);
         alert('Failed to update. Please try again.');
@@ -2682,9 +2555,7 @@
         const r = symptomReports.find(x => x.id === id);
         if(!r) return;
         r.status = status;
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
@@ -2699,9 +2570,7 @@
       try {
         await cloudLoad(true);
         chatMessages.push({ id: uid('MSG-'), sender: 'developer', user: email, text: text.trim(), time: new Date().toISOString() });
-        await cloudSave();
-        lastSyncHash = computeHash();
-        renderDevAll();
+        await cloudSave(); renderDevAll();
         alert('Reply sent.');
       } finally {
         processingKeys.delete(key);
@@ -3057,62 +2926,38 @@
       devUpdateStats();
     }
 
-    // ============================================================
-    // AUTO-SYNC: 3 triggers
-    // ============================================================
-    function setupBroadcastChannel(){
-      if(typeof BroadcastChannel === 'undefined') return;
-      try{
-        syncChannel = new BroadcastChannel(CHANNEL_NAME);
-        syncChannel.onmessage = (e) => {
-          if(e.data && e.data.type === 'cloud-save'){
-            autoSync();
-          } else if(e.data && e.data.type === 'local-save'){
-            loadLocal();
-            const newHash = computeHash();
-            if(newHash !== lastSyncHash){
-              lastSyncHash = newHash;
-              if(isDevMode && isDevUnlocked) renderDevAll();
-              else if(!isDevMode) renderCustomerAll();
-            }
-          }
-        };
-      }catch(e){ console.warn('BroadcastChannel not available'); }
-    }
-
-    document.addEventListener('focusin', (e) => {
-      const t = e.target;
-      if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')){
-        syncPaused = true;
+    async function pollOnce(){
+      if(processingKeys.size > 0) return;
+      const wasDev = isDevMode, wasUnlocked = isDevUnlocked;
+      await cloudLoad(true);
+      if(wasDev){
+        if(wasUnlocked) renderDevAll();
+      } else {
+        if(currentUser){
+          const u = userAccounts.find(x => x.email === currentUser.email);
+          if(u){
+            currentUser = u;
+            if(!currentUser.isVerified){ logout(); alert('Your account access has been revoked.'); return; }
+          } else { logout(); alert('Your account has been removed.'); return; }
+        }
+        renderCustomerAll();
       }
-    });
-    document.addEventListener('focusout', () => {
-      setTimeout(() => { syncPaused = false; }, 500);
-    });
+    }
 
     window.addEventListener('load', async () => {
       loadLocal();
-      setupBroadcastChannel();
       await cloudLoad(true);
       route();
       populateDoctorDropdown();
-      lastSyncHash = computeHash();
       setSync('ok', CLOUD_ENABLED ? '☁️ Synced' : '💾 Local mode');
-
-      setInterval(autoSync, POLL_MS);
-
-      document.addEventListener('visibilitychange', () => {
-        if(document.visibilityState === 'visible') autoSync();
-      });
-
-      window.addEventListener('focus', autoSync);
-      window.addEventListener('online', autoSync);
+      setInterval(pollOnce, POLL_MS);
+      document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') pollOnce(); });
+      window.addEventListener('focus', pollOnce);
     });
 
     window.addEventListener('hashchange', async () => {
       route();
       await cloudLoad(true);
-      lastSyncHash = computeHash();
       if(isDevMode && isDevUnlocked) renderDevAll();
       else if(!isDevMode) renderCustomerAll();
     });
