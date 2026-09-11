@@ -29,14 +29,14 @@
     @keyframes meshMove { 0% { transform: scale(1); } 100% { transform: scale(1.15) translate(-3%, -2%); } }
     body.admin-mode::before { background: radial-gradient(circle at 15% 20%, rgba(30, 41, 59, 0.85) 0px, transparent 45%), radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.6) 0px, transparent 45%), radial-gradient(circle at 75% 80%, rgba(14, 165, 233, 0.5) 0px, transparent 45%), radial-gradient(circle at 25% 85%, rgba(139, 92, 246, 0.4) 0px, transparent 45%), linear-gradient(180deg, #1e293b 0%, #0f172a 100%); }
 
-    .auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.15); backdrop-filter: blur(24px); animation: fadeIn 0.4s; }
-    .auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur-strong); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-glass-lg); border: 1px solid var(--glass-border); animation: slideUp 0.55s; }
+    .auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.15); backdrop-filter: blur(24px); }
+    .auth-card { position: relative; width: 440px; max-width: 100%; background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur-strong); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-glass-lg); border: 1px solid var(--glass-border); }
     .auth-logo { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 800; text-align: center; margin-bottom: 6px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.2px; }
     .auth-tagline { text-align: center; font-size: 13px; color: var(--grey); margin-bottom: 28px; font-weight: 500; }
     .auth-card h3 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 22px; font-family: 'Space Grotesk', sans-serif; }
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 7px; color: #334155; text-transform: uppercase; letter-spacing: 0.8px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 15px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); outline: none; font-size: 14px; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px); color: var(--dark); font-family: inherit; transition: all 0.25s; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 13px 15px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); outline: none; font-size: 14px; background: rgba(255, 255, 255, 0.65); color: var(--dark); font-family: inherit; transition: all 0.25s; }
     .form-group textarea { resize: vertical; min-height: 90px; }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); background: rgba(255, 255, 255, 0.95); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
     .btn-primary { width: 100%; padding: 14px; background: var(--gradient-primary); border: none; border-radius: var(--radius-sm); color: white; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
@@ -44,31 +44,31 @@
     .btn-primary:disabled { background: rgba(148, 163, 184, 0.5); cursor: not-allowed; transform: none; }
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 18px; color: var(--primary); cursor: pointer; font-weight: 600; }
 
-    header { position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(28px); border-bottom: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 4px 24px rgba(31, 38, 135, 0.06); }
+    header { position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(28px); border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
     .navbar { display: flex; align-items: center; padding: 12px 24px; gap: 16px; max-width: 1600px; margin: 0 auto; }
-    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; flex-shrink: 0; letter-spacing: -0.6px; display: flex; align-items: center; gap: 8px; }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
     .nav-logo::before { content: '⚕️'; font-size: 24px; -webkit-text-fill-color: initial; }
     .nav-sections { display: flex; gap: 4px; flex: 1; justify-content: center; flex-wrap: wrap; }
-    .nav-section { padding: 9px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; color: var(--dark); cursor: pointer; transition: all 0.25s; background: transparent; border: 1px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+    .nav-section { padding: 9px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.25s; border: 1px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
     .nav-section:hover { background: rgba(16, 185, 129, 0.08); }
     .nav-section.active { background: rgba(16, 185, 129, 0.15); color: var(--primary-dark); border-color: rgba(16, 185, 129, 0.3); }
-    .nav-right { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
+    .nav-right { display: flex; align-items: center; gap: 6px; margin-left: auto; }
     .nav-link { color: var(--dark); font-size: 13px; cursor: pointer; padding: 10px 14px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5); }
     .nav-link:hover { background: rgba(255, 255, 255, 0.7); }
     .nav-link span { display: block; font-size: 10px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
     .nav-link strong { font-size: 13px; font-weight: 700; }
-    .sync-badge { position: fixed; top: 72px; right: 24px; background: rgba(16, 185, 129, 0.85); color: white; padding: 8px 15px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; z-index: 1500; display: flex; align-items: center; gap: 6px; }
+    .sync-badge { position: fixed; top: 72px; right: 24px; background: rgba(16, 185, 129, 0.85); color: white; padding: 8px 15px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; z-index: 1500; }
     .sync-badge.syncing { background: rgba(245, 158, 11, 0.85); }
     .sync-badge.error { background: rgba(239, 68, 68, 0.85); }
 
     .main-container { max-width: 1600px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
-    .section { display: none; animation: fadeIn 0.4s; }
+    .section { display: none; }
     .section.active { display: block; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
     .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -1.2px; display: flex; align-items: center; gap: 14px; }
     .section-header h2::before { content: ''; width: 6px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-pill); }
     .subtitle { font-size: 14px; color: var(--grey); font-weight: 500; margin-top: 4px; }
-    .count-pill { font-size: 13px; font-weight: 600; background: rgba(255, 255, 255, 0.65); backdrop-filter: var(--glass-blur); padding: 9px 18px; border-radius: var(--radius-pill); border: 1px solid var(--glass-border); }
+    .count-pill { font-size: 13px; font-weight: 600; background: rgba(255, 255, 255, 0.65); padding: 9px 18px; border-radius: var(--radius-pill); border: 1px solid var(--glass-border); }
 
     .doctor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
     .doctor-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; box-shadow: var(--shadow-glass); transition: all 0.35s; }
@@ -84,13 +84,13 @@
     .doctor-stat.exp { color: var(--info); background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.25); }
     .doctor-stat.fee { color: var(--primary-dark); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25); }
     .doctor-actions { display: flex; gap: 8px; margin-top: auto; }
-    .btn-sm { padding: 11px 14px; border-radius: var(--radius-sm); border: none; font-weight: 700; font-size: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1; }
+    .btn-sm { padding: 11px 14px; border-radius: var(--radius-sm); border: none; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; flex: 1; }
     .btn-sm:hover { transform: translateY(-2px); }
     .btn-book { background: var(--gradient-primary); color: white; }
     .btn-chat { background: rgba(59, 130, 246, 0.1); color: var(--accent-dark); border: 1px solid rgba(59, 130, 246, 0.3); }
 
     .filters-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
-    .filter-chip { padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.5); color: var(--dark); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .filter-chip { padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.5); color: var(--dark); font-size: 12px; font-weight: 700; cursor: pointer; }
     .filter-chip.active { background: var(--gradient-primary); color: white; border-color: transparent; }
     .search-med { display: flex; flex: 1; max-width: 400px; height: 42px; border-radius: var(--radius-pill); overflow: hidden; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.7); }
     .search-med input { flex: 1; border: none; padding: 0 18px; font-size: 13px; outline: none; background: transparent; }
@@ -156,18 +156,20 @@
     .severity-btn.selected.high { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border-color: transparent; }
     .severity-btn.selected.critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); color: white; border-color: transparent; }
 
-    .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.92); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
+    .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
     .drawer.open { right: 0; }
-    .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); z-index: 10; }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(24px); z-index: 10; }
     .drawer-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; }
     .drawer-header button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.6); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px; }
     .drawer-body { padding: 20px 24px 40px; flex: 1; }
-    .item-card { background: rgba(255, 255, 255, 0.7); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; }
+    .item-card { background: rgba(255, 255, 255, 0.75); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; }
     .item-card strong { font-weight: 700; }
     .item-card .muted { color: var(--grey); font-size: 12px; }
     .badge { display: inline-flex; align-items: center; padding: 4px 11px; border-radius: var(--radius-pill); font-size: 10px; font-weight: 700; color: white; text-transform: uppercase; }
     .bg-pending { background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9)); }
     .bg-confirmed { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
+    .bg-dispatched { background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(3,105,161,0.9)); }
+    .bg-delivered { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
     .bg-rejected { background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(220,38,38,0.9)); }
     .bg-completed { background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(3,105,161,0.9)); }
     .empty-state { text-align: center; padding: 40px 20px; color: var(--grey); font-size: 13px; }
@@ -207,19 +209,18 @@
     .chat-widget-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
     .chat-toggle-btn { background: var(--gradient-primary); color: white; border: none; padding: 14px 22px; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; box-shadow: 0 12px 32px rgba(16,185,129,0.4); font-size: 14px; display: flex; align-items: center; gap: 8px; }
     .chat-toggle-btn:hover { transform: translateY(-3px); }
-    .chat-box { display: none; width: 380px; height: 560px; background: rgba(255, 255, 255, 0.95); backdrop-filter: var(--glass-blur-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-glass-lg); flex-direction: column; overflow: hidden; position: fixed; bottom: 92px; right: 24px; z-index: 1200; }
+    .chat-box { display: none; width: 380px; height: 560px; background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-glass-lg); flex-direction: column; overflow: hidden; position: fixed; bottom: 92px; right: 24px; z-index: 1200; }
     .chat-box.open { display: flex; }
-    .chat-header { background: rgba(255, 255, 255, 0.8); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
+    .chat-header { background: rgba(255, 255, 255, 0.85); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.6); }
     .chat-header span:last-child { cursor: pointer; opacity: 0.6; font-size: 18px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.5); }
     .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: rgba(248, 250, 252, 0.5); }
     .chat-message { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.45; word-wrap: break-word; }
     .chat-message.customer { background: var(--gradient-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
     .chat-message.developer { background: rgba(255, 255, 255, 0.95); color: var(--dark); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
     .chat-meta { font-size: 10px; opacity: 0.75; margin-bottom: 3px; font-weight: 700; text-transform: uppercase; }
-    .chat-footer { display: flex; padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.8); gap: 8px; }
+    .chat-footer { display: flex; padding: 12px; border-top: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.85); gap: 8px; }
     .chat-input { flex: 1; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: var(--radius-pill); padding: 11px 16px; outline: none; font-size: 13px; background: rgba(255, 255, 255, 0.9); }
     .chat-send-btn { background: var(--gradient-primary); border: none; color: white; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 15px; }
-    .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     #devSite { display: none; color: white; min-height: 100vh; }
     #devSite.active { display: block; }
@@ -241,7 +242,7 @@
     .dev-btn-refresh { background: rgba(16, 185, 129, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-btn-logout { background: rgba(239, 68, 68, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-container { max-width: 1800px; margin: 0 auto; padding: 28px 28px 80px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 24px; }
     .stat-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 20px; color: white; }
     .stat-card small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); font-weight: 700; }
     .stat-card strong { display: block; font-size: 26px; font-weight: 800; margin-top: 6px; font-family: 'Space Grotesk', sans-serif; }
@@ -252,6 +253,7 @@
     .dev-tab .tab-badge.green { background: #10b981; }
     .dev-tab .tab-badge.purple { background: #8b5cf6; }
     .dev-tab .tab-badge.blue { background: #3b82f6; }
+    .dev-tab .tab-badge.orange { background: #f59e0b; }
     .dev-tab .tab-badge:empty, .dev-tab .tab-badge[data-count="0"] { display: none; }
     .panel { display: none; }
     .panel.active { display: block; }
@@ -273,6 +275,8 @@
     .badge-confirmed { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .badge-rejected { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .badge-completed { background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; }
+    .badge-dispatched { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+    .badge-delivered { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .badge-doctor { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .badge-admin { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
     .dev-card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
@@ -293,7 +297,6 @@
     .form-group-dev input:focus, .form-group-dev textarea:focus, .form-group-dev select:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12); }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
 
@@ -479,11 +482,12 @@
     </div>
 
     <div class="drawer" id="appointmentsDrawer">
-      <div class="drawer-header"><h3>📅 My Appointments & Reports</h3><button onclick="toggleDrawer('appointmentsDrawer')">✕</button></div>
+      <div class="drawer-header"><h3>📅 My Appointments & Orders</h3><button onclick="toggleDrawer('appointmentsDrawer')">✕</button></div>
       <div class="drawer-body">
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
           <button class="filter-chip active" data-appt-filter="all" onclick="setApptFilter('all', this)">All</button>
-          <button class="filter-chip" data-appt-filter="upcoming" onclick="setApptFilter('upcoming', this)">Upcoming</button>
+          <button class="filter-chip" data-appt-filter="appointments" onclick="setApptFilter('appointments', this)">Appointments</button>
+          <button class="filter-chip" data-appt-filter="medicines" onclick="setApptFilter('medicines', this)">Medicine Orders</button>
           <button class="filter-chip" data-appt-filter="reports" onclick="setApptFilter('reports', this)">Symptom Reports</button>
         </div>
         <div id="appointmentsContainer"></div>
@@ -528,7 +532,7 @@
         <div class="dev-nav-logo">medizone.in<span class="dev-nav-badge">Doctor</span></div>
         <div class="dev-nav-right">
           <div class="dev-sync-badge" id="devSyncBadge">💾 Local mode</div>
-          <div class="dev-nav-user" id="devNavUser">Doctor Access</div>
+          <div class="dev-nav-user">Doctor Access</div>
           <button class="dev-btn-refresh" id="refreshBtn" onclick="manualRefresh()">🔄 Refresh</button>
           <button class="dev-btn-logout" onclick="devLogout()">Logout</button>
         </div>
@@ -539,15 +543,17 @@
           <div class="stat-card"><small>Patients</small><strong id="statUsers">0</strong></div>
           <div class="stat-card"><small>Doctors</small><strong id="statDoctors">0</strong></div>
           <div class="stat-card"><small>Medicines</small><strong id="statMedicines">0</strong></div>
-          <div class="stat-card"><small>Appointments</small><strong id="statOrders">0</strong></div>
+          <div class="stat-card"><small>Appointments</small><strong id="statAppts">0</strong></div>
+          <div class="stat-card"><small>Orders</small><strong id="statOrders">0</strong></div>
           <div class="stat-card"><small>Reports</small><strong id="statReports">0</strong></div>
         </div>
 
         <div class="tabs-bar">
           <button class="dev-tab active" data-tab="accounts" onclick="switchTab('accounts')">🔐 Patients <span class="tab-badge" id="tabAccountsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="doctors" onclick="switchTab('doctors')">🩺 Doctors <span class="tab-badge blue" id="tabDoctorsBadge" data-count="0">0</span></button>
-          <button class="dev-tab" data-tab="medicines" onclick="switchTab('medicines')">💊 Pharmacy</button>
-          <button class="dev-tab" data-tab="orders" onclick="switchTab('orders')">📅 Appointments <span class="tab-badge green" id="tabOrdersBadge" data-count="0">0</span></button>
+          <button class="dev-tab" data-tab="medicines" onclick="switchTab('medicines')">💊 Inventory</button>
+          <button class="dev-tab" data-tab="appointments" onclick="switchTab('appointments')">📅 Appointments <span class="tab-badge green" id="tabApptsBadge" data-count="0">0</span></button>
+          <button class="dev-tab" data-tab="orders" onclick="switchTab('orders')">🛒 Orders <span class="tab-badge orange" id="tabOrdersBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="reports" onclick="switchTab('reports')">🧬 Reports <span class="tab-badge purple" id="tabReportsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="support" onclick="switchTab('support')">💬 Chats <span class="tab-badge" id="tabSupportBadge" data-count="0">0</span></button>
         </div>
@@ -594,7 +600,7 @@
               <div class="form-group-dev"><label>Rating (0-5)</label><input id="ndRating" type="number" min="0" max="5" step="0.1" value="4.5"></div>
             </div>
             <div class="form-row">
-              <div class="form-group-dev"><label>Icon (Emoji)</label><input id="ndIcon" placeholder="👨‍⚕️" maxlength="4" value="👨‍⚕️"></div>
+              <div class="form-group-dev"><label>Icon (Emoji)</label><input id="ndIcon" maxlength="4" value="👨‍⚕️"></div>
               <div class="form-group-dev"><label>Access Role</label>
                 <select id="ndRole">
                   <option value="doctor">Doctor</option>
@@ -603,7 +609,7 @@
                 </select>
               </div>
             </div>
-            <div class="form-group-dev"><label>Short Bio</label><textarea id="ndBio" rows="2" placeholder="Brief description of expertise..."></textarea></div>
+            <div class="form-group-dev"><label>Short Bio</label><textarea id="ndBio" rows="2"></textarea></div>
             <button class="btn-sm-dev btn-primary-sm" id="addDoctorBtn" onclick="devAddDoctor()">+ Add Doctor</button>
           </div>
           <div class="card-list" id="doctorsList"></div>
@@ -634,15 +640,27 @@
           <div class="card-list" id="medicinesList"></div>
         </div>
 
-        <div class="panel" id="panel-orders">
-          <h3>📅 Appointment Requests <span class="count" id="ordersCount">0</span></h3>
+        <div class="panel" id="panel-appointments">
+          <h3>📅 Appointment Requests <span class="count" id="apptsCount">0</span></h3>
           <div class="filter-bar">
-            <button class="chip active" data-order-filter="all" onclick="setOrderFilter('all', this)">All</button>
-            <button class="chip" data-order-filter="pending" onclick="setOrderFilter('pending', this)">Pending</button>
-            <button class="chip" data-order-filter="confirmed" onclick="setOrderFilter('confirmed', this)">Confirmed</button>
-            <button class="chip" data-order-filter="completed" onclick="setOrderFilter('completed', this)">Completed</button>
+            <button class="chip active" data-appt-admin-filter="all" onclick="setApptAdminFilter('all', this)">All</button>
+            <button class="chip" data-appt-admin-filter="pending" onclick="setApptAdminFilter('pending', this)">Pending</button>
+            <button class="chip" data-appt-admin-filter="confirmed" onclick="setApptAdminFilter('confirmed', this)">Confirmed</button>
+            <button class="chip" data-appt-admin-filter="completed" onclick="setApptAdminFilter('completed', this)">Completed</button>
           </div>
-          <div class="card-list" id="ordersList"></div>
+          <div class="card-list" id="appointmentsList"></div>
+        </div>
+
+        <div class="panel" id="panel-orders">
+          <h3>🛒 Medicine Orders <span class="count" id="ordersListCount">0</span></h3>
+          <div class="filter-bar">
+            <button class="chip active" data-order-admin-filter="all" onclick="setOrderAdminFilter('all', this)">All</button>
+            <button class="chip" data-order-admin-filter="pending" onclick="setOrderAdminFilter('pending', this)">Pending</button>
+            <button class="chip" data-order-admin-filter="confirmed" onclick="setOrderAdminFilter('confirmed', this)">Confirmed</button>
+            <button class="chip" data-order-admin-filter="dispatched" onclick="setOrderAdminFilter('dispatched', this)">Dispatched</button>
+            <button class="chip" data-order-admin-filter="delivered" onclick="setOrderAdminFilter('delivered', this)">Delivered</button>
+          </div>
+          <div class="card-list" id="ordersAdminList"></div>
         </div>
 
         <div class="panel" id="panel-reports">
@@ -664,7 +682,7 @@
     </div>
   </div>
 
-  <!-- ============ THREE.JS 3D BODY ============ -->
+  <!-- ============ THREE.JS ============ -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -681,8 +699,8 @@
     const ORGAN_DEFS = [
       { id:'brain',     name:'Brain',           icon:'🧠', y: 4.05, color:0xff9eb3, emissive:0xff6b8a },
       { id:'eyes',      name:'Eyes',            icon:'👁️', y: 3.78, color:0x60a5fa, emissive:0x3b82f6 },
-      { id:'nose',      name:'Nose & Sinuses',  icon:'👃', y: 3.6,  color:0xfca5a5, emissive:0xf87171 },
-      { id:'mouth',     name:'Mouth & Dental',  icon:'🦷', y: 3.36, color:0xfda4af, emissive:0xfb7185 },
+      { id:'nose',      name:'Nose',            icon:'👃', y: 3.6,  color:0xfca5a5, emissive:0xf87171 },
+      { id:'mouth',     name:'Mouth',           icon:'🦷', y: 3.36, color:0xfda4af, emissive:0xfb7185 },
       { id:'thyroid',   name:'Thyroid',         icon:'🦋', y: 3.05, color:0xc4b5fd, emissive:0xa78bfa },
       { id:'trachea',   name:'Trachea',         icon:'🌬️', y: 2.7,  color:0xbae6fd, emissive:0x7dd3fc },
       { id:'lungs',     name:'Lungs',           icon:'🫁', y: 2.35, color:0xfbcfe8, emissive:0xf9a8d4 },
@@ -851,19 +869,16 @@
         bodyGroup.add(eye); clickableMeshes.push(eye);
       });
 
-      // Nose
       const nose = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.22, 12), makeOrganMaterial(0xfca5a5, 0xf87171));
       nose.position.set(0, 3.6, 0.42); nose.rotation.x = Math.PI / 2.4;
       nose.userData = { organId: 'nose', organName: 'Nose & Sinuses', organIcon: '👃', isOrgan: true };
       bodyGroup.add(nose); clickableMeshes.push(nose);
 
-      // Mouth
       const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.08, 0.14), makeOrganMaterial(0xfda4af, 0xfb7185));
       mouth.position.set(0, 3.36, 0.4);
       mouth.userData = { organId: 'mouth', organName: 'Mouth & Dental', organIcon: '🦷', isOrgan: true };
       bodyGroup.add(mouth); clickableMeshes.push(mouth);
 
-      // Thyroid
       const thyroidMat = makeOrganMaterial(0xc4b5fd, 0xa78bfa);
       [-0.09, 0.09].forEach(x => {
         const lobe = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), thyroidMat);
@@ -872,14 +887,11 @@
         bodyGroup.add(lobe); clickableMeshes.push(lobe);
       });
 
-      // Trachea
-      const tracheaMat = makeOrganMaterial(0xbae6fd, 0x7dd3fc);
-      const trachea = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.55, 16), tracheaMat);
+      const trachea = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.55, 16), makeOrganMaterial(0xbae6fd, 0x7dd3fc));
       trachea.position.set(0, 2.7, 0.1);
       trachea.userData = { organId: 'trachea', organName: 'Trachea & Airways', organIcon: '🌬️', isOrgan: true };
       bodyGroup.add(trachea); clickableMeshes.push(trachea);
 
-      // Lungs
       const lungMat = makeOrganMaterial(0xfbcfe8, 0xf9a8d4);
       [-1, 1].forEach(side => {
         const lung = new THREE.Group();
@@ -892,7 +904,6 @@
         bodyGroup.add(lung);
       });
 
-      // Heart
       const heartMat = makeOrganMaterial(0xef4444, 0xdc2626);
       const heart = new THREE.Group();
       const la = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), heartMat); la.position.set(-0.06, 0.14, 0); heart.add(la);
@@ -903,19 +914,16 @@
       heart.traverse(o => { if(o.isMesh){ o.userData = { organId: 'heart', organName: 'Heart', organIcon: '❤️', isOrgan: true }; clickableMeshes.push(o); } });
       bodyGroup.add(heart);
 
-      // Liver
       const liver = new THREE.Mesh(new THREE.SphereGeometry(0.38, 24, 24), makeOrganMaterial(0x92400e, 0x78350f));
       liver.scale.set(1.3, 0.55, 0.85); liver.position.set(-0.18, 1.9, 0.12);
       liver.userData = { organId: 'liver', organName: 'Liver', organIcon: '🫀', isOrgan: true };
       bodyGroup.add(liver); clickableMeshes.push(liver);
 
-      // Stomach
       const stomach = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 20), makeOrganMaterial(0xfcd34d, 0xf59e0b));
       stomach.scale.set(1.05, 0.85, 0.9); stomach.position.set(0.28, 1.82, 0.14); stomach.rotation.z = -0.3;
       stomach.userData = { organId: 'stomach', organName: 'Stomach', organIcon: '🫃', isOrgan: true };
       bodyGroup.add(stomach); clickableMeshes.push(stomach);
 
-      // Kidneys
       const kidneyMat = makeOrganMaterial(0x9a3412, 0x7c2d12);
       [-0.28, 0.28].forEach(x => {
         const k = new THREE.Mesh(new THREE.SphereGeometry(0.16, 18, 18), kidneyMat);
@@ -924,14 +932,12 @@
         bodyGroup.add(k); clickableMeshes.push(k);
       });
 
-      // Intestines
       const intestineMat = makeOrganMaterial(0xfdba74, 0xfb923c);
       const large = new THREE.Mesh(new THREE.TorusGeometry(0.32, 0.055, 12, 40), intestineMat);
       large.position.set(0, 1.15, 0.12); large.rotation.x = Math.PI / 2; large.scale.set(1.05, 0.75, 1);
       large.userData = { organId: 'intestines', organName: 'Intestines', organIcon: '🌀', isOrgan: true };
       bodyGroup.add(large); clickableMeshes.push(large);
 
-      // Spine
       const spineMat = makeOrganMaterial(0xe2e8f0, 0x94a3b8);
       for(let i = 0; i < 14; i++){
         const vert = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.06, 12), spineMat);
@@ -1093,12 +1099,12 @@
 
   <script>
     // ============================================================
-    // MEDIZONE — MAIN SCRIPT (ALL BUGS FIXED)
+    // MEDIZONE — MAIN SCRIPT
     // ============================================================
     const JSONBIN_BIN_ID = "6aa30871ac6210605abdfb81";
     const JSONBIN_API_KEY = "$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.";
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-    const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('YOUR_') && !JSONBIN_API_KEY.includes('YOUR_');
+    const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('6aa30871ac6210605abdfb81') && !JSONBIN_API_KEY.includes('$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.');
     const DEV_KEY = 'DOCTOR-2026';
     const POLL_MS = 2000;
 
@@ -1136,13 +1142,12 @@
       {icon:'🗣️',title:'Language & Trust',desc:'Migrants can\'t find doctors who speak their language.',stats:['22 languages','Trust gap']}
     ];
 
-    let userAccounts=[], doctors=[], medicines=[], appointments=[], cart=[], chatMessages=[], symptomReports=[];
+    let userAccounts=[], doctors=[], medicines=[], appointments=[], medicineOrders=[], cart=[], chatMessages=[], symptomReports=[];
     let currentUser=null;
-    let userFilter='all', adminOrderFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
+    let userFilter='all', apptAdminFilter='all', orderAdminFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
     let selectedOrgan=null, selectedSeverity='medium';
     let isSyncing=false, isDevMode=false, isDevUnlocked=false;
     let activeSection='doctors';
-    // ⭐ FIX: track which actions are processing to prevent double-fire
     const processingKeys = new Set();
 
     const $=id=>document.getElementById(id);
@@ -1163,6 +1168,7 @@
         localStorage.setItem('mz_doctors',JSON.stringify(doctors));
         localStorage.setItem('mz_medicines',JSON.stringify(medicines));
         localStorage.setItem('mz_appointments',JSON.stringify(appointments));
+        localStorage.setItem('mz_medicineOrders',JSON.stringify(medicineOrders));
         localStorage.setItem('mz_chat',JSON.stringify(chatMessages));
         localStorage.setItem('mz_reports',JSON.stringify(symptomReports));
         if(currentUser){
@@ -1178,13 +1184,14 @@
         doctors=JSON.parse(localStorage.getItem('mz_doctors'))||[];
         medicines=JSON.parse(localStorage.getItem('mz_medicines'))||[];
         appointments=JSON.parse(localStorage.getItem('mz_appointments'))||[];
+        medicineOrders=JSON.parse(localStorage.getItem('mz_medicineOrders'))||[];
         chatMessages=JSON.parse(localStorage.getItem('mz_chat'))||[];
         symptomReports=JSON.parse(localStorage.getItem('mz_reports'))||[];
         if(!Array.isArray(doctors)||!doctors.length) doctors=structuredClone(DEFAULT_DOCTORS);
         if(!Array.isArray(medicines)||!medicines.length) medicines=structuredClone(DEFAULT_MEDICINES);
       }catch(e){
         userAccounts=[];doctors=structuredClone(DEFAULT_DOCTORS);medicines=structuredClone(DEFAULT_MEDICINES);
-        appointments=[];chatMessages=[];symptomReports=[];
+        appointments=[];medicineOrders=[];chatMessages=[];symptomReports=[];
       }
     }
 
@@ -1216,12 +1223,13 @@
         const j=await res.json();
         const d=j.record||{};
 
-        userAccounts = Array.isArray(d.users)      ? d.users      : [];
-        doctors      = (Array.isArray(d.doctors) && d.doctors.length) ? d.doctors : structuredClone(DEFAULT_DOCTORS);
-        medicines    = (Array.isArray(d.medicines) && d.medicines.length) ? d.medicines : structuredClone(DEFAULT_MEDICINES);
-        appointments = Array.isArray(d.appointments) ? d.appointments : [];
-        chatMessages = Array.isArray(d.chat)       ? d.chat       : [];
-        symptomReports = Array.isArray(d.reports)  ? d.reports    : [];
+        userAccounts   = Array.isArray(d.users)      ? d.users      : [];
+        doctors        = (Array.isArray(d.doctors) && d.doctors.length) ? d.doctors : structuredClone(DEFAULT_DOCTORS);
+        medicines      = (Array.isArray(d.medicines) && d.medicines.length) ? d.medicines : structuredClone(DEFAULT_MEDICINES);
+        appointments   = Array.isArray(d.appointments) ? d.appointments : [];
+        medicineOrders = Array.isArray(d.medicineOrders) ? d.medicineOrders : [];
+        chatMessages   = Array.isArray(d.chat)       ? d.chat       : [];
+        symptomReports = Array.isArray(d.reports)    ? d.reports    : [];
 
         saveLocal();
         if(!silent)setSync('ok','☁️ Synced');
@@ -1248,6 +1256,7 @@
             doctors,
             medicines,
             appointments,
+            medicineOrders,
             chat: chatMessages,
             reports: symptomReports
           })
@@ -1259,8 +1268,6 @@
         setSync('error','❌ Save failed');
       }finally{isSyncing=false}
     }
-
-    async function persist(){saveLocal();await cloudSave();renderAll();}
 
     // ============ ROUTING ============
     function route(){
@@ -1409,7 +1416,7 @@
       renderCustomerAll();
     }
 
-    // ============ DOCTORS (Customer View) ============
+    // ============ DOCTORS ============
     function renderDoctorSpecFilter(){
       const previous=$('doctorSpecFilter').value||'all';
       const specs=[...new Set(doctors.map(d=>d.spec))].sort();
@@ -1513,7 +1520,6 @@
           patientEmail:currentUser.email,
           patientName:currentUser.name||currentUser.email,
           date, slot, reason,
-          type:'appointment',
           status:'Pending Confirmation',
           createdAt:new Date().toISOString()
         };
@@ -1686,21 +1692,24 @@
         }).filter(Boolean);
         const t=cartTotals();
         const order={
-          id:uid('ORD-'), type:'medicine',
-          patientEmail:currentUser.email,
-          items, total:t.total,
-          address:{name,phone,pin,address,city,state},
-          status:'Pending Verification',
-          createdAt:new Date().toISOString()
+          id: uid('ORD-'),
+          patientEmail: currentUser.email,
+          patientName: currentUser.name || currentUser.email,
+          items,
+          total: t.total,
+          address: {name, phone, pin, address, city, state},
+          status: 'Pending Verification',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         };
-        appointments.unshift(order);
+        medicineOrders.unshift(order);
         cart=[];
         saveLocal();
         await cloudSave();
         closeModal('checkoutModal');
         renderCustomerAll();
         toggleDrawer('appointmentsDrawer');
-        alert('✅ Medicine order placed!');
+        alert('✅ Medicine order placed!\n\nA doctor will verify and dispatch it shortly.');
       } finally {
         processingKeys.delete(key);
       }
@@ -1719,7 +1728,7 @@
       `).join('');
     }
 
-    // ============ 3D BODY SIDEBAR ============
+    // ============ 3D BODY ============
     function renderBodySidebar(){
       if(!selectedOrgan){
         $('organSelectionArea').style.display='block';
@@ -1792,7 +1801,7 @@
       }
     }
 
-    // ============ APPOINTMENTS DRAWER ============
+    // ============ APPOINTMENTS DRAWER (CUSTOMER) ============
     function setApptFilter(f,el){
       apptFilter=f;
       document.querySelectorAll('[data-appt-filter]').forEach(x=>x.classList.remove('active'));
@@ -1800,22 +1809,49 @@
       renderAppointments();
     }
 
+    function statusBadgeClass(status){
+      const map = {
+        'Pending Confirmation': 'bg-pending',
+        'Pending Verification': 'bg-pending',
+        'Confirmed': 'bg-confirmed',
+        'Dispatched': 'bg-dispatched',
+        'Delivered': 'bg-delivered',
+        'Completed': 'bg-completed',
+        'Rejected': 'bg-rejected',
+        'Reviewed': 'bg-confirmed',
+        'Resolved': 'bg-completed'
+      };
+      return map[status] || 'bg-pending';
+    }
+
     function renderAppointments(){
       if(!currentUser){$('appointmentsCount').textContent='0';$('appointmentsContainer').innerHTML='<div class="empty-state">Sign in to view.</div>';return;}
-      let items=[];
-      const appts=appointments.filter(a=>a.patientEmail===currentUser.email);
-      const reports=symptomReports.filter(r=>r.patientEmail===currentUser.email);
-      if(apptFilter==='all') items=[...appts,...reports].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-      if(apptFilter==='upcoming') items=appts.filter(a=>a.type==='appointment');
-      if(apptFilter==='reports') items=reports;
-      $('appointmentsCount').textContent=appts.length + reports.length;
-      const c=$('appointmentsContainer');
+
+      const userAppts = appointments.filter(a => a.patientEmail === currentUser.email);
+      const userOrders = medicineOrders.filter(o => o.patientEmail === currentUser.email);
+      const userReports = symptomReports.filter(r => r.patientEmail === currentUser.email);
+
+      let items = [];
+      if(apptFilter === 'all') items = [
+        ...userAppts.map(x => ({...x, _kind:'appointment'})),
+        ...userOrders.map(x => ({...x, _kind:'order'})),
+        ...userReports.map(x => ({...x, _kind:'report'}))
+      ].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      if(apptFilter === 'appointments') items = userAppts.map(x => ({...x, _kind:'appointment'}));
+      if(apptFilter === 'medicines') items = userOrders.map(x => ({...x, _kind:'order'}));
+      if(apptFilter === 'reports') items = userReports.map(x => ({...x, _kind:'report'}));
+
+      $('appointmentsCount').textContent = userAppts.length + userOrders.length + userReports.length;
+      const c = $('appointmentsContainer');
+
       if(!items.length){
         c.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div>No records in this filter.</div>';
         return;
       }
-      c.innerHTML=items.map(a=>{
-        if(a.organ){
+
+      c.innerHTML = items.map(a => {
+        const badge = statusBadgeClass(a.status);
+        if(a._kind === 'report'){
           return `
             <div class="item-card">
               <div style="display:flex;justify-content:space-between;gap:8px;">
@@ -1823,22 +1859,25 @@
                   <div style="font-weight:800;font-size:14px;">${a.organIcon} ${esc(a.organName)} Report</div>
                   <div class="muted" style="margin-top:4px;">Severity: <strong>${esc(a.severity)}</strong> · ${new Date(a.createdAt).toLocaleString()}</div>
                 </div>
-                <span class="badge bg-pending">${esc(a.status)}</span>
+                <span class="badge ${badge}">${esc(a.status)}</span>
               </div>
               <div class="muted" style="margin-top:8px;">${esc(a.description)}</div>
             </div>
           `;
         }
-        if(a.items){
-          const totalItems=(a.items||[]).reduce((s,i)=>s+i.quantity,0);
+        if(a._kind === 'order'){
+          const totalItems = (a.items||[]).reduce((s,i)=>s+i.quantity,0);
           return `
             <div class="item-card">
               <div style="display:flex;justify-content:space-between;gap:8px;">
                 <div style="font-weight:800;font-size:14px;">💊 Medicine Order</div>
-                <span class="badge bg-pending">${esc(a.status)}</span>
+                <span class="badge ${badge}">${esc(a.status)}</span>
               </div>
               <div class="muted" style="margin-top:5px;">${esc(a.id)} · ${new Date(a.createdAt).toLocaleString()}</div>
               <div class="muted">${totalItems} item(s) · ₹${money(a.total)}</div>
+              <div class="muted" style="margin-top:6px;padding-top:6px;border-top:1px dashed #e2e8f0;">
+                ${(a.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;"><span>${esc(i.name)} × ${i.quantity}</span><span>₹${money(i.price*i.quantity)}</span></div>`).join('')}
+              </div>
             </div>
           `;
         }
@@ -1846,7 +1885,7 @@
           <div class="item-card">
             <div style="display:flex;justify-content:space-between;gap:8px;">
               <div style="font-weight:800;font-size:14px;">${a.doctorIcon||'👨‍⚕️'} ${esc(a.doctorName)}</div>
-              <span class="badge bg-pending">${esc(a.status)}</span>
+              <span class="badge ${badge}">${esc(a.status)}</span>
             </div>
             <div class="muted" style="margin-top:5px;">${esc(a.doctorSpec)} · ${new Date(a.date).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})} · ${esc(a.slot)}</div>
             <div class="muted">Reason: ${esc(a.reason)}</div>
@@ -1870,15 +1909,15 @@
         </div>
         <div class="item-card">
           <strong>Health Summary</strong>
-          <div class="cart-summary-line" style="margin-top:8px;"><span>Appointments</span><strong>${appointments.filter(a=>a.patientEmail===currentUser.email&&a.type==='appointment').length}</strong></div>
+          <div class="cart-summary-line" style="margin-top:8px;"><span>Appointments</span><strong>${appointments.filter(a=>a.patientEmail===currentUser.email).length}</strong></div>
           <div class="cart-summary-line"><span>Symptom Reports</span><strong>${symptomReports.filter(r=>r.patientEmail===currentUser.email).length}</strong></div>
-          <div class="cart-summary-line"><span>Medicine Orders</span><strong>${appointments.filter(a=>a.patientEmail===currentUser.email&&a.type==='medicine').length}</strong></div>
+          <div class="cart-summary-line"><span>Medicine Orders</span><strong>${medicineOrders.filter(o=>o.patientEmail===currentUser.email).length}</strong></div>
         </div>
       `;
       toggleDrawer('profileDrawer');
     }
 
-    // ============ CHAT (⭐ FIXED) ============
+    // ============ CHAT ============
     function toggleChat(){
       const b=$('chatBox');
       b.classList.toggle('open');
@@ -1893,9 +1932,7 @@
       const d=doctors.find(x=>x.id===doctorId);
       if(!d)return;
       const b=$('chatBox');
-      if(!b.classList.contains('open')){
-        b.classList.add('open');
-      }
+      if(!b.classList.contains('open')) b.classList.add('open');
       $('chatTitle').textContent=`💬 ${d.name} — ${d.spec}`;
       renderChat();
       setTimeout(()=>{ const i=$('chatInput'); if(i) i.focus(); }, 100);
@@ -1914,7 +1951,6 @@
       if(btn) btn.disabled = true;
 
       try {
-        // ⭐ CRITICAL FIX: Add the message locally FIRST so it appears instantly
         const newMsg = {
           id: uid('MSG-'),
           sender: 'customer',
@@ -1922,15 +1958,9 @@
           text: text,
           time: new Date().toISOString()
         };
-
-        // Push to in-memory first
         chatMessages.push(newMsg);
-
-        // Clear input & re-render IMMEDIATELY (before any network call)
         input.value = '';
         renderChat();
-
-        // Now save to local + cloud (fire and forget, but awaited for correctness)
         saveLocal();
         await cloudSave();
       } catch(e) {
@@ -1938,7 +1968,6 @@
       } finally {
         processingKeys.delete('chat');
         if(btn) btn.disabled = false;
-        // Re-focus input for next message
         if(input) input.focus();
       }
     }
@@ -1947,7 +1976,6 @@
       const body=$('chatBody');
       if(!body) return;
 
-      // ⭐ FIX: Show messages from THIS user OR doctor replies to them
       const visible = chatMessages.filter(m => {
         if(!currentUser) return false;
         if(m.sender === 'customer' && m.user === currentUser.email) return true;
@@ -1967,7 +1995,6 @@
         </div>
       `).join('');
 
-      // Auto-scroll to bottom
       setTimeout(()=>{ body.scrollTop = body.scrollHeight; }, 30);
     }
 
@@ -1991,7 +2018,9 @@
     }
     function renderAll(){isDevMode?renderDevAll():renderCustomerAll();}
 
-    // ============ DOCTOR CONSOLE ============
+    // ============================================================
+    // DOCTOR CONSOLE
+    // ============================================================
     function devLogin(){
       const key=$('devKey').value.trim();
       if(key!==DEV_KEY){alert('Invalid doctor key.');return;}
@@ -2000,12 +2029,14 @@
       $('devDashboard').style.display='block';
       cloudLoad(true).then(()=>renderDevAll());
     }
+
     function devLogout(){
       isDevUnlocked=false;
       $('devAuthOverlay').style.display='flex';
       $('devDashboard').style.display='none';
       $('devKey').value='';
     }
+
     async function manualRefresh(){
       const btn=$('refreshBtn');
       if(btn)btn.textContent='🔄 Refreshing...';
@@ -2015,22 +2046,23 @@
       setSync('ok','☁️ Synced');
       if(btn)setTimeout(()=>btn.textContent='🔄 Refresh',600);
     }
+
     function switchTab(tab){
       document.querySelectorAll('.dev-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
       document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+tab));
     }
+
     function setUserFilter(f,el){userFilter=f;document.querySelectorAll('[data-user-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevAccounts();}
-    function setOrderFilter(f,el){adminOrderFilter=f;document.querySelectorAll('#panel-orders [data-order-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevOrders();}
+    function setApptAdminFilter(f,el){apptAdminFilter=f;document.querySelectorAll('[data-appt-admin-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevAppointments();}
+    function setOrderAdminFilter(f,el){orderAdminFilter=f;document.querySelectorAll('[data-order-admin-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevMedicineOrders();}
     function setReportFilter(f,el){reportFilter=f;document.querySelectorAll('#panel-reports [data-report-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevReports();}
 
-    // ⭐ FIX: Verify user with processing guard
     async function devVerifyUser(email){
       const key = 'verify_' + email;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
 
       try {
-        // Disable all approve buttons for this email
         document.querySelectorAll(`button[data-email="${email}"]`).forEach(b => {
           b.disabled = true;
           b.textContent = '⏳ Approving...';
@@ -2053,9 +2085,6 @@
         saveLocal();
         await cloudSave();
         renderDevAll();
-
-        // Show success only once
-        console.log(`✅ ${email} approved`);
       } catch(e) {
         console.error('Approval failed:', e);
         alert('Failed to approve. Please try again.');
@@ -2069,11 +2098,11 @@
       await cloudLoad(true);
       userAccounts=userAccounts.filter(x=>x.email!==email);
       appointments=appointments.filter(a=>a.patientEmail!==email);
+      medicineOrders=medicineOrders.filter(o=>o.patientEmail!==email);
       symptomReports=symptomReports.filter(r=>r.patientEmail!==email);
       saveLocal();await cloudSave();renderDevAll();
     }
 
-    // ⭐ FIX: Doctor add with full validation & reset
     async function devAddDoctor(){
       const key = 'addDoctor';
       if(processingKeys.has(key)) return;
@@ -2093,43 +2122,22 @@
         const role = $('ndRole').value;
         const bio = $('ndBio').value.trim() || `Specialist in ${spec.toLowerCase()}.`;
 
-        // Validate
-        if(!name){
-          alert('Please enter the doctor\'s name.');
-          return;
-        }
-        if(!name.toLowerCase().startsWith('dr')){
-          alert('Name should start with "Dr." (e.g., Dr. Rohan Gupta).');
-          return;
-        }
+        if(!name){ alert('Please enter the doctor\'s name.'); return; }
+        if(!name.toLowerCase().startsWith('dr')){ alert('Name should start with "Dr."'); return; }
 
-        // Pull fresh data
         await cloudLoad(true);
-
-        // Generate new ID
         const newId = doctors.length ? Math.max(...doctors.map(d => Number(d.id) || 0)) + 1 : 1;
-
-        // Add doctor
-        const newDoctor = {
-          id: newId,
-          name,
-          spec,
-          qual,
+        doctors.push({
+          id: newId, name, spec, qual,
           exp: Number.isFinite(exp) ? exp : 0,
           fee: Number.isFinite(fee) ? fee : 500,
           rating: Number.isFinite(rating) ? rating : 4.5,
-          icon,
-          bio,
-          role,
+          icon, bio, role,
           createdAt: new Date().toISOString()
-        };
-        doctors.push(newDoctor);
-
-        // Save
+        });
         saveLocal();
         await cloudSave();
 
-        // Clear form
         $('ndName').value = '';
         $('ndQual').value = '';
         $('ndBio').value = '';
@@ -2138,13 +2146,11 @@
         $('ndRating').value = '4.5';
         $('ndIcon').value = '👨‍⚕️';
 
-        // Re-render
         renderDevAll();
-
         alert(`✅ ${name} (${spec}) added successfully.`);
       } catch(e) {
         console.error('Add doctor failed:', e);
-        alert('Failed to add doctor. Please check console for details.');
+        alert('Failed to add doctor.');
       } finally {
         processingKeys.delete(key);
         if(btn) btn.disabled = false;
@@ -2172,7 +2178,6 @@
       }
     }
 
-    // ⭐ FIX: Save doctor edit with proper validation
     async function devSaveDoctor(id){
       const key = 'saveDoctor_' + id;
       if(processingKeys.has(key)) return;
@@ -2181,11 +2186,7 @@
       try {
         await cloudLoad(true);
         const d = doctors.find(x => x.id === id);
-        if(!d) {
-          alert('Doctor not found. Refreshing list.');
-          renderDevAll();
-          return;
-        }
+        if(!d) { alert('Doctor not found.'); renderDevAll(); return; }
 
         const name = ($('edName_'+id).value || '').trim();
         const spec = $('edSpec_'+id).value;
@@ -2197,10 +2198,7 @@
         const role = $('edRole_'+id).value;
         const bio = ($('edBio_'+id).value || '').trim();
 
-        if(!name){
-          alert('Name cannot be empty.');
-          return;
-        }
+        if(!name){ alert('Name cannot be empty.'); return; }
 
         d.name = name;
         d.spec = spec;
@@ -2218,7 +2216,7 @@
         alert(`✅ ${name}'s profile updated.`);
       } catch(e) {
         console.error('Save doctor failed:', e);
-        alert('Failed to save. Please try again.');
+        alert('Failed to save.');
       } finally {
         processingKeys.delete(key);
       }
@@ -2250,8 +2248,7 @@
         await cloudLoad(true);
         const newId = medicines.length ? Math.max(...medicines.map(m => Number(m.id) || 0)) + 1 : 1;
         medicines.push({
-          id: newId,
-          name, brand,
+          id: newId, name, brand,
           price, mrp: price*1.3,
           quantity, category, type, icon, desc
         });
@@ -2283,23 +2280,84 @@
       }
     }
 
-    async function devOrderAction(id,action){
-      const key = 'order_' + id + '_' + action;
+    // ⭐ NEW: Appointment action handler (approve/reject/complete)
+    async function devAppointmentAction(id, action){
+      const key = 'appt_' + id + '_' + action;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
 
+      // Disable buttons immediately
+      document.querySelectorAll(`[data-appt-action="${id}"]`).forEach(b => { b.disabled = true; });
+
       try {
         await cloudLoad(true);
-        const o = appointments.find(a => a.id === id);
-        if(!o) return;
+        const a = appointments.find(x => x.id === id);
+        if(!a) {
+          alert('Appointment not found.');
+          renderDevAll();
+          return;
+        }
 
-        if(action==='confirm') o.status='Confirmed';
-        else if(action==='reject') o.status='Rejected';
-        else if(action==='complete') o.status='Completed';
+        if(action === 'confirm') a.status = 'Confirmed';
+        else if(action === 'reject') a.status = 'Rejected';
+        else if(action === 'complete') a.status = 'Completed';
+
+        a.updatedAt = new Date().toISOString();
 
         saveLocal();
         await cloudSave();
         renderDevAll();
+
+        console.log(`✅ Appointment ${id} → ${a.status}`);
+      } catch(e) {
+        console.error('Appointment action failed:', e);
+        alert('Failed to update appointment. Please try again.');
+      } finally {
+        processingKeys.delete(key);
+      }
+    }
+
+    // ⭐ NEW: Medicine Order workflow (confirm → dispatch → deliver)
+    async function devOrderAction(id, action){
+      const key = 'order_' + id + '_' + action;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      document.querySelectorAll(`[data-order-action="${id}"]`).forEach(b => { b.disabled = true; });
+
+      try {
+        await cloudLoad(true);
+        const o = medicineOrders.find(x => x.id === id);
+        if(!o) {
+          alert('Order not found.');
+          renderDevAll();
+          return;
+        }
+
+        if(action === 'confirm'){
+          o.status = 'Confirmed';
+          // Reduce stock
+          o.items.forEach(item => {
+            const med = medicines.find(m => m.id === item.medicineId);
+            if(med && med.quantity >= item.quantity){
+              med.quantity -= item.quantity;
+            }
+          });
+        }
+        else if(action === 'dispatch') o.status = 'Dispatched';
+        else if(action === 'deliver') o.status = 'Delivered';
+        else if(action === 'reject') o.status = 'Rejected';
+
+        o.updatedAt = new Date().toISOString();
+
+        saveLocal();
+        await cloudSave();
+        renderDevAll();
+
+        console.log(`✅ Order ${id} → ${o.status}`);
+      } catch(e) {
+        console.error('Order action failed:', e);
+        alert('Failed to update order. Please try again.');
       } finally {
         processingKeys.delete(key);
       }
@@ -2350,8 +2408,10 @@
     }
 
     function devStatusClass(s){
-      if(s==='Completed')return'badge-completed';
+      if(s==='Delivered')return'badge-delivered';
+      if(s==='Dispatched')return'badge-dispatched';
       if(s==='Confirmed')return'badge-confirmed';
+      if(s==='Completed')return'badge-completed';
       if(s==='Rejected')return'badge-rejected';
       return'badge-pending';
     }
@@ -2385,14 +2445,13 @@
     function renderDevDoctors(){
       const total = doctors.length;
       $('doctorsAdminCount').textContent = total;
-
       const badge = $('tabDoctorsBadge');
       badge.textContent = total;
       badge.dataset.count = total;
       badge.style.display = total ? 'inline-flex' : 'none';
 
       if(!doctors.length){
-        $('doctorsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🩺</span>No doctors in the system. Add one above.</div>';
+        $('doctorsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🩺</span>No doctors yet. Add one above.</div>';
         return;
       }
 
@@ -2469,52 +2528,109 @@
       `).join('');
     }
 
-    function renderDevOrders(){
-      let arr=[...appointments];
-      if(adminOrderFilter==='pending')arr=arr.filter(o=>o.status==='Pending Confirmation'||o.status==='Pending Verification');
-      if(adminOrderFilter==='confirmed')arr=arr.filter(o=>o.status==='Confirmed');
-      if(adminOrderFilter==='completed')arr=arr.filter(o=>['Completed','Rejected'].includes(o.status));
-      const pending=appointments.filter(o=>o.status==='Pending Confirmation'||o.status==='Pending Verification').length;
-      $('ordersCount').textContent=arr.length;
-      const badge=$('tabOrdersBadge');
-      badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
-      if(!arr.length){$('ordersList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">📅</span>No appointments yet.</div>';return;}
-      const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
-      $('ordersList').innerHTML=sorted.map(o=>{
-        if(o.type==='medicine'){
-          return `
-            <div class="dev-card">
-              <div class="dev-card-head">
-                <div>
-                  <div class="dev-card-title">💊 Medicine Order — ${esc(o.id)}</div>
-                  <div class="dev-card-meta">👤 ${esc(o.patientEmail)}</div>
-                </div>
-                <span class="dev-card-badge ${devStatusClass(o.status)}">${esc(o.status)}</span>
-              </div>
-              <div style="background:#f8fafc;padding:10px;border-radius:10px;margin:8px 0;">
-                ${(o.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;padding:3px 0;"><span>${esc(i.name)} × ${i.quantity}</span><strong>₹${money(i.price*i.quantity)}</strong></div>`).join('')}
-                <div style="display:flex;justify-content:space-between;font-size:13px;color:#0f172a;padding-top:6px;margin-top:6px;border-top:1px solid #e2e8f0;"><span>Total</span><strong>₹${money(o.total)}</strong></div>
-              </div>
-              <div class="dev-card-actions">
-                ${o.status==='Pending Verification'?`<button class="btn-sm-dev btn-success" onclick="devOrderAction('${o.id}','confirm')">✓ Approve</button><button class="btn-sm-dev btn-danger" onclick="devOrderAction('${o.id}','reject')">✕ Reject</button>`:''}
-              </div>
+    // ⭐ FIXED: Render Appointments (only appointment type)
+    function renderDevAppointments(){
+      let arr = [...appointments];
+      if(apptAdminFilter === 'pending') arr = arr.filter(a => a.status === 'Pending Confirmation');
+      if(apptAdminFilter === 'confirmed') arr = arr.filter(a => a.status === 'Confirmed');
+      if(apptAdminFilter === 'completed') arr = arr.filter(a => ['Completed','Rejected'].includes(a.status));
+
+      const pending = appointments.filter(a => a.status === 'Pending Confirmation').length;
+      $('apptsCount').textContent = arr.length;
+      const badge = $('tabApptsBadge');
+      badge.textContent = pending;
+      badge.dataset.count = pending;
+      badge.style.display = pending ? 'inline-flex' : 'none';
+
+      if(!arr.length){
+        $('appointmentsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">📅</span>No appointments found.</div>';
+        return;
+      }
+
+      const sorted = [...arr].sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+
+      $('appointmentsList').innerHTML = sorted.map(a => `
+        <div class="dev-card">
+          <div class="dev-card-head">
+            <div>
+              <div class="dev-card-title">${a.doctorIcon||'👨‍⚕️'} ${esc(a.doctorName)}</div>
+              <div class="dev-card-meta">👤 ${esc(a.patientName||a.patientEmail)} · ${esc(a.patientEmail)}</div>
+              <div class="dev-card-meta">📅 ${esc(a.date)} · ${esc(a.slot)} · ₹${a.fee}</div>
             </div>
-          `;
-        }
+            <span class="dev-card-badge ${devStatusClass(a.status)}">${esc(a.status)}</span>
+          </div>
+          <div style="background:#f8fafc;padding:10px;border-radius:10px;margin:8px 0;font-size:12px;color:#334155;">
+            <strong>Reason:</strong> ${esc(a.reason)}
+          </div>
+          <div class="dev-card-actions">
+            ${a.status === 'Pending Confirmation' ? `
+              <button class="btn-sm-dev btn-success" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','confirm')">✓ Confirm</button>
+              <button class="btn-sm-dev btn-danger" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','reject')">✕ Reject</button>
+            ` : ''}
+            ${a.status === 'Confirmed' ? `
+              <button class="btn-sm-dev btn-info" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','complete')">✓ Mark Completed</button>
+            ` : ''}
+            ${a.status === 'Completed' ? '<span class="dev-card-meta" style="color:#10b981;font-weight:700;">✅ Completed</span>' : ''}
+            ${a.status === 'Rejected' ? '<span class="dev-card-meta" style="color:#ef4444;font-weight:700;">❌ Rejected</span>' : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ⭐ NEW: Render Medicine Orders with 4-state workflow
+    function renderDevMedicineOrders(){
+      let arr = [...medicineOrders];
+      if(orderAdminFilter === 'pending') arr = arr.filter(o => o.status === 'Pending Verification');
+      if(orderAdminFilter === 'confirmed') arr = arr.filter(o => o.status === 'Confirmed');
+      if(orderAdminFilter === 'dispatched') arr = arr.filter(o => o.status === 'Dispatched');
+      if(orderAdminFilter === 'delivered') arr = arr.filter(o => o.status === 'Delivered');
+
+      const pending = medicineOrders.filter(o => o.status === 'Pending Verification').length;
+      $('ordersListCount').textContent = arr.length;
+      const badge = $('tabOrdersBadge');
+      badge.textContent = pending;
+      badge.dataset.count = pending;
+      badge.style.display = pending ? 'inline-flex' : 'none';
+
+      if(!arr.length){
+        $('ordersAdminList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🛒</span>No medicine orders found.</div>';
+        return;
+      }
+
+      const sorted = [...arr].sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+
+      $('ordersAdminList').innerHTML = sorted.map(o => {
+        const totalItems = (o.items||[]).reduce((s,i)=>s+i.quantity,0);
         return `
           <div class="dev-card">
             <div class="dev-card-head">
               <div>
-                <div class="dev-card-title">${o.doctorIcon||'👨‍⚕️'} ${esc(o.doctorName)}</div>
-                <div class="dev-card-meta">👤 ${esc(o.patientEmail)}</div>
-                <div class="dev-card-meta">📅 ${esc(o.date)} · ${esc(o.slot)}</div>
+                <div class="dev-card-title">🛒 Order ${esc(o.id)}</div>
+                <div class="dev-card-meta">👤 ${esc(o.patientName||o.patientEmail)} · ${esc(o.patientEmail)}</div>
+                <div class="dev-card-meta">📅 ${new Date(o.createdAt).toLocaleString()}</div>
               </div>
               <span class="dev-card-badge ${devStatusClass(o.status)}">${esc(o.status)}</span>
             </div>
-            <div class="dev-card-meta">Reason: ${esc(o.reason)}</div>
+            <div style="background:#f8fafc;padding:12px;border-radius:10px;margin:10px 0;">
+              <div style="font-weight:800;font-size:12px;color:#0f172a;margin-bottom:6px;">Items (${totalItems}):</div>
+              ${(o.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;padding:3px 0;"><span>${i.icon||'💊'} ${esc(i.name)} × ${i.quantity}</span><strong>₹${money(i.price*i.quantity)}</strong></div>`).join('')}
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:#0f172a;padding-top:6px;margin-top:6px;border-top:1px solid #e2e8f0;"><span>Total</span><strong>₹${money(o.total)}</strong></div>
+            </div>
+            <div class="dev-card-meta">📍 ${esc(o.address.address)}, ${esc(o.address.city)}, ${esc(o.address.state)} · ${esc(o.address.pin)}</div>
+            <div class="dev-card-meta">📞 ${esc(o.address.phone)}</div>
             <div class="dev-card-actions">
-              ${o.status==='Pending Confirmation'?`<button class="btn-sm-dev btn-success" onclick="devOrderAction('${o.id}','confirm')">✓ Confirm</button><button class="btn-sm-dev btn-danger" onclick="devOrderAction('${o.id}','reject')">✕ Reject</button>`:''}
-              ${o.status==='Confirmed'?`<button class="btn-sm-dev btn-info" onclick="devOrderAction('${o.id}','complete')">✓ Mark Completed</button>`:''}
+              ${o.status === 'Pending Verification' ? `
+                <button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','confirm')">✓ Confirm Order</button>
+                <button class="btn-sm-dev btn-danger" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','reject')">✕ Reject</button>
+              ` : ''}
+              ${o.status === 'Confirmed' ? `
+                <button class="btn-sm-dev btn-info" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','dispatch')">📦 Mark Dispatched</button>
+              ` : ''}
+              ${o.status === 'Dispatched' ? `
+                <button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','deliver')">✓ Mark Delivered</button>
+              ` : ''}
+              ${o.status === 'Delivered' ? '<span class="dev-card-meta" style="color:#10b981;font-weight:700;">✅ Delivered</span>' : ''}
+              ${o.status === 'Rejected' ? '<span class="dev-card-meta" style="color:#ef4444;font-weight:700;">❌ Rejected</span>' : ''}
             </div>
           </div>
         `;
@@ -2556,14 +2672,6 @@
       const custMsgs=chatMessages.filter(m=>m.sender==='customer').length;
       const badge=$('tabSupportBadge');
       badge.textContent=custMsgs;badge.dataset.count=custMsgs;badge.style.display=custMsgs?'inline-flex':'none';
-
-      // Group messages by user for clarity
-      const grouped = {};
-      chatMessages.forEach(m => {
-        if(!grouped[m.user]) grouped[m.user] = [];
-        grouped[m.user].push(m);
-      });
-
       $('supportList').innerHTML=[...chatMessages].reverse().map(m=>`
         <div class="dev-card">
           <div class="dev-card-head">
@@ -2580,18 +2688,20 @@
     }
 
     function devUpdateStats(){
-      $('statUsers').textContent=userAccounts.length;
-      $('statDoctors').textContent=doctors.length;
-      $('statMedicines').textContent=medicines.length;
-      $('statOrders').textContent=appointments.length;
-      $('statReports').textContent=symptomReports.length;
+      $('statUsers').textContent = userAccounts.length;
+      $('statDoctors').textContent = doctors.length;
+      $('statMedicines').textContent = medicines.length;
+      $('statAppts').textContent = appointments.length;
+      $('statOrders').textContent = medicineOrders.length;
+      $('statReports').textContent = symptomReports.length;
     }
 
     function renderDevAll(){
       renderDevAccounts();
       renderDevDoctors();
       renderDevMedicines();
-      renderDevOrders();
+      renderDevAppointments();
+      renderDevMedicineOrders();
       renderDevReports();
       renderDevSupport();
       devUpdateStats();
@@ -2599,44 +2709,42 @@
 
     // ============ POLLING ============
     async function pollOnce(){
-      const wasDev=isDevMode, wasUnlocked=isDevUnlocked;
-
-      // Don't poll while an action is in progress
       if(processingKeys.size > 0) return;
 
+      const wasDev = isDevMode, wasUnlocked = isDevUnlocked;
       await cloudLoad(true);
 
       if(wasDev){
         if(wasUnlocked) renderDevAll();
       } else {
         if(currentUser){
-          const u=userAccounts.find(x=>x.email===currentUser.email);
+          const u = userAccounts.find(x => x.email === currentUser.email);
           if(u){
-            currentUser=u;
-            if(!currentUser.isVerified){logout();alert('Your account access has been revoked.');return;}
-          } else {logout();alert('Your account has been removed.');return;}
+            currentUser = u;
+            if(!currentUser.isVerified){ logout(); alert('Your account access has been revoked.'); return; }
+          } else { logout(); alert('Your account has been removed.'); return; }
         }
         renderCustomerAll();
       }
     }
 
     // ============ INIT ============
-    window.addEventListener('load',async()=>{
+    window.addEventListener('load', async () => {
       loadLocal();
       await cloudLoad(true);
       route();
       populateDoctorDropdown();
-      setSync('ok',CLOUD_ENABLED?'☁️ Synced':'💾 Local mode');
+      setSync('ok', CLOUD_ENABLED ? '☁️ Synced' : '💾 Local mode');
       setInterval(pollOnce, POLL_MS);
-      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pollOnce();});
-      window.addEventListener('focus',pollOnce);
+      document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') pollOnce(); });
+      window.addEventListener('focus', pollOnce);
     });
 
-    window.addEventListener('hashchange',async()=>{
+    window.addEventListener('hashchange', async () => {
       route();
       await cloudLoad(true);
-      if(isDevMode&&isDevUnlocked)renderDevAll();
-      else if(!isDevMode)renderCustomerAll();
+      if(isDevMode && isDevUnlocked) renderDevAll();
+      else if(!isDevMode) renderCustomerAll();
     });
   </script>
 </body>
