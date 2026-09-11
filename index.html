@@ -19,6 +19,7 @@
       --glass-blur-strong: blur(40px) saturate(200%);
       --gradient-primary: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
       --gradient-heart: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-emergency: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
       --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.12);
       --shadow-glass-lg: 0 20px 60px rgba(31, 38, 135, 0.18);
       --radius: 20px; --radius-sm: 14px; --radius-lg: 28px; --radius-pill: 999px;
@@ -52,6 +53,13 @@
     .nav-section { padding: 9px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.25s; border: 1px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
     .nav-section:hover { background: rgba(16, 185, 129, 0.08); }
     .nav-section.active { background: rgba(16, 185, 129, 0.15); color: var(--primary-dark); border-color: rgba(16, 185, 129, 0.3); }
+    .nav-section.emergency { background: rgba(239, 68, 68, 0.08); color: var(--danger); position: relative; }
+    .nav-section.emergency:hover { background: rgba(239, 68, 68, 0.15); }
+    .nav-section.emergency.active { background: var(--gradient-emergency); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
+    .nav-section.emergency::after { content: ''; position: absolute; top: 6px; right: 8px; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; animation: pulse-dot 1.5s ease-in-out infinite; }
+    .nav-section.emergency.active::after { background: white; }
+    @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+
     .nav-right { display: flex; align-items: center; gap: 6px; margin-left: auto; }
     .nav-link { color: var(--dark); font-size: 13px; cursor: pointer; padding: 10px 14px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5); }
     .nav-link:hover { background: rgba(255, 255, 255, 0.7); }
@@ -67,9 +75,11 @@
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
     .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -1.2px; display: flex; align-items: center; gap: 14px; }
     .section-header h2::before { content: ''; width: 6px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-pill); }
+    .section-header.emergency h2::before { background: var(--gradient-emergency); }
     .subtitle { font-size: 14px; color: var(--grey); font-weight: 500; margin-top: 4px; }
     .count-pill { font-size: 13px; font-weight: 600; background: rgba(255, 255, 255, 0.65); padding: 9px 18px; border-radius: var(--radius-pill); border: 1px solid var(--glass-border); }
 
+    /* DOCTORS */
     .doctor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
     .doctor-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; box-shadow: var(--shadow-glass); transition: all 0.35s; }
     .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(31, 38, 135, 0.18); }
@@ -89,6 +99,7 @@
     .btn-book { background: var(--gradient-primary); color: white; }
     .btn-chat { background: rgba(59, 130, 246, 0.1); color: var(--accent-dark); border: 1px solid rgba(59, 130, 246, 0.3); }
 
+    /* MEDICINES */
     .filters-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
     .filter-chip { padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.5); color: var(--dark); font-size: 12px; font-weight: 700; cursor: pointer; }
     .filter-chip.active { background: var(--gradient-primary); color: white; border-color: transparent; }
@@ -115,6 +126,7 @@
     .btn-med:hover:not(:disabled) { transform: translateY(-2px); }
     .btn-med:disabled { background: rgba(226, 232, 240, 0.6); color: #94a3b8; cursor: not-allowed; }
 
+    /* BARRIERS */
     .barriers-container { display: grid; gap: 20px; }
     .intro-text { background: rgba(255, 255, 255, 0.6); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-glass); }
     .intro-text h3 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 10px; }
@@ -127,6 +139,7 @@
     .barrier-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(100, 116, 139, 0.25); }
     .barrier-stat { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(16, 185, 129, 0.1); color: var(--primary-dark); }
 
+    /* 3D BODY */
     .body-3d-explorer { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
     .body-3d-canvas-wrapper { background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(240,253,250,0.4)); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); box-shadow: var(--shadow-glass); position: relative; overflow: hidden; min-height: 640px; }
     #bodyCanvas3D { width: 100%; height: 640px; display: block; cursor: grab; }
@@ -156,6 +169,228 @@
     .severity-btn.selected.high { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border-color: transparent; }
     .severity-btn.selected.critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); color: white; border-color: transparent; }
 
+    /* ============ EMERGENCY / AMBULANCE ============ */
+    .emergency-hero {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(220, 38, 38, 0.06));
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(239, 68, 68, 0.12);
+    }
+    .emergency-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .emergency-hero-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px; font-weight: 800;
+      color: var(--danger);
+      margin-bottom: 8px;
+      letter-spacing: -0.8px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .emergency-hero-content p {
+      font-size: 14px; color: #334155;
+      line-height: 1.6; margin-bottom: 16px;
+      max-width: 620px;
+    }
+    .emergency-hero-stats {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .emergency-stat {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+    .emergency-stat small {
+      display: block; font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--grey); font-weight: 700;
+    }
+    .emergency-stat strong {
+      font-size: 20px; font-weight: 800;
+      color: var(--danger); font-family: 'Space Grotesk', sans-serif;
+    }
+    .emergency-cta {
+      background: var(--gradient-emergency);
+      color: white; border: none;
+      padding: 20px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 800; font-size: 16px;
+      cursor: pointer; letter-spacing: 0.5px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4);
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+      animation: emergencyPulse 2s ease-in-out infinite;
+    }
+    @keyframes emergencyPulse {
+      0%, 100% { box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4); }
+      50% { box-shadow: 0 12px 40px rgba(239, 68, 68, 0.7); }
+    }
+    .emergency-cta:hover { transform: translateY(-3px) scale(1.02); }
+    .emergency-cta:disabled { opacity: 0.6; cursor: not-allowed; animation: none; }
+
+    /* Ambulance units status */
+    .ambulance-status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .amb-unit {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      box-shadow: var(--shadow-glass);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .amb-unit-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(14, 165, 233, 0.15));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .amb-unit-info { flex: 1; }
+    .amb-unit-name { font-weight: 800; font-size: 13px; color: var(--dark); }
+    .amb-unit-status { font-size: 11px; font-weight: 700; margin-top: 2px; display: inline-flex; align-items: center; gap: 4px; }
+    .amb-unit-status.available { color: var(--primary-dark); }
+    .amb-unit-status.busy { color: var(--warning); }
+    .amb-unit-status.offline { color: var(--grey); }
+
+    /* Emergency form */
+    .emergency-form-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-glass);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .emergency-form-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: var(--danger);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .emergency-form-card .form-hint {
+      font-size: 13px; color: var(--grey);
+      margin-bottom: 20px;
+    }
+
+    /* Emergency level selector */
+    .emergency-level-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .emergency-level {
+      padding: 16px 12px;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(100, 116, 139, 0.2);
+      background: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s;
+      position: relative;
+    }
+    .emergency-level:hover { transform: translateY(-2px); }
+    .emergency-level-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+    .emergency-level-title { font-weight: 800; font-size: 13px; color: var(--dark); }
+    .emergency-level-desc { font-size: 10px; color: var(--grey); margin-top: 2px; }
+    .emergency-level.selected { color: white; border-color: transparent; }
+    .emergency-level.selected.critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); }
+    .emergency-level.selected.critical .emergency-level-title,
+    .emergency-level.selected.critical .emergency-level-desc { color: white; }
+    .emergency-level.selected.urgent { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .emergency-level.selected.urgent .emergency-level-title,
+    .emergency-level.selected.urgent .emergency-level-desc { color: white; }
+    .emergency-level.selected.standard { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .emergency-level.selected.standard .emergency-level-title,
+    .emergency-level.selected.standard .emergency-level-desc { color: white; }
+
+    /* Active ambulance request card */
+    .active-request-card {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .active-request-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: var(--gradient-emergency);
+      animation: slideBar 2s ease-in-out infinite;
+    }
+    @keyframes slideBar {
+      0%, 100% { transform: translateX(-30%); }
+      50% { transform: translateX(30%); }
+    }
+    .active-request-head {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 12px;
+      margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .active-request-head h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 800;
+      color: var(--danger);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .active-request-progress {
+      display: flex; gap: 4px; margin: 18px 0;
+    }
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px 4px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.5);
+      font-size: 10px; font-weight: 700;
+      color: var(--grey);
+      border: 1px solid rgba(100, 116, 139, 0.15);
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .progress-step.active {
+      background: var(--gradient-emergency);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    .progress-step.done {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* DRAWERS & MODALS */
     .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(24px); z-index: 10; }
@@ -168,7 +403,9 @@
     .badge { display: inline-flex; align-items: center; padding: 4px 11px; border-radius: var(--radius-pill); font-size: 10px; font-weight: 700; color: white; text-transform: uppercase; }
     .bg-pending { background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9)); }
     .bg-confirmed { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
-    .bg-dispatched { background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(3,105,161,0.9)); }
+    .bg-dispatched { background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(37,99,235,0.9)); }
+    .bg-enroute { background: linear-gradient(135deg, rgba(139,92,246,0.9), rgba(109,40,217,0.9)); }
+    .bg-arrived { background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(3,105,161,0.9)); }
     .bg-delivered { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
     .bg-rejected { background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(220,38,38,0.9)); }
     .bg-completed { background: linear-gradient(135deg, rgba(14,165,233,0.9), rgba(3,105,161,0.9)); }
@@ -202,10 +439,12 @@
     .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .notice { padding: 12px 14px; border-radius: 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--primary-dark); font-size: 12px; font-weight: 600; margin: 14px 0; }
     .notice.info { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2); color: var(--accent-dark); }
+    .notice.danger { background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.25); color: var(--danger); }
     .slot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin: 12px 0; }
     .slot-btn { padding: 10px 6px; border-radius: var(--radius-sm); border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.06); font-size: 12px; font-weight: 700; cursor: pointer; color: var(--primary-dark); }
     .slot-btn.selected { background: var(--gradient-primary); color: white; border-color: transparent; }
 
+    /* CHAT */
     .chat-widget-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
     .chat-toggle-btn { background: var(--gradient-primary); color: white; border: none; padding: 14px 22px; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; box-shadow: 0 12px 32px rgba(16,185,129,0.4); font-size: 14px; display: flex; align-items: center; gap: 8px; }
     .chat-toggle-btn:hover { transform: translateY(-3px); }
@@ -222,6 +461,7 @@
     .chat-input { flex: 1; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: var(--radius-pill); padding: 11px 16px; outline: none; font-size: 13px; background: rgba(255, 255, 255, 0.9); }
     .chat-send-btn { background: var(--gradient-primary); border: none; color: white; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 15px; }
 
+    /* DEV CONSOLE */
     #devSite { display: none; color: white; min-height: 100vh; }
     #devSite.active { display: block; }
     .dev-auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(24px); }
@@ -242,19 +482,26 @@
     .dev-btn-refresh { background: rgba(16, 185, 129, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-btn-logout { background: rgba(239, 68, 68, 0.9); color: white; border: none; padding: 9px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 12px; cursor: pointer; }
     .dev-container { max-width: 1800px; margin: 0 auto; padding: 28px 28px 80px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 24px; }
-    .stat-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 20px; color: white; }
+    .stats-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius); padding: 18px; color: white; }
+    .stat-card.emergency-stat-card { border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.1); }
     .stat-card small { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); font-weight: 700; }
-    .stat-card strong { display: block; font-size: 26px; font-weight: 800; margin-top: 6px; font-family: 'Space Grotesk', sans-serif; }
+    .stat-card strong { display: block; font-size: 24px; font-weight: 800; margin-top: 6px; font-family: 'Space Grotesk', sans-serif; }
+    .stat-card.emergency-stat-card strong { color: #fca5a5; }
+
     .tabs-bar { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; margin-bottom: 22px; overflow-x: auto; }
-    .dev-tab { flex: 1; min-width: 130px; padding: 11px 14px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+    .dev-tab { flex: 1; min-width: 120px; padding: 11px 14px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
     .dev-tab.active { background: rgba(255, 255, 255, 0.15); color: white; }
-    .dev-tab .tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; }
+    .dev-tab.emergency-tab { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+    .dev-tab.emergency-tab.active { background: var(--gradient-emergency); color: white; }
+    .dev-tab .tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; animation: pulse-badge 2s ease-in-out infinite; }
+    @keyframes pulse-badge { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
     .dev-tab .tab-badge.green { background: #10b981; }
     .dev-tab .tab-badge.purple { background: #8b5cf6; }
     .dev-tab .tab-badge.blue { background: #3b82f6; }
     .dev-tab .tab-badge.orange { background: #f59e0b; }
     .dev-tab .tab-badge:empty, .dev-tab .tab-badge[data-count="0"] { display: none; }
+
     .panel { display: none; }
     .panel.active { display: block; }
     .panel h3 { color: white; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
@@ -266,6 +513,7 @@
     .dev-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius-sm); padding: 16px 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
     .dev-card.verified { background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(255, 255, 255, 0.95)); }
     .dev-card.doctor-role { background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(255, 255, 255, 0.95)); }
+    .dev-card.emergency-card { background: linear-gradient(135deg, rgba(254, 242, 242, 0.98), rgba(255, 255, 255, 0.98)); border-left: 4px solid #ef4444; }
     .dev-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
     .dev-card-title { font-weight: 800; color: var(--dark); font-size: 14px; }
     .dev-card-meta { color: var(--grey); font-size: 11px; margin-top: 3px; }
@@ -276,9 +524,15 @@
     .badge-rejected { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .badge-completed { background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; }
     .badge-dispatched { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+    .badge-enroute { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+    .badge-arrived { background: linear-gradient(135deg, #0ea5e9, #0369a1); color: white; }
     .badge-delivered { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .badge-doctor { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .badge-admin { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+    .badge-critical { background: linear-gradient(135deg, #7f1d1d, #991b1b); color: white; }
+    .badge-urgent { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+    .badge-standard { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+
     .dev-card-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
     .btn-sm-dev { padding: 8px 13px; border-radius: 9px; border: none; font-weight: 700; font-size: 11px; cursor: pointer; text-transform: uppercase; }
     .btn-sm-dev:hover { transform: translateY(-1px); }
@@ -287,6 +541,8 @@
     .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .btn-info { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .btn-primary-sm { background: linear-gradient(135deg, #10b981, #0ea5e9); color: white; }
+    .btn-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+    .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
     .empty-panel { background: rgba(255, 255, 255, 0.06); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius); padding: 50px 30px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 13px; }
     .form-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius); padding: 20px; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
     .form-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 14px; }
@@ -300,8 +556,18 @@
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
 
-    @media (max-width: 1100px) { .body-3d-explorer { grid-template-columns: 1fr; } .body-sidebar { position: relative; top: 0; } .stats-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .form-row { grid-template-columns: 1fr; } .nav-sections { order: 3; flex-basis: 100%; justify-content: flex-start; overflow-x: auto; } }
+    @media (max-width: 1100px) {
+      .body-3d-explorer { grid-template-columns: 1fr; }
+      .body-sidebar { position: relative; top: 0; }
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .emergency-hero { grid-template-columns: 1fr; }
+      .emergency-level-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-sections { order: 3; flex-basis: 100%; justify-content: flex-start; overflow-x: auto; }
+    }
     @media (max-width: 768px) {
       .navbar { padding: 10px 16px; gap: 10px; flex-wrap: wrap; }
       .section-header h2 { font-size: 26px; }
@@ -313,6 +579,8 @@
       .dev-container { padding: 18px 14px 60px; }
       .dev-nav-user { display: none; }
       #bodyCanvas3D { height: 480px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .active-request-progress { flex-direction: column; }
     }
   </style>
   <script type="importmap">
@@ -326,6 +594,7 @@
 </head>
 <body>
 
+  <!-- ============ CUSTOMER SITE ============ -->
   <div id="customerSite">
     <div class="sync-badge" id="syncBadge">💾 Local mode</div>
 
@@ -359,6 +628,7 @@
         <div class="nav-section" data-section="pharmacy" onclick="switchSection('pharmacy')">💊 Pharmacy</div>
         <div class="nav-section" data-section="barriers" onclick="switchSection('barriers')">📊 Challenges</div>
         <div class="nav-section" data-section="body" onclick="switchSection('body')">🧬 3D Body</div>
+        <div class="nav-section emergency" data-section="emergency" onclick="switchSection('emergency')">🚨 Emergency</div>
       </div>
       <div class="nav-right">
         <div class="nav-link" onclick="openProfile()"><span id="navUserRole">Role: Guest</span><strong id="navUserEmail">Not Signed In</strong></div>
@@ -369,6 +639,7 @@
     </div></header>
 
     <main class="main-container">
+      <!-- DOCTORS -->
       <section class="section active" id="section-doctors">
         <div class="section-header">
           <div><h2>Our Specialists</h2><div class="subtitle">Verified doctors — book an appointment or consult via chat</div></div>
@@ -380,6 +651,7 @@
         <div class="doctor-grid" id="doctorGrid"></div>
       </section>
 
+      <!-- PHARMACY -->
       <section class="section" id="section-pharmacy">
         <div class="section-header">
           <div><h2>Online Pharmacy</h2><div class="subtitle">Order medicines with verified prescriptions — free home delivery</div></div>
@@ -394,6 +666,7 @@
         <div class="medicine-grid" id="medicineGrid"></div>
       </section>
 
+      <!-- BARRIERS -->
       <section class="section" id="section-barriers">
         <div class="section-header"><div><h2>Barriers to Timely Care</h2><div class="subtitle">Why millions don't receive medical help on time</div></div></div>
         <div class="barriers-container">
@@ -405,6 +678,7 @@
         </div>
       </section>
 
+      <!-- 3D BODY -->
       <section class="section" id="section-body">
         <div class="section-header">
           <div><h2>3D Interactive Body Explorer</h2><div class="subtitle">Rotate the body • Click any organ • Describe your symptoms • Submit to a doctor</div></div>
@@ -462,8 +736,64 @@
           </div>
         </div>
       </section>
+
+      <!-- ============ EMERGENCY SECTION ============ -->
+      <section class="section" id="section-emergency">
+        <div class="section-header emergency">
+          <div>
+            <h2>Emergency Ambulance Service</h2>
+            <div class="subtitle">24/7 emergency response — request an ambulance in seconds</div>
+          </div>
+          <div class="count-pill" id="emergencyCount">0 active requests</div>
+        </div>
+
+        <!-- HERO BANNER -->
+        <div class="emergency-hero">
+          <div class="emergency-hero-content">
+            <h3>🚨 Emergency Ambulance</h3>
+            <p>Every second counts in a medical emergency. Request an ambulance with a single tap. Our dispatch team will confirm and send the nearest available unit to your location.</p>
+            <div class="emergency-hero-stats">
+              <div class="emergency-stat">
+                <small>Available Units</small>
+                <strong id="availableAmbulances">3</strong>
+              </div>
+              <div class="emergency-stat">
+                <small>Avg Response</small>
+                <strong>8 min</strong>
+              </div>
+              <div class="emergency-stat">
+                <small>24/7 Service</small>
+                <strong>Active</strong>
+              </div>
+            </div>
+          </div>
+          <button class="emergency-cta" id="requestAmbulanceBtn" onclick="openAmbulanceRequestModal()">
+            🚑 Request Ambulance Now
+          </button>
+        </div>
+
+        <!-- AMBULANCE UNITS STATUS -->
+        <div style="margin-bottom:16px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+            <span>🚑</span> Fleet Status
+          </div>
+          <div class="ambulance-status-grid" id="ambulanceStatusGrid"></div>
+        </div>
+
+        <!-- ACTIVE REQUEST -->
+        <div id="activeRequestContainer"></div>
+
+        <!-- PAST REQUESTS -->
+        <div style="margin-top:24px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+            <span>📋</span> Request History
+          </div>
+          <div id="pastRequestsContainer"></div>
+        </div>
+      </section>
     </main>
 
+    <!-- DRAWERS -->
     <div class="drawer" id="cartDrawer">
       <div class="drawer-header"><h3>🛒 Medicine Cart</h3><button onclick="toggleDrawer('cartDrawer')">✕</button></div>
       <div class="drawer-body">
@@ -487,8 +817,9 @@
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
           <button class="filter-chip active" data-appt-filter="all" onclick="setApptFilter('all', this)">All</button>
           <button class="filter-chip" data-appt-filter="appointments" onclick="setApptFilter('appointments', this)">Appointments</button>
-          <button class="filter-chip" data-appt-filter="medicines" onclick="setApptFilter('medicines', this)">Medicine Orders</button>
-          <button class="filter-chip" data-appt-filter="reports" onclick="setApptFilter('reports', this)">Symptom Reports</button>
+          <button class="filter-chip" data-appt-filter="medicines" onclick="setApptFilter('medicines', this)">Medicines</button>
+          <button class="filter-chip" data-appt-filter="emergency" onclick="setApptFilter('emergency', this)">🚑 Emergency</button>
+          <button class="filter-chip" data-appt-filter="reports" onclick="setApptFilter('reports', this)">Reports</button>
         </div>
         <div id="appointmentsContainer"></div>
       </div>
@@ -499,6 +830,7 @@
       <div class="drawer-body"><div id="profileContainer"></div></div>
     </div>
 
+    <!-- CHAT -->
     <div class="chat-widget-container">
       <button class="chat-toggle-btn" onclick="toggleChat()">💬 Doctor Chat</button>
       <div class="chat-box" id="chatBox">
@@ -511,10 +843,13 @@
       </div>
     </div>
 
+    <!-- MODALS -->
     <div class="modal-overlay" id="bookingModal"><div class="modal"><div class="modal-head"><h3>📅 Book Appointment</h3><button class="close-btn" onclick="closeModal('bookingModal')">✕</button></div><div id="bookingModalBody"></div></div></div>
     <div class="modal-overlay" id="checkoutModal"><div class="modal"><div class="modal-head"><h3>🛒 Medicine Checkout</h3><button class="close-btn" onclick="closeModal('checkoutModal')">✕</button></div><div id="checkoutBody"></div></div></div>
+    <div class="modal-overlay" id="ambulanceModal"><div class="modal"><div class="modal-head"><h3 style="color:#ef4444;">🚑 Emergency Ambulance Request</h3><button class="close-btn" onclick="closeModal('ambulanceModal')">✕</button></div><div id="ambulanceModalBody"></div></div></div>
   </div>
 
+  <!-- ============ DOCTOR SITE ============ -->
   <div id="devSite">
     <div class="dev-auth-overlay" id="devAuthOverlay">
       <div class="dev-auth-card">
@@ -543,17 +878,19 @@
           <div class="stat-card"><small>Patients</small><strong id="statUsers">0</strong></div>
           <div class="stat-card"><small>Doctors</small><strong id="statDoctors">0</strong></div>
           <div class="stat-card"><small>Medicines</small><strong id="statMedicines">0</strong></div>
-          <div class="stat-card"><small>Appointments</small><strong id="statAppts">0</strong></div>
+          <div class="stat-card"><small>Appts</small><strong id="statAppts">0</strong></div>
           <div class="stat-card"><small>Orders</small><strong id="statOrders">0</strong></div>
           <div class="stat-card"><small>Reports</small><strong id="statReports">0</strong></div>
+          <div class="stat-card emergency-stat-card"><small>🚨 Emergency</small><strong id="statEmergency">0</strong></div>
         </div>
 
         <div class="tabs-bar">
           <button class="dev-tab active" data-tab="accounts" onclick="switchTab('accounts')">🔐 Patients <span class="tab-badge" id="tabAccountsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="doctors" onclick="switchTab('doctors')">🩺 Doctors <span class="tab-badge blue" id="tabDoctorsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="medicines" onclick="switchTab('medicines')">💊 Inventory</button>
-          <button class="dev-tab" data-tab="appointments" onclick="switchTab('appointments')">📅 Appointments <span class="tab-badge green" id="tabApptsBadge" data-count="0">0</span></button>
+          <button class="dev-tab" data-tab="appointments" onclick="switchTab('appointments')">📅 Appts <span class="tab-badge green" id="tabApptsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="orders" onclick="switchTab('orders')">🛒 Orders <span class="tab-badge orange" id="tabOrdersBadge" data-count="0">0</span></button>
+          <button class="dev-tab emergency-tab" data-tab="ambulance" onclick="switchTab('ambulance')">🚨 Ambulance <span class="tab-badge" id="tabAmbulanceBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="reports" onclick="switchTab('reports')">🧬 Reports <span class="tab-badge purple" id="tabReportsBadge" data-count="0">0</span></button>
           <button class="dev-tab" data-tab="support" onclick="switchTab('support')">💬 Chats <span class="tab-badge" id="tabSupportBadge" data-count="0">0</span></button>
         </div>
@@ -663,6 +1000,28 @@
           <div class="card-list" id="ordersAdminList"></div>
         </div>
 
+        <!-- ============ AMBULANCE PANEL ============ -->
+        <div class="panel" id="panel-ambulance">
+          <h3>🚨 Emergency Ambulance Requests <span class="count" id="ambulanceCount">0</span></h3>
+
+          <!-- Fleet status -->
+          <div style="margin-bottom:20px;">
+            <div style="color:white;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;opacity:0.8;">🚑 Fleet Status</div>
+            <div id="devFleetStatus" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;"></div>
+          </div>
+
+          <div class="filter-bar">
+            <button class="chip active" data-amb-filter="all" onclick="setAmbFilter('all', this)">All</button>
+            <button class="chip" data-amb-filter="requested" onclick="setAmbFilter('requested', this)">🔴 Requested</button>
+            <button class="chip" data-amb-filter="dispatched" onclick="setAmbFilter('dispatched', this)">📤 Dispatched</button>
+            <button class="chip" data-amb-filter="enroute" onclick="setAmbFilter('enroute', this)">🚗 En Route</button>
+            <button class="chip" data-amb-filter="arrived" onclick="setAmbFilter('arrived', this)">✅ Arrived</button>
+            <button class="chip" data-amb-filter="completed" onclick="setAmbFilter('completed', this)">✔ Completed</button>
+            <button class="chip" data-amb-filter="rejected" onclick="setAmbFilter('rejected', this)">✕ Rejected</button>
+          </div>
+          <div class="card-list" id="ambulanceList"></div>
+        </div>
+
         <div class="panel" id="panel-reports">
           <h3>🧬 Symptom Reports <span class="count" id="reportsCount">0</span></h3>
           <div class="filter-bar">
@@ -682,7 +1041,7 @@
     </div>
   </div>
 
-  <!-- ============ THREE.JS ============ -->
+  <!-- ============ THREE.JS MODULE ============ -->
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -1099,12 +1458,12 @@
 
   <script>
     // ============================================================
-    // MEDIZONE — MAIN SCRIPT
+    // MEDIZONE — MAIN SCRIPT WITH AMBULANCE SERVICE
     // ============================================================
     const JSONBIN_BIN_ID = "6aa30871ac6210605abdfb81";
     const JSONBIN_API_KEY = "$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.";
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-    const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('6aa30871ac6210605abdfb81') && !JSONBIN_API_KEY.includes('$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.');
+    const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('YOUR_') && !JSONBIN_API_KEY.includes('YOUR_');
     const DEV_KEY = 'DOCTOR-2026';
     const POLL_MS = 2000;
 
@@ -1130,6 +1489,13 @@
       {id:8,name:'ORS Powder',brand:'FDC',price:20,mrp:25,quantity:300,type:'otc',category:'Hydration',icon:'💧',desc:'Oral rehydration'}
     ];
 
+    const DEFAULT_AMBULANCES = [
+      { id:'AMB-01', name:'Unit Alpha', driver:'Rajesh Kumar', status:'available', location:'Central Station' },
+      { id:'AMB-02', name:'Unit Bravo', driver:'Suresh Yadav', status:'available', location:'East Zone' },
+      { id:'AMB-03', name:'Unit Charlie', driver:'Mohammed Ali', status:'available', location:'West Zone' },
+      { id:'AMB-04', name:'Unit Delta', driver:'Anil Sharma', status:'offline', location:'Under Maintenance' }
+    ];
+
     const BARRIERS = [
       {icon:'📍',title:'Geographic Distance',desc:'Rural populations may live 50+ km from the nearest hospital.',stats:['65% rural','>30 km']},
       {icon:'💰',title:'Financial Constraints',desc:'Out-of-pocket expenses push millions into poverty.',stats:['60M poverty','50% skip']},
@@ -1142,10 +1508,11 @@
       {icon:'🗣️',title:'Language & Trust',desc:'Migrants can\'t find doctors who speak their language.',stats:['22 languages','Trust gap']}
     ];
 
-    let userAccounts=[], doctors=[], medicines=[], appointments=[], medicineOrders=[], cart=[], chatMessages=[], symptomReports=[];
+    let userAccounts=[], doctors=[], medicines=[], appointments=[], medicineOrders=[], ambulanceRequests=[], ambulances=[], cart=[], chatMessages=[], symptomReports=[];
     let currentUser=null;
-    let userFilter='all', apptAdminFilter='all', orderAdminFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
+    let userFilter='all', apptAdminFilter='all', orderAdminFilter='all', ambFilter='all', apptFilter='all', reportFilter='all', medFilter='all';
     let selectedOrgan=null, selectedSeverity='medium';
+    let selectedEmergencyLevel='urgent';
     let isSyncing=false, isDevMode=false, isDevUnlocked=false;
     let activeSection='doctors';
     const processingKeys = new Set();
@@ -1169,6 +1536,8 @@
         localStorage.setItem('mz_medicines',JSON.stringify(medicines));
         localStorage.setItem('mz_appointments',JSON.stringify(appointments));
         localStorage.setItem('mz_medicineOrders',JSON.stringify(medicineOrders));
+        localStorage.setItem('mz_ambulanceRequests',JSON.stringify(ambulanceRequests));
+        localStorage.setItem('mz_ambulances',JSON.stringify(ambulances));
         localStorage.setItem('mz_chat',JSON.stringify(chatMessages));
         localStorage.setItem('mz_reports',JSON.stringify(symptomReports));
         if(currentUser){
@@ -1185,13 +1554,17 @@
         medicines=JSON.parse(localStorage.getItem('mz_medicines'))||[];
         appointments=JSON.parse(localStorage.getItem('mz_appointments'))||[];
         medicineOrders=JSON.parse(localStorage.getItem('mz_medicineOrders'))||[];
+        ambulanceRequests=JSON.parse(localStorage.getItem('mz_ambulanceRequests'))||[];
+        ambulances=JSON.parse(localStorage.getItem('mz_ambulances'))||[];
         chatMessages=JSON.parse(localStorage.getItem('mz_chat'))||[];
         symptomReports=JSON.parse(localStorage.getItem('mz_reports'))||[];
         if(!Array.isArray(doctors)||!doctors.length) doctors=structuredClone(DEFAULT_DOCTORS);
         if(!Array.isArray(medicines)||!medicines.length) medicines=structuredClone(DEFAULT_MEDICINES);
+        if(!Array.isArray(ambulances)||!ambulances.length) ambulances=structuredClone(DEFAULT_AMBULANCES);
       }catch(e){
         userAccounts=[];doctors=structuredClone(DEFAULT_DOCTORS);medicines=structuredClone(DEFAULT_MEDICINES);
-        appointments=[];medicineOrders=[];chatMessages=[];symptomReports=[];
+        appointments=[];medicineOrders=[];ambulanceRequests=[];ambulances=structuredClone(DEFAULT_AMBULANCES);
+        chatMessages=[];symptomReports=[];
       }
     }
 
@@ -1223,13 +1596,15 @@
         const j=await res.json();
         const d=j.record||{};
 
-        userAccounts   = Array.isArray(d.users)      ? d.users      : [];
-        doctors        = (Array.isArray(d.doctors) && d.doctors.length) ? d.doctors : structuredClone(DEFAULT_DOCTORS);
-        medicines      = (Array.isArray(d.medicines) && d.medicines.length) ? d.medicines : structuredClone(DEFAULT_MEDICINES);
-        appointments   = Array.isArray(d.appointments) ? d.appointments : [];
-        medicineOrders = Array.isArray(d.medicineOrders) ? d.medicineOrders : [];
-        chatMessages   = Array.isArray(d.chat)       ? d.chat       : [];
-        symptomReports = Array.isArray(d.reports)    ? d.reports    : [];
+        userAccounts       = Array.isArray(d.users)      ? d.users      : [];
+        doctors            = (Array.isArray(d.doctors) && d.doctors.length) ? d.doctors : structuredClone(DEFAULT_DOCTORS);
+        medicines          = (Array.isArray(d.medicines) && d.medicines.length) ? d.medicines : structuredClone(DEFAULT_MEDICINES);
+        appointments       = Array.isArray(d.appointments) ? d.appointments : [];
+        medicineOrders     = Array.isArray(d.medicineOrders) ? d.medicineOrders : [];
+        ambulanceRequests  = Array.isArray(d.ambulanceRequests) ? d.ambulanceRequests : [];
+        ambulances         = (Array.isArray(d.ambulances) && d.ambulances.length) ? d.ambulances : structuredClone(DEFAULT_AMBULANCES);
+        chatMessages       = Array.isArray(d.chat)       ? d.chat       : [];
+        symptomReports     = Array.isArray(d.reports)    ? d.reports    : [];
 
         saveLocal();
         if(!silent)setSync('ok','☁️ Synced');
@@ -1257,6 +1632,8 @@
             medicines,
             appointments,
             medicineOrders,
+            ambulanceRequests,
+            ambulances,
             chat: chatMessages,
             reports: symptomReports
           })
@@ -1323,6 +1700,7 @@
           renderBodySidebar();
         }, 150);
       }
+      if(name==='emergency') renderEmergencySection();
     }
 
     function toggleAuthView(view){
@@ -1709,7 +2087,7 @@
         closeModal('checkoutModal');
         renderCustomerAll();
         toggleDrawer('appointmentsDrawer');
-        alert('✅ Medicine order placed!\n\nA doctor will verify and dispatch it shortly.');
+        alert('✅ Medicine order placed!');
       } finally {
         processingKeys.delete(key);
       }
@@ -1801,6 +2179,283 @@
       }
     }
 
+    // ============ EMERGENCY SECTION (CUSTOMER) ============
+    function renderEmergencySection(){
+      renderFleetStatus();
+      renderActiveRequest();
+      renderPastRequests();
+      updateEmergencyCount();
+    }
+
+    function updateEmergencyCount(){
+      if(!currentUser){
+        $('emergencyCount').textContent = '0 active requests';
+        return;
+      }
+      const active = ambulanceRequests.filter(r =>
+        r.patientEmail === currentUser.email &&
+        !['Delivered','Completed','Rejected','Arrived'].includes(r.status)
+      );
+      $('emergencyCount').textContent = `${active.length} active request${active.length !== 1 ? 's' : ''}`;
+    }
+
+    function renderFleetStatus(){
+      const grid = $('ambulanceStatusGrid');
+      if(!grid) return;
+
+      const available = ambulances.filter(a => a.status === 'available').length;
+      $('availableAmbulances').textContent = available;
+
+      grid.innerHTML = ambulances.map(a => `
+        <div class="amb-unit">
+          <div class="amb-unit-icon">🚑</div>
+          <div class="amb-unit-info">
+            <div class="amb-unit-name">${esc(a.name)}</div>
+            <div class="amb-unit-status ${a.status}">
+              ${a.status === 'available' ? '● Available' : a.status === 'busy' ? '● On Duty' : '● Offline'}
+            </div>
+            <div style="font-size:10px;color:#94a3b8;margin-top:2px;">${esc(a.location)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderActiveRequest(){
+      const container = $('activeRequestContainer');
+      if(!container) return;
+
+      if(!currentUser){
+        container.innerHTML = '';
+        return;
+      }
+
+      const active = ambulanceRequests.find(r =>
+        r.patientEmail === currentUser.email &&
+        !['Delivered','Completed','Rejected'].includes(r.status)
+      );
+
+      if(!active){
+        container.innerHTML = '';
+        return;
+      }
+
+      const steps = [
+        { key: 'Requested', label: 'Requested', icon: '📝' },
+        { key: 'Dispatched', label: 'Dispatched', icon: '📤' },
+        { key: 'En Route', label: 'En Route', icon: '🚗' },
+        { key: 'Arrived', label: 'Arrived', icon: '📍' }
+      ];
+      const currentIdx = steps.findIndex(s => s.key === active.status);
+
+      container.innerHTML = `
+        <div class="active-request-card">
+          <div class="active-request-head">
+            <h4>🚨 Ambulance En Route</h4>
+            <span class="badge ${statusBadgeClass(active.status)}">${esc(active.status)}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;color:#334155;">
+            <div><strong>Request ID:</strong> ${esc(active.id)}</div>
+            <div><strong>Emergency:</strong> <span style="color:#ef4444;font-weight:800;">${esc(active.emergencyLevel.toUpperCase())}</span></div>
+            <div><strong>Patient:</strong> ${esc(active.patientName)}</div>
+            <div><strong>Location:</strong> ${esc(active.location)}</div>
+            ${active.ambulanceName ? `<div><strong>Assigned Unit:</strong> ${esc(active.ambulanceName)}</div>` : ''}
+            ${active.ambulanceDriver ? `<div><strong>Driver:</strong> ${esc(active.ambulanceDriver)}</div>` : ''}
+          </div>
+          <div class="active-request-progress">
+            ${steps.map((s, i) => `
+              <div class="progress-step ${i < currentIdx ? 'done' : i === currentIdx ? 'active' : ''}">
+                <div>${s.icon}</div>
+                <div style="margin-top:2px;">${s.label}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="notice danger" style="margin-top:0;">
+            📞 Keep this app open. Our dispatch team will contact you at <strong>${esc(active.phone)}</strong>.
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPastRequests(){
+      const container = $('pastRequestsContainer');
+      if(!container) return;
+
+      if(!currentUser){
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🚑</div>Sign in to view your emergency requests</div>';
+        return;
+      }
+
+      const past = ambulanceRequests.filter(r =>
+        r.patientEmail === currentUser.email &&
+        ['Delivered','Completed','Rejected'].includes(r.status)
+      );
+
+      if(!past.length){
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div>No past emergency requests</div>';
+        return;
+      }
+
+      container.innerHTML = past.map(r => `
+        <div class="item-card">
+          <div style="display:flex;justify-content:space-between;gap:8px;">
+            <div>
+              <div style="font-weight:800;font-size:14px;">🚑 ${esc(r.id)}</div>
+              <div class="muted" style="margin-top:4px;">${new Date(r.createdAt).toLocaleString()}</div>
+            </div>
+            <span class="badge ${statusBadgeClass(r.status)}">${esc(r.status)}</span>
+          </div>
+          <div class="muted" style="margin-top:8px;">
+            <strong>Level:</strong> ${esc(r.emergencyLevel.toUpperCase())} · 
+            <strong>Location:</strong> ${esc(r.location)}
+          </div>
+          <div class="muted" style="margin-top:4px;"><strong>Condition:</strong> ${esc(r.condition)}</div>
+        </div>
+      `).join('');
+    }
+
+    function openAmbulanceRequestModal(){
+      if(!currentUser) return alert('Please sign in first.');
+
+      // Block if already active
+      const active = ambulanceRequests.find(r =>
+        r.patientEmail === currentUser.email &&
+        !['Delivered','Completed','Rejected'].includes(r.status)
+      );
+      if(active){
+        alert(`⚠️ You already have an active ambulance request.\n\nRequest ID: ${active.id}\nStatus: ${active.status}`);
+        return;
+      }
+
+      selectedEmergencyLevel = 'urgent';
+
+      $('ambulanceModalBody').innerHTML = `
+        <div class="modal-body">
+          <div class="notice danger" style="margin-top:0;">
+            ⚠️ This is a real emergency request. Only submit if you genuinely need urgent medical transport.
+          </div>
+
+          <div class="form-group">
+            <label>Emergency Level</label>
+            <div class="emergency-level-row" id="emergencyLevelRow">
+              <div class="emergency-level standard" data-level="standard" onclick="selectEmergencyLevel('standard')">
+                <span class="emergency-level-icon">🟡</span>
+                <div class="emergency-level-title">Standard</div>
+                <div class="emergency-level-desc">Non-life-threatening</div>
+              </div>
+              <div class="emergency-level urgent selected" data-level="urgent" onclick="selectEmergencyLevel('urgent')">
+                <span class="emergency-level-icon">🟠</span>
+                <div class="emergency-level-title">Urgent</div>
+                <div class="emergency-level-desc">Serious condition</div>
+              </div>
+              <div class="emergency-level critical" data-level="critical" onclick="selectEmergencyLevel('critical')">
+                <span class="emergency-level-icon">🔴</span>
+                <div class="emergency-level-title">Critical</div>
+                <div class="emergency-level-desc">Life-threatening</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Pickup Location</label>
+            <input id="ambLocation" placeholder="Full address where ambulance should arrive" value="${esc(currentUser.name ? '' : '')}">
+          </div>
+
+          <div class="modal-row">
+            <div class="form-group">
+              <label>Contact Phone</label>
+              <input id="ambPhone" placeholder="10-digit phone" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label>Patient Name</label>
+              <input id="ambPatientName" value="${esc(currentUser.name||'')}" placeholder="Patient name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Describe the Condition</label>
+            <textarea id="ambCondition" placeholder="E.g., chest pain, difficulty breathing, unconscious, accident..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred Hospital (optional)</label>
+            <input id="ambHospital" placeholder="Which hospital should we take the patient to?">
+          </div>
+
+          <div class="notice">
+            🕐 Average ambulance response time: <strong>8 minutes</strong> · Available units: <strong>${ambulances.filter(a=>a.status==='available').length}</strong>
+          </div>
+
+          <button class="btn-primary" id="ambSubmitBtn" style="background:linear-gradient(135deg, #ef4444, #dc2626);" onclick="submitAmbulanceRequest()">
+            🚑 Submit Emergency Request
+          </button>
+        </div>
+      `;
+      openModal('ambulanceModal');
+    }
+
+    function selectEmergencyLevel(level){
+      selectedEmergencyLevel = level;
+      document.querySelectorAll('.emergency-level').forEach(el => {
+        el.classList.toggle('selected', el.dataset.level === level);
+      });
+    }
+
+    async function submitAmbulanceRequest(){
+      const key = 'ambulance';
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+
+      const btn = $('ambSubmitBtn');
+      if(btn) btn.disabled = true;
+
+      try {
+        const location = $('ambLocation').value.trim();
+        const phone = $('ambPhone').value.trim();
+        const patientName = $('ambPatientName').value.trim();
+        const condition = $('ambCondition').value.trim();
+        const hospital = $('ambHospital').value.trim();
+
+        if(!location) { alert('Please enter the pickup location.'); return; }
+        if(!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit phone number.'); return; }
+        if(!patientName) { alert('Please enter the patient name.'); return; }
+        if(!condition) { alert('Please describe the condition.'); return; }
+
+        await cloudLoad(true);
+
+        const req = {
+          id: uid('EMG-'),
+          patientEmail: currentUser.email,
+          patientName,
+          phone,
+          location,
+          condition,
+          hospital: hospital || 'Nearest available',
+          emergencyLevel: selectedEmergencyLevel,
+          status: 'Requested',
+          ambulanceId: null,
+          ambulanceName: null,
+          ambulanceDriver: null,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        ambulanceRequests.unshift(req);
+        saveLocal();
+        await cloudSave();
+        closeModal('ambulanceModal');
+        renderCustomerAll();
+        renderEmergencySection();
+
+        alert(`🚨 Emergency request submitted!\n\nRequest ID: ${req.id}\nLevel: ${req.emergencyLevel.toUpperCase()}\n\nOur dispatch team has been notified. You will receive a call shortly at ${phone}.`);
+      } catch(e) {
+        console.error('Ambulance request failed:', e);
+        alert('Failed to submit. Please try again or call emergency services.');
+      } finally {
+        processingKeys.delete(key);
+        if(btn) btn.disabled = false;
+      }
+    }
+
     // ============ APPOINTMENTS DRAWER (CUSTOMER) ============
     function setApptFilter(f,el){
       apptFilter=f;
@@ -1815,11 +2470,14 @@
         'Pending Verification': 'bg-pending',
         'Confirmed': 'bg-confirmed',
         'Dispatched': 'bg-dispatched',
+        'En Route': 'bg-enroute',
+        'Arrived': 'bg-arrived',
         'Delivered': 'bg-delivered',
         'Completed': 'bg-completed',
         'Rejected': 'bg-rejected',
         'Reviewed': 'bg-confirmed',
-        'Resolved': 'bg-completed'
+        'Resolved': 'bg-completed',
+        'Requested': 'bg-pending'
       };
       return map[status] || 'bg-pending';
     }
@@ -1829,19 +2487,22 @@
 
       const userAppts = appointments.filter(a => a.patientEmail === currentUser.email);
       const userOrders = medicineOrders.filter(o => o.patientEmail === currentUser.email);
+      const userEmergencies = ambulanceRequests.filter(r => r.patientEmail === currentUser.email);
       const userReports = symptomReports.filter(r => r.patientEmail === currentUser.email);
 
       let items = [];
       if(apptFilter === 'all') items = [
         ...userAppts.map(x => ({...x, _kind:'appointment'})),
         ...userOrders.map(x => ({...x, _kind:'order'})),
+        ...userEmergencies.map(x => ({...x, _kind:'emergency'})),
         ...userReports.map(x => ({...x, _kind:'report'}))
       ].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
       if(apptFilter === 'appointments') items = userAppts.map(x => ({...x, _kind:'appointment'}));
       if(apptFilter === 'medicines') items = userOrders.map(x => ({...x, _kind:'order'}));
+      if(apptFilter === 'emergency') items = userEmergencies.map(x => ({...x, _kind:'emergency'}));
       if(apptFilter === 'reports') items = userReports.map(x => ({...x, _kind:'report'}));
 
-      $('appointmentsCount').textContent = userAppts.length + userOrders.length + userReports.length;
+      $('appointmentsCount').textContent = userAppts.length + userOrders.length + userEmergencies.length + userReports.length;
       const c = $('appointmentsContainer');
 
       if(!items.length){
@@ -1875,9 +2536,18 @@
               </div>
               <div class="muted" style="margin-top:5px;">${esc(a.id)} · ${new Date(a.createdAt).toLocaleString()}</div>
               <div class="muted">${totalItems} item(s) · ₹${money(a.total)}</div>
-              <div class="muted" style="margin-top:6px;padding-top:6px;border-top:1px dashed #e2e8f0;">
-                ${(a.items||[]).map(i=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0;"><span>${esc(i.name)} × ${i.quantity}</span><span>₹${money(i.price*i.quantity)}</span></div>`).join('')}
+            </div>
+          `;
+        }
+        if(a._kind === 'emergency'){
+          return `
+            <div class="item-card" style="border-left:4px solid #ef4444;">
+              <div style="display:flex;justify-content:space-between;gap:8px;">
+                <div style="font-weight:800;font-size:14px;">🚑 Ambulance Request</div>
+                <span class="badge ${badge}">${esc(a.status)}</span>
               </div>
+              <div class="muted" style="margin-top:5px;">${esc(a.id)} · ${new Date(a.createdAt).toLocaleString()}</div>
+              <div class="muted">Level: <strong>${esc(a.emergencyLevel.toUpperCase())}</strong> · ${esc(a.location)}</div>
             </div>
           `;
         }
@@ -1912,6 +2582,7 @@
           <div class="cart-summary-line" style="margin-top:8px;"><span>Appointments</span><strong>${appointments.filter(a=>a.patientEmail===currentUser.email).length}</strong></div>
           <div class="cart-summary-line"><span>Symptom Reports</span><strong>${symptomReports.filter(r=>r.patientEmail===currentUser.email).length}</strong></div>
           <div class="cart-summary-line"><span>Medicine Orders</span><strong>${medicineOrders.filter(o=>o.patientEmail===currentUser.email).length}</strong></div>
+          <div class="cart-summary-line"><span>Emergency Requests</span><strong>${ambulanceRequests.filter(r=>r.patientEmail===currentUser.email).length}</strong></div>
         </div>
       `;
       toggleDrawer('profileDrawer');
@@ -1942,29 +2613,18 @@
       const input = $('chatInput');
       const btn = $('chatSendBtn');
       const text = (input.value || '').trim();
-
       if(!text){ return; }
       if(!currentUser){ return alert('Please sign in first.'); }
       if(processingKeys.has('chat')){ return; }
-
       processingKeys.add('chat');
       if(btn) btn.disabled = true;
-
       try {
-        const newMsg = {
-          id: uid('MSG-'),
-          sender: 'customer',
-          user: currentUser.email,
-          text: text,
-          time: new Date().toISOString()
-        };
+        const newMsg = { id: uid('MSG-'), sender: 'customer', user: currentUser.email, text, time: new Date().toISOString() };
         chatMessages.push(newMsg);
         input.value = '';
         renderChat();
         saveLocal();
         await cloudSave();
-      } catch(e) {
-        console.error('Chat send failed:', e);
       } finally {
         processingKeys.delete('chat');
         if(btn) btn.disabled = false;
@@ -1975,7 +2635,6 @@
     function renderChat(){
       const body=$('chatBody');
       if(!body) return;
-
       const visible = chatMessages.filter(m => {
         if(!currentUser) return false;
         if(m.sender === 'customer' && m.user === currentUser.email) return true;
@@ -1994,7 +2653,6 @@
           ${esc(m.text)}
         </div>
       `).join('');
-
       setTimeout(()=>{ body.scrollTop = body.scrollHeight; }, 30);
     }
 
@@ -2014,6 +2672,7 @@
       updateCartUI();
       renderAppointments();
       renderChat();
+      renderEmergencySection();
       if(selectedOrgan)renderBodySidebar();
     }
     function renderAll(){isDevMode?renderDevAll():renderCustomerAll();}
@@ -2055,39 +2714,25 @@
     function setUserFilter(f,el){userFilter=f;document.querySelectorAll('[data-user-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevAccounts();}
     function setApptAdminFilter(f,el){apptAdminFilter=f;document.querySelectorAll('[data-appt-admin-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevAppointments();}
     function setOrderAdminFilter(f,el){orderAdminFilter=f;document.querySelectorAll('[data-order-admin-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevMedicineOrders();}
+    function setAmbFilter(f,el){ambFilter=f;document.querySelectorAll('[data-amb-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevAmbulance();}
     function setReportFilter(f,el){reportFilter=f;document.querySelectorAll('#panel-reports [data-report-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevReports();}
 
     async function devVerifyUser(email){
       const key = 'verify_' + email;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         document.querySelectorAll(`button[data-email="${email}"]`).forEach(b => {
-          b.disabled = true;
-          b.textContent = '⏳ Approving...';
+          b.disabled = true; b.textContent = '⏳ Approving...';
         });
-
         await cloudLoad(true);
         const idx = userAccounts.findIndex(u => u.email === email);
-        if(idx === -1){
-          alert('User not found.');
-          renderDevAll();
-          return;
-        }
-
-        if(userAccounts[idx].isVerified){
-          renderDevAll();
-          return;
-        }
-
+        if(idx === -1){ alert('User not found.'); renderDevAll(); return; }
+        if(userAccounts[idx].isVerified){ renderDevAll(); return; }
         userAccounts[idx].isVerified = true;
         saveLocal();
         await cloudSave();
         renderDevAll();
-      } catch(e) {
-        console.error('Approval failed:', e);
-        alert('Failed to approve. Please try again.');
       } finally {
         processingKeys.delete(key);
       }
@@ -2099,6 +2744,7 @@
       userAccounts=userAccounts.filter(x=>x.email!==email);
       appointments=appointments.filter(a=>a.patientEmail!==email);
       medicineOrders=medicineOrders.filter(o=>o.patientEmail!==email);
+      ambulanceRequests=ambulanceRequests.filter(r=>r.patientEmail!==email);
       symptomReports=symptomReports.filter(r=>r.patientEmail!==email);
       saveLocal();await cloudSave();renderDevAll();
     }
@@ -2107,10 +2753,8 @@
       const key = 'addDoctor';
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       const btn = $('addDoctorBtn');
       if(btn) btn.disabled = true;
-
       try {
         const name = $('ndName').value.trim();
         const spec = $('ndSpec').value;
@@ -2121,23 +2765,13 @@
         const icon = $('ndIcon').value.trim() || '👨‍⚕️';
         const role = $('ndRole').value;
         const bio = $('ndBio').value.trim() || `Specialist in ${spec.toLowerCase()}.`;
-
         if(!name){ alert('Please enter the doctor\'s name.'); return; }
         if(!name.toLowerCase().startsWith('dr')){ alert('Name should start with "Dr."'); return; }
-
         await cloudLoad(true);
         const newId = doctors.length ? Math.max(...doctors.map(d => Number(d.id) || 0)) + 1 : 1;
-        doctors.push({
-          id: newId, name, spec, qual,
-          exp: Number.isFinite(exp) ? exp : 0,
-          fee: Number.isFinite(fee) ? fee : 500,
-          rating: Number.isFinite(rating) ? rating : 4.5,
-          icon, bio, role,
-          createdAt: new Date().toISOString()
-        });
+        doctors.push({ id: newId, name, spec, qual, exp, fee, rating, icon, bio, role, createdAt: new Date().toISOString() });
         saveLocal();
         await cloudSave();
-
         $('ndName').value = '';
         $('ndQual').value = '';
         $('ndBio').value = '';
@@ -2145,12 +2779,8 @@
         $('ndFee').value = '500';
         $('ndRating').value = '4.5';
         $('ndIcon').value = '👨‍⚕️';
-
         renderDevAll();
         alert(`✅ ${name} (${spec}) added successfully.`);
-      } catch(e) {
-        console.error('Add doctor failed:', e);
-        alert('Failed to add doctor.');
       } finally {
         processingKeys.delete(key);
         if(btn) btn.disabled = false;
@@ -2161,17 +2791,13 @@
       const d = doctors.find(x => x.id === id);
       if(!d) return;
       if(!confirm(`Remove ${d.name} (${d.spec})?`)) return;
-
       const key = 'removeDoctor_' + id;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         await cloudLoad(true);
         doctors = doctors.filter(x => x.id !== id);
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
+        saveLocal(); await cloudSave(); renderDevAll();
         alert(`✅ ${d.name} removed.`);
       } finally {
         processingKeys.delete(key);
@@ -2182,41 +2808,22 @@
       const key = 'saveDoctor_' + id;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         await cloudLoad(true);
         const d = doctors.find(x => x.id === id);
         if(!d) { alert('Doctor not found.'); renderDevAll(); return; }
-
-        const name = ($('edName_'+id).value || '').trim();
-        const spec = $('edSpec_'+id).value;
-        const qual = ($('edQual_'+id).value || '').trim();
-        const exp = Number($('edExp_'+id).value);
-        const fee = Number($('edFee_'+id).value);
-        const rating = Number($('edRating_'+id).value);
-        const icon = ($('edIcon_'+id).value || '').trim() || '👨‍⚕️';
-        const role = $('edRole_'+id).value;
-        const bio = ($('edBio_'+id).value || '').trim();
-
-        if(!name){ alert('Name cannot be empty.'); return; }
-
-        d.name = name;
-        d.spec = spec;
-        d.qual = qual || d.qual;
-        d.exp = Number.isFinite(exp) ? exp : d.exp;
-        d.fee = Number.isFinite(fee) ? fee : d.fee;
-        d.rating = Number.isFinite(rating) ? rating : d.rating;
-        d.icon = icon;
-        d.role = role;
-        d.bio = bio || d.bio;
-
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
-        alert(`✅ ${name}'s profile updated.`);
-      } catch(e) {
-        console.error('Save doctor failed:', e);
-        alert('Failed to save.');
+        d.name = ($('edName_'+id).value || '').trim();
+        d.spec = $('edSpec_'+id).value;
+        d.qual = ($('edQual_'+id).value || '').trim() || d.qual;
+        d.exp = Number($('edExp_'+id).value) || d.exp;
+        d.fee = Number($('edFee_'+id).value) || d.fee;
+        d.rating = Number($('edRating_'+id).value) || d.rating;
+        d.icon = ($('edIcon_'+id).value || '').trim() || '👨‍⚕️';
+        d.role = $('edRole_'+id).value;
+        d.bio = ($('edBio_'+id).value || '').trim() || d.bio;
+        if(!d.name){ alert('Name cannot be empty.'); return; }
+        saveLocal(); await cloudSave(); renderDevAll();
+        alert(`✅ ${d.name}'s profile updated.`);
       } finally {
         processingKeys.delete(key);
       }
@@ -2226,10 +2833,8 @@
       const key = 'addMedicine';
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       const btn = $('addMedicineBtn');
       if(btn) btn.disabled = true;
-
       try {
         const name=$('nmName').value.trim();
         const brand=$('nmBrand').value.trim();
@@ -2239,24 +2844,14 @@
         const type=$('nmType').value;
         const icon=$('nmIcon').value.trim()||'💊';
         const desc=$('nmDesc').value.trim()||'';
-
         if(!name || !Number.isFinite(price) || price<0 || !Number.isInteger(quantity) || quantity<0){
-          alert('Please enter valid medicine details.');
-          return;
+          alert('Please enter valid medicine details.'); return;
         }
-
         await cloudLoad(true);
         const newId = medicines.length ? Math.max(...medicines.map(m => Number(m.id) || 0)) + 1 : 1;
-        medicines.push({
-          id: newId, name, brand,
-          price, mrp: price*1.3,
-          quantity, category, type, icon, desc
-        });
-        saveLocal();
-        await cloudSave();
-
+        medicines.push({ id: newId, name, brand, price, mrp: price*1.3, quantity, category, type, icon, desc });
+        saveLocal(); await cloudSave();
         ['nmName','nmBrand','nmPrice','nmQty','nmCategory','nmIcon','nmDesc'].forEach(id=>{ $(id).value=''; });
-
         renderDevAll();
         alert(`✅ ${name} added to inventory.`);
       } finally {
@@ -2270,7 +2865,6 @@
       const key = 'delMed_' + id;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         await cloudLoad(true);
         medicines=medicines.filter(m=>m.id!==id);
@@ -2280,84 +2874,102 @@
       }
     }
 
-    // ⭐ NEW: Appointment action handler (approve/reject/complete)
     async function devAppointmentAction(id, action){
       const key = 'appt_' + id + '_' + action;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
-      // Disable buttons immediately
       document.querySelectorAll(`[data-appt-action="${id}"]`).forEach(b => { b.disabled = true; });
-
       try {
         await cloudLoad(true);
         const a = appointments.find(x => x.id === id);
-        if(!a) {
-          alert('Appointment not found.');
-          renderDevAll();
-          return;
-        }
-
+        if(!a) { alert('Appointment not found.'); renderDevAll(); return; }
         if(action === 'confirm') a.status = 'Confirmed';
         else if(action === 'reject') a.status = 'Rejected';
         else if(action === 'complete') a.status = 'Completed';
-
         a.updatedAt = new Date().toISOString();
-
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
-
-        console.log(`✅ Appointment ${id} → ${a.status}`);
-      } catch(e) {
-        console.error('Appointment action failed:', e);
-        alert('Failed to update appointment. Please try again.');
+        saveLocal(); await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
     }
 
-    // ⭐ NEW: Medicine Order workflow (confirm → dispatch → deliver)
     async function devOrderAction(id, action){
       const key = 'order_' + id + '_' + action;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       document.querySelectorAll(`[data-order-action="${id}"]`).forEach(b => { b.disabled = true; });
-
       try {
         await cloudLoad(true);
         const o = medicineOrders.find(x => x.id === id);
-        if(!o) {
-          alert('Order not found.');
-          renderDevAll();
-          return;
-        }
-
+        if(!o) { alert('Order not found.'); renderDevAll(); return; }
         if(action === 'confirm'){
           o.status = 'Confirmed';
-          // Reduce stock
           o.items.forEach(item => {
             const med = medicines.find(m => m.id === item.medicineId);
-            if(med && med.quantity >= item.quantity){
-              med.quantity -= item.quantity;
-            }
+            if(med && med.quantity >= item.quantity) med.quantity -= item.quantity;
           });
         }
         else if(action === 'dispatch') o.status = 'Dispatched';
         else if(action === 'deliver') o.status = 'Delivered';
         else if(action === 'reject') o.status = 'Rejected';
-
         o.updatedAt = new Date().toISOString();
+        saveLocal(); await cloudSave(); renderDevAll();
+      } finally {
+        processingKeys.delete(key);
+      }
+    }
 
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
+    // ============ AMBULANCE ACTIONS (DOCTOR) ============
+    async function devAmbulanceAction(id, action){
+      const key = 'amb_' + id + '_' + action;
+      if(processingKeys.has(key)) return;
+      processingKeys.add(key);
+      document.querySelectorAll(`[data-amb-action="${id}"]`).forEach(b => { b.disabled = true; });
+      try {
+        await cloudLoad(true);
+        const r = ambulanceRequests.find(x => x.id === id);
+        if(!r) { alert('Request not found.'); renderDevAll(); return; }
 
-        console.log(`✅ Order ${id} → ${o.status}`);
+        if(action === 'dispatch'){
+          // Find available ambulance
+          const available = ambulances.find(a => a.status === 'available');
+          if(!available){
+            alert('⚠️ No ambulance units available. Cannot dispatch.');
+            return;
+          }
+          r.status = 'Dispatched';
+          r.ambulanceId = available.id;
+          r.ambulanceName = available.name;
+          r.ambulanceDriver = available.driver;
+          available.status = 'busy';
+          available.currentRequest = r.id;
+        }
+        else if(action === 'enroute') r.status = 'En Route';
+        else if(action === 'arrived'){
+          r.status = 'Arrived';
+        }
+        else if(action === 'complete'){
+          r.status = 'Completed';
+          // Free the ambulance
+          if(r.ambulanceId){
+            const amb = ambulances.find(a => a.id === r.ambulanceId);
+            if(amb){ amb.status = 'available'; amb.currentRequest = null; }
+          }
+        }
+        else if(action === 'reject'){
+          r.status = 'Rejected';
+          r.rejectionReason = 'No ambulance available at this time';
+          // If there was an assigned ambulance, free it
+          if(r.ambulanceId){
+            const amb = ambulances.find(a => a.id === r.ambulanceId);
+            if(amb){ amb.status = 'available'; amb.currentRequest = null; }
+          }
+        }
+        r.updatedAt = new Date().toISOString();
+        saveLocal(); await cloudSave(); renderDevAll();
       } catch(e) {
-        console.error('Order action failed:', e);
-        alert('Failed to update order. Please try again.');
+        console.error('Ambulance action failed:', e);
+        alert('Failed to update. Please try again.');
       } finally {
         processingKeys.delete(key);
       }
@@ -2367,15 +2979,12 @@
       const key = 'report_' + id + '_' + status;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         await cloudLoad(true);
         const r = symptomReports.find(x => x.id === id);
         if(!r) return;
         r.status = status;
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
+        saveLocal(); await cloudSave(); renderDevAll();
       } finally {
         processingKeys.delete(key);
       }
@@ -2384,23 +2993,13 @@
     async function devReplyChat(email){
       const text = prompt(`Reply to ${email}:`);
       if(!text || !text.trim()) return;
-
       const key = 'reply_' + email;
       if(processingKeys.has(key)) return;
       processingKeys.add(key);
-
       try {
         await cloudLoad(true);
-        chatMessages.push({
-          id: uid('MSG-'),
-          sender: 'developer',
-          user: email,
-          text: text.trim(),
-          time: new Date().toISOString()
-        });
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
+        chatMessages.push({ id: uid('MSG-'), sender: 'developer', user: email, text: text.trim(), time: new Date().toISOString() });
+        saveLocal(); await cloudSave(); renderDevAll();
         alert('Reply sent.');
       } finally {
         processingKeys.delete(key);
@@ -2410,6 +3009,8 @@
     function devStatusClass(s){
       if(s==='Delivered')return'badge-delivered';
       if(s==='Dispatched')return'badge-dispatched';
+      if(s==='En Route')return'badge-enroute';
+      if(s==='Arrived')return'badge-arrived';
       if(s==='Confirmed')return'badge-confirmed';
       if(s==='Completed')return'badge-completed';
       if(s==='Rejected')return'badge-rejected';
@@ -2451,10 +3052,9 @@
       badge.style.display = total ? 'inline-flex' : 'none';
 
       if(!doctors.length){
-        $('doctorsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🩺</span>No doctors yet. Add one above.</div>';
+        $('doctorsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🩺</span>No doctors yet.</div>';
         return;
       }
-
       const specs = ['Cardiologist','Neurologist','Pediatrician','Orthopedic','Psychiatrist','Dermatologist','Gynecologist','General Physician','ENT Specialist','Ophthalmologist','Dentist','Physiotherapist'];
 
       $('doctorsList').innerHTML = doctors.map(d => `
@@ -2472,7 +3072,6 @@
               ${d.role === 'admin' ? 'ADMIN' : d.role === 'senior' ? 'SENIOR' : 'DOCTOR'}
             </span>
           </div>
-
           <div class="form-row">
             <div class="form-group-dev"><label>Name</label><input id="edName_${d.id}" value="${esc(d.name)}"></div>
             <div class="form-group-dev"><label>Specialisation</label>
@@ -2500,17 +3099,16 @@
             </div>
           </div>
           <div class="form-group-dev"><label>Bio</label><textarea id="edBio_${d.id}" rows="2">${esc(d.bio||'')}</textarea></div>
-
           <div class="dev-card-actions">
             <button class="btn-sm-dev btn-success" onclick="devSaveDoctor(${d.id})">💾 Save</button>
-            <button class="btn-sm-dev btn-danger" onclick="devRemoveDoctor(${d.id})">🗑 Remove Doctor</button>
+            <button class="btn-sm-dev btn-danger" onclick="devRemoveDoctor(${d.id})">🗑 Remove</button>
           </div>
         </div>
       `).join('');
     }
 
     function renderDevMedicines(){
-      if(!medicines.length){$('medicinesList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💊</span>No medicines in inventory.</div>';return;}
+      if(!medicines.length){$('medicinesList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💊</span>No medicines.</div>';return;}
       $('medicinesList').innerHTML=medicines.map(m=>`
         <div class="dev-card">
           <div class="dev-card-head">
@@ -2528,33 +3126,28 @@
       `).join('');
     }
 
-    // ⭐ FIXED: Render Appointments (only appointment type)
     function renderDevAppointments(){
       let arr = [...appointments];
       if(apptAdminFilter === 'pending') arr = arr.filter(a => a.status === 'Pending Confirmation');
       if(apptAdminFilter === 'confirmed') arr = arr.filter(a => a.status === 'Confirmed');
       if(apptAdminFilter === 'completed') arr = arr.filter(a => ['Completed','Rejected'].includes(a.status));
-
       const pending = appointments.filter(a => a.status === 'Pending Confirmation').length;
       $('apptsCount').textContent = arr.length;
       const badge = $('tabApptsBadge');
       badge.textContent = pending;
       badge.dataset.count = pending;
       badge.style.display = pending ? 'inline-flex' : 'none';
-
       if(!arr.length){
-        $('appointmentsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">📅</span>No appointments found.</div>';
+        $('appointmentsList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">📅</span>No appointments.</div>';
         return;
       }
-
       const sorted = [...arr].sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-
       $('appointmentsList').innerHTML = sorted.map(a => `
         <div class="dev-card">
           <div class="dev-card-head">
             <div>
               <div class="dev-card-title">${a.doctorIcon||'👨‍⚕️'} ${esc(a.doctorName)}</div>
-              <div class="dev-card-meta">👤 ${esc(a.patientName||a.patientEmail)} · ${esc(a.patientEmail)}</div>
+              <div class="dev-card-meta">👤 ${esc(a.patientName||a.patientEmail)}</div>
               <div class="dev-card-meta">📅 ${esc(a.date)} · ${esc(a.slot)} · ₹${a.fee}</div>
             </div>
             <span class="dev-card-badge ${devStatusClass(a.status)}">${esc(a.status)}</span>
@@ -2567,38 +3160,29 @@
               <button class="btn-sm-dev btn-success" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','confirm')">✓ Confirm</button>
               <button class="btn-sm-dev btn-danger" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','reject')">✕ Reject</button>
             ` : ''}
-            ${a.status === 'Confirmed' ? `
-              <button class="btn-sm-dev btn-info" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','complete')">✓ Mark Completed</button>
-            ` : ''}
-            ${a.status === 'Completed' ? '<span class="dev-card-meta" style="color:#10b981;font-weight:700;">✅ Completed</span>' : ''}
-            ${a.status === 'Rejected' ? '<span class="dev-card-meta" style="color:#ef4444;font-weight:700;">❌ Rejected</span>' : ''}
+            ${a.status === 'Confirmed' ? `<button class="btn-sm-dev btn-info" data-appt-action="${a.id}" onclick="devAppointmentAction('${a.id}','complete')">✓ Complete</button>` : ''}
           </div>
         </div>
       `).join('');
     }
 
-    // ⭐ NEW: Render Medicine Orders with 4-state workflow
     function renderDevMedicineOrders(){
       let arr = [...medicineOrders];
       if(orderAdminFilter === 'pending') arr = arr.filter(o => o.status === 'Pending Verification');
       if(orderAdminFilter === 'confirmed') arr = arr.filter(o => o.status === 'Confirmed');
       if(orderAdminFilter === 'dispatched') arr = arr.filter(o => o.status === 'Dispatched');
       if(orderAdminFilter === 'delivered') arr = arr.filter(o => o.status === 'Delivered');
-
       const pending = medicineOrders.filter(o => o.status === 'Pending Verification').length;
       $('ordersListCount').textContent = arr.length;
       const badge = $('tabOrdersBadge');
       badge.textContent = pending;
       badge.dataset.count = pending;
       badge.style.display = pending ? 'inline-flex' : 'none';
-
       if(!arr.length){
-        $('ordersAdminList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🛒</span>No medicine orders found.</div>';
+        $('ordersAdminList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🛒</span>No medicine orders.</div>';
         return;
       }
-
       const sorted = [...arr].sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
-
       $('ordersAdminList').innerHTML = sorted.map(o => {
         const totalItems = (o.items||[]).reduce((s,i)=>s+i.quantity,0);
         return `
@@ -2606,7 +3190,7 @@
             <div class="dev-card-head">
               <div>
                 <div class="dev-card-title">🛒 Order ${esc(o.id)}</div>
-                <div class="dev-card-meta">👤 ${esc(o.patientName||o.patientEmail)} · ${esc(o.patientEmail)}</div>
+                <div class="dev-card-meta">👤 ${esc(o.patientName||o.patientEmail)}</div>
                 <div class="dev-card-meta">📅 ${new Date(o.createdAt).toLocaleString()}</div>
               </div>
               <span class="dev-card-badge ${devStatusClass(o.status)}">${esc(o.status)}</span>
@@ -2620,17 +3204,107 @@
             <div class="dev-card-meta">📞 ${esc(o.address.phone)}</div>
             <div class="dev-card-actions">
               ${o.status === 'Pending Verification' ? `
-                <button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','confirm')">✓ Confirm Order</button>
+                <button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','confirm')">✓ Confirm</button>
                 <button class="btn-sm-dev btn-danger" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','reject')">✕ Reject</button>
               ` : ''}
-              ${o.status === 'Confirmed' ? `
-                <button class="btn-sm-dev btn-info" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','dispatch')">📦 Mark Dispatched</button>
+              ${o.status === 'Confirmed' ? `<button class="btn-sm-dev btn-info" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','dispatch')">📦 Dispatch</button>` : ''}
+              ${o.status === 'Dispatched' ? `<button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','deliver')">✓ Deliver</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============ AMBULANCE RENDERING (DOCTOR) ============
+    function renderDevAmbulance(){
+      // Fleet status
+      const fleet = $('devFleetStatus');
+      if(fleet){
+        fleet.innerHTML = ambulances.map(a => `
+          <div style="background:rgba(255,255,255,0.95);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;border-left:4px solid ${a.status === 'available' ? '#10b981' : a.status === 'busy' ? '#f59e0b' : '#64748b'};">
+            <div style="font-size:22px;">🚑</div>
+            <div style="flex:1;">
+              <div style="font-weight:800;font-size:12px;color:#0f172a;">${esc(a.name)}</div>
+              <div style="font-size:10px;color:#64748b;margin-top:2px;">${esc(a.driver)}</div>
+              <div style="font-size:10px;font-weight:700;margin-top:2px;color:${a.status === 'available' ? '#10b981' : a.status === 'busy' ? '#f59e0b' : '#64748b'};">
+                ${a.status === 'available' ? '● Available' : a.status === 'busy' ? '● On Duty' : '● Offline'}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Requests
+      let arr = [...ambulanceRequests];
+      if(ambFilter === 'requested') arr = arr.filter(r => r.status === 'Requested');
+      if(ambFilter === 'dispatched') arr = arr.filter(r => r.status === 'Dispatched');
+      if(ambFilter === 'enroute') arr = arr.filter(r => r.status === 'En Route');
+      if(ambFilter === 'arrived') arr = arr.filter(r => r.status === 'Arrived');
+      if(ambFilter === 'completed') arr = arr.filter(r => ['Completed','Delivered'].includes(r.status));
+      if(ambFilter === 'rejected') arr = arr.filter(r => r.status === 'Rejected');
+
+      const pending = ambulanceRequests.filter(r => r.status === 'Requested').length;
+      $('ambulanceCount').textContent = arr.length;
+      const badge = $('tabAmbulanceBadge');
+      badge.textContent = pending;
+      badge.dataset.count = pending;
+      badge.style.display = pending ? 'inline-flex' : 'none';
+
+      if(!arr.length){
+        $('ambulanceList').innerHTML = '<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🚑</span>No emergency requests in this filter.</div>';
+        return;
+      }
+
+      const sorted = [...arr].sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0));
+
+      $('ambulanceList').innerHTML = sorted.map(r => {
+        const levelClass = r.emergencyLevel === 'critical' ? 'badge-critical' : r.emergencyLevel === 'urgent' ? 'badge-urgent' : 'badge-standard';
+        const levelEmoji = r.emergencyLevel === 'critical' ? '🔴' : r.emergencyLevel === 'urgent' ? '🟠' : '🟡';
+        return `
+          <div class="dev-card emergency-card">
+            <div class="dev-card-head">
+              <div>
+                <div class="dev-card-title">🚑 ${esc(r.id)} · ${esc(r.patientName)}</div>
+                <div class="dev-card-meta">📞 ${esc(r.phone)} · ${esc(r.patientEmail)}</div>
+                <div class="dev-card-meta">📅 ${new Date(r.createdAt).toLocaleString()}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+                <span class="dev-card-badge ${levelClass}">${levelEmoji} ${esc(r.emergencyLevel.toUpperCase())}</span>
+                <span class="dev-card-badge ${devStatusClass(r.status)}">${esc(r.status)}</span>
+              </div>
+            </div>
+
+            <div style="background:#fef2f2;padding:12px;border-radius:10px;margin:10px 0;border-left:3px solid #ef4444;">
+              <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Condition</div>
+              <div style="font-size:13px;color:#334155;">${esc(r.condition)}</div>
+            </div>
+
+            <div class="dev-card-meta">📍 <strong>Pickup:</strong> ${esc(r.location)}</div>
+            <div class="dev-card-meta">🏥 <strong>Hospital:</strong> ${esc(r.hospital)}</div>
+
+            ${r.ambulanceName ? `
+              <div style="background:#f0fdf4;padding:10px;border-radius:10px;margin-top:10px;border-left:3px solid #10b981;">
+                <div style="font-size:11px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Assigned Unit</div>
+                <div style="font-size:13px;color:#0f172a;font-weight:700;">🚑 ${esc(r.ambulanceName)} — ${esc(r.ambulanceDriver)}</div>
+              </div>
+            ` : ''}
+
+            <div class="dev-card-actions">
+              ${r.status === 'Requested' ? `
+                <button class="btn-sm-dev btn-success" data-amb-action="${r.id}" onclick="devAmbulanceAction('${r.id}','dispatch')">✓ Dispatch Ambulance</button>
+                <button class="btn-sm-dev btn-danger" data-amb-action="${r.id}" onclick="devAmbulanceAction('${r.id}','reject')">✕ Reject (No Availability)</button>
               ` : ''}
-              ${o.status === 'Dispatched' ? `
-                <button class="btn-sm-dev btn-success" data-order-action="${o.id}" onclick="devOrderAction('${o.id}','deliver')">✓ Mark Delivered</button>
+              ${r.status === 'Dispatched' ? `
+                <button class="btn-sm-dev btn-purple" data-amb-action="${r.id}" onclick="devAmbulanceAction('${r.id}','enroute')">🚗 Mark En Route</button>
               ` : ''}
-              ${o.status === 'Delivered' ? '<span class="dev-card-meta" style="color:#10b981;font-weight:700;">✅ Delivered</span>' : ''}
-              ${o.status === 'Rejected' ? '<span class="dev-card-meta" style="color:#ef4444;font-weight:700;">❌ Rejected</span>' : ''}
+              ${r.status === 'En Route' ? `
+                <button class="btn-sm-dev btn-info" data-amb-action="${r.id}" onclick="devAmbulanceAction('${r.id}','arrived')">📍 Mark Arrived</button>
+              ` : ''}
+              ${r.status === 'Arrived' ? `
+                <button class="btn-sm-dev btn-success" data-amb-action="${r.id}" onclick="devAmbulanceAction('${r.id}','complete')">✓ Complete & Free Unit</button>
+              ` : ''}
+              ${r.status === 'Completed' ? '<span style="color:#10b981;font-weight:800;font-size:12px;">✅ Completed</span>' : ''}
+              ${r.status === 'Rejected' ? '<span style="color:#ef4444;font-weight:800;font-size:12px;">❌ Rejected</span>' : ''}
             </div>
           </div>
         `;
@@ -2644,7 +3318,7 @@
       $('reportsCount').textContent=arr.length;
       const badge=$('tabReportsBadge');
       badge.textContent=newCount;badge.dataset.count=newCount;badge.style.display=newCount?'inline-flex':'none';
-      if(!arr.length){$('reportsList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🧬</span>No symptom reports yet.</div>';return;}
+      if(!arr.length){$('reportsList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">🧬</span>No symptom reports.</div>';return;}
       const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       const sevColor={low:'badge-verified',medium:'badge-pending',high:'badge-rejected',critical:'badge-rejected'};
       $('reportsList').innerHTML=sorted.map(r=>`
@@ -2660,7 +3334,7 @@
           <div style="background:#f8fafc;padding:10px;border-radius:10px;margin:8px 0;font-size:13px;color:#334155;">${esc(r.description)}</div>
           <div class="dev-card-meta">Duration: ${esc(r.duration)}${r.preferredDoctor?` · Preferred: ${esc(r.preferredDoctor.name)}`:' · No preferred doctor'}</div>
           <div class="dev-card-actions">
-            ${r.status==='New'?`<button class="btn-sm-dev btn-info" onclick="devReportStatus('${r.id}','Reviewed')">👁 Mark Reviewed</button><button class="btn-sm-dev btn-success" onclick="devReportStatus('${r.id}','Resolved')">✓ Resolved</button>`:''}
+            ${r.status==='New'?`<button class="btn-sm-dev btn-info" onclick="devReportStatus('${r.id}','Reviewed')">👁 Reviewed</button><button class="btn-sm-dev btn-success" onclick="devReportStatus('${r.id}','Resolved')">✓ Resolved</button>`:''}
             ${r.status!=='New'?`<span class="dev-card-meta">Status: ${esc(r.status)}</span>`:''}
           </div>
         </div>
@@ -2668,7 +3342,7 @@
     }
 
     function renderDevSupport(){
-      if(!chatMessages.length){$('supportList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💬</span>No chat messages yet.</div>';$('tabSupportBadge').style.display='none';return;}
+      if(!chatMessages.length){$('supportList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">💬</span>No chat messages.</div>';$('tabSupportBadge').style.display='none';return;}
       const custMsgs=chatMessages.filter(m=>m.sender==='customer').length;
       const badge=$('tabSupportBadge');
       badge.textContent=custMsgs;badge.dataset.count=custMsgs;badge.style.display=custMsgs?'inline-flex':'none';
@@ -2694,6 +3368,7 @@
       $('statAppts').textContent = appointments.length;
       $('statOrders').textContent = medicineOrders.length;
       $('statReports').textContent = symptomReports.length;
+      $('statEmergency').textContent = ambulanceRequests.filter(r => !['Completed','Rejected'].includes(r.status)).length;
     }
 
     function renderDevAll(){
@@ -2702,6 +3377,7 @@
       renderDevMedicines();
       renderDevAppointments();
       renderDevMedicineOrders();
+      renderDevAmbulance();
       renderDevReports();
       renderDevSupport();
       devUpdateStats();
@@ -2710,10 +3386,8 @@
     // ============ POLLING ============
     async function pollOnce(){
       if(processingKeys.size > 0) return;
-
       const wasDev = isDevMode, wasUnlocked = isDevUnlocked;
       await cloudLoad(true);
-
       if(wasDev){
         if(wasUnlocked) renderDevAll();
       } else {
