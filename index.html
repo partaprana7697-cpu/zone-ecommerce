@@ -1343,7 +1343,7 @@
 
     function loadLocal(){
       try{
-        userAccounts=JSON.parse(localStorage.getItem('mz_users'))||[];
+        userAccounts=(JSON.parse(localStorage.getItem('mz_users'))||[]).map(u=>({...u,isVerified:true}));
         doctors=JSON.parse(localStorage.getItem('mz_doctors'))||[];
         medicines=JSON.parse(localStorage.getItem('mz_medicines'))||[];
         appointments=JSON.parse(localStorage.getItem('mz_appointments'))||[];
@@ -1365,7 +1365,7 @@
     function loadSession(){
       const email=localStorage.getItem('mz_session');
       if(!email)return false;
-      const u=userAccounts.find(x=>x.email===email&&x.isVerified);
+      const u=userAccounts.find(x=>x.email===email);
       if(!u)return false;
       currentUser=u;
       cart=JSON.parse(localStorage.getItem('mz_cart_'+email)||'[]');
@@ -1392,7 +1392,7 @@
         const d=j.record||{};
 
         // ⭐ Assign ALL fields, including ambulance
-        userAccounts       = Array.isArray(d.users)      ? d.users      : [];
+        userAccounts       = Array.isArray(d.users)      ? d.users.map(u => ({...u, isVerified: true})) : [];
         doctors            = (Array.isArray(d.doctors) && d.doctors.length) ? d.doctors : structuredClone(DEFAULT_DOCTORS);
         medicines          = (Array.isArray(d.medicines) && d.medicines.length) ? d.medicines : structuredClone(DEFAULT_MEDICINES);
         appointments       = Array.isArray(d.appointments) ? d.appointments : [];
@@ -1549,12 +1549,12 @@
         userAccounts.push({
           email, name,
           passwordHash: await hashPassword(pass),
-          isVerified: false,
+          isVerified: true,
           createdAt: new Date().toISOString()
         });
         saveLocal();
         await cloudSave();
-        alert('✅ Account created!\n\nA doctor must approve your account before you can sign in.');
+        alert('✅ Account created successfully!\n\nYou can sign in now and use all customer features.');
         $('regName').value=$('regEmail').value=$('regPassword').value=$('regPassword2').value='';
         toggleAuthView('login');
       } catch(e) {
@@ -1577,7 +1577,6 @@
         await cloudLoad(true);
         const acc = userAccounts.find(u => u.email === email);
         if(!acc) return alert('Invalid email or password.');
-        if(!acc.isVerified) return alert('⏳ Account approval is still pending.\n\nA doctor must approve your account before you can sign in.');
 
         const hash = await hashPassword(pass);
         if(acc.passwordHash !== hash) return alert('Invalid email or password.');
@@ -2556,24 +2555,12 @@
     function setReportFilter(f,el){reportFilter=f;document.querySelectorAll('#panel-reports [data-report-filter]').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderDevReports();}
 
     async function devVerifyUser(email){
-      const key = 'verify_' + email;
-      if(processingKeys.has(key)) return;
-      processingKeys.add(key);
-      try {
-        document.querySelectorAll(`button[data-email="${email}"]`).forEach(b => {
-          b.disabled = true; b.textContent = '⏳ Approving...';
-        });
-        await cloudLoad(true);
-        const idx = userAccounts.findIndex(u => u.email === email);
-        if(idx === -1){ alert('User not found.'); renderDevAll(); return; }
-        if(userAccounts[idx].isVerified){ renderDevAll(); return; }
-        userAccounts[idx].isVerified = true;
-        saveLocal();
-        await cloudSave();
-        renderDevAll();
-      } finally {
-        processingKeys.delete(key);
-      }
+      // Registration approval is intentionally disabled. All customer accounts are active immediately.
+      const idx=userAccounts.findIndex(u=>u.email===email);
+      if(idx===-1){ alert('User not found.'); return; }
+      userAccounts[idx].isVerified=true;
+      saveLocal();
+      renderDevAll();
     }
 
     async function devRemoveUser(email){
@@ -2850,9 +2837,9 @@
     }
 
     function renderDevAccounts(){
-      const arr=userAccounts.filter(u=>userFilter==='all'||(userFilter==='pending'&&!u.isVerified)||(userFilter==='verified'&&u.isVerified));
+      const arr=userAccounts.filter(u=>userFilter==='all'||(userFilter==='verified'&&u.isVerified)||(userFilter==='pending'&&!u.isVerified));
       $('accountsCount').textContent=arr.length;
-      const pending=userAccounts.filter(u=>!u.isVerified).length;
+      const pending=0;
       const badge=$('tabAccountsBadge');
       badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
       if(!arr.length){$('accountsList').innerHTML='<div class="empty-panel"><span style="font-size:48px;opacity:0.4;display:block;margin-bottom:12px;">👥</span>No patients found.</div>';return;}
@@ -2865,10 +2852,10 @@
               <div class="dev-card-meta">${esc(u.email)}</div>
               <div class="dev-card-meta">Joined ${new Date(u.createdAt||Date.now()).toLocaleString()}</div>
             </div>
-            <span class="dev-card-badge ${u.isVerified?'badge-verified':'badge-pending'}">${u.isVerified?'Verified':'Pending'}</span>
+            <span class="dev-card-badge badge-verified">Active</span>
           </div>
           <div class="dev-card-actions">
-            ${!u.isVerified?`<button class="btn-sm-dev btn-success" data-email="${esc(u.email)}" onclick="devVerifyUser('${esc(u.email)}')">✓ Approve</button>`:''}
+            <span class="dev-card-meta" style="color:#10b981;font-weight:800;">✓ Registration approved automatically</span>
             <button class="btn-sm-dev btn-danger" onclick="devRemoveUser('${esc(u.email)}')">🗑 Remove</button>
           </div>
         </div>
@@ -3224,12 +3211,19 @@
           const u = userAccounts.find(x => x.email === currentUser.email);
           if(u){
             currentUser = u;
-            if(!currentUser.isVerified){ logout(); alert('Your account access has been revoked.'); return; }
           } else { logout(); alert('Your account has been removed.'); return; }
         }
         renderCustomerAll();
       }
     }
+
+
+    window.addEventListener('error', (event) => {
+      console.error('MediZone UI error:', event.error || event.message);
+    });
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('MediZone async error:', event.reason);
+    });
 
     // ============ INIT ============
     window.addEventListener('load', async () => {
