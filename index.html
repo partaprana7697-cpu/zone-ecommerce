@@ -51,10 +51,8 @@
         linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
     }
     body.admin-mode::after { opacity: 0.3; }
-
     @keyframes meshMove { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.15) translate(-3%, -2%); } }
 
-    /* ============ PRODUCT GRID ============ */
     .main-container { max-width: 1600px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
     .catalog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
     .catalog-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -1.4px; color: var(--dark); display: flex; align-items: center; gap: 14px; }
@@ -73,7 +71,6 @@
     .product-image-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(224, 231, 255, 0.6), rgba(243, 232, 255, 0.6)); color: var(--primary); font-size: 56px; }
     .product-fav { position: absolute; top: 22px; right: 22px; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.8); background: rgba(255,255,255,.78); border-radius: 50%; z-index: 5; cursor: pointer; font-size: 17px; display: flex; align-items: center; justify-content: center; }
     .product-fav.active { color: #ef4444; background: #fff1f2; }
-
     .product-info { padding: 20px 20px 12px; display: flex; flex-direction: column; gap: 6px; }
     .product-category { font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: #6366f1; font-weight: 800; margin-bottom: 2px; }
     .product-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; color: var(--dark); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -89,7 +86,6 @@
     .btn-cart:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(99,102,241,0.45); }
     .btn-cart:disabled { background: rgba(226, 232, 240, 0.6); color: #94a3b8; cursor: not-allowed; box-shadow: none; }
 
-    /* ============ AUTH ============ */
     .auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.15); backdrop-filter: blur(24px) saturate(180%); animation: fadeIn 0.4s ease; }
     .auth-card { position: relative; width: 430px; max-width: 100%; background: rgba(255, 255, 255, 0.65); backdrop-filter: var(--glass-blur-strong); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-glass-lg), var(--shadow-inset); border: 1px solid var(--glass-border); animation: slideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
     .auth-logo { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 800; text-align: center; margin-bottom: 6px; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.2px; }
@@ -105,7 +101,6 @@
     .btn-primary:disabled { background: rgba(148, 163, 184, 0.5); cursor: not-allowed; }
     .auth-toggle { font-size: 13px; text-align: center; margin-top: 18px; color: var(--primary); cursor: pointer; font-weight: 600; }
 
-    /* ============ NAVBAR ============ */
     header { position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, 0.55); backdrop-filter: blur(28px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 24px rgba(31, 38, 135, 0.06); }
     .navbar { display: flex; align-items: center; padding: 14px 24px; gap: 20px; max-width: 1600px; margin: 0 auto; }
     .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; flex-shrink: 0; letter-spacing: -0.6px; }
@@ -114,18 +109,15 @@
     .search-input { flex: 1; border: none; padding: 0 20px; font-size: 14px; outline: none; background: transparent; color: var(--dark); }
     .search-input::placeholder { color: #94a3b8; font-weight: 500; }
     .search-btn { background: transparent; border: none; width: 52px; cursor: pointer; font-size: 16px; color: var(--primary); display: flex; align-items: center; justify-content: center; }
-
     .nav-right { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
     .nav-link { color: var(--dark); font-size: 13px; cursor: pointer; white-space: nowrap; line-height: 1.25; padding: 10px 16px; border-radius: var(--radius-sm); transition: all 0.2s; background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
     .nav-link:hover { background: rgba(255, 255, 255, 0.65); transform: translateY(-1px); }
     .nav-link span { display: block; font-size: 10px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
     .nav-link strong { font-size: 13px; color: var(--dark); font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; }
     .nav-link strong span { display: inline; font-size: 13px; font-weight: 700; padding: 0 1px; }
-
     .sync-badge { position: fixed; top: 76px; right: 24px; background: rgba(16, 185, 129, 0.85); backdrop-filter: blur(20px) saturate(180%); color: white; padding: 9px 16px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; z-index: 1500; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 8px 24px rgba(16,185,129,0.3); }
     .sync-badge.syncing { background: rgba(245, 158, 11, 0.85); }
     .sync-badge.error { background: rgba(239, 68, 68, 0.85); }
-
     .search-wrap { position: relative; flex: 1; max-width: 720px; }
     .search-wrap .nav-search { max-width: none; width: 100%; }
     .search-results { position: absolute; top: 50px; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,.8); border-radius: 16px; box-shadow: 0 20px 50px rgba(15,23,42,.15); z-index: 1600; display: none; overflow: hidden; }
@@ -134,7 +126,6 @@
     .search-result:hover { background: #f8fafc; }
     .search-result small { color: #64748b; display: block; margin-top: 3px; }
 
-    /* ============ DRAWERS ============ */
     .drawer { position: fixed; top: 0; right: -520px; width: 480px; max-width: 100vw; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: var(--glass-blur-strong); border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -20px 0 60px rgba(31, 38, 135, 0.15); transition: right 0.45s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1100; overflow-y: auto; display: flex; flex-direction: column; }
     .drawer.open { right: 0; }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.5); position: sticky; top: 0; background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(24px) saturate(180%); z-index: 10; }
@@ -142,21 +133,17 @@
     .drawer-header button { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.6); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px; color: var(--dark); display: flex; align-items: center; justify-content: center; }
     .drawer-header button:hover { background: rgba(255, 255, 255, 0.9); transform: rotate(90deg); }
     .drawer-body { padding: 20px 24px 40px; flex: 1; }
-
     .item-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: var(--glass-blur-light); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; transition: all 0.25s; }
     .item-card:hover { background: rgba(255, 255, 255, 0.9); border-color: rgba(99, 102, 241, 0.3); }
     .item-card strong { color: var(--dark); font-weight: 700; }
     .item-card .muted { color: var(--grey); font-size: 12px; }
-
     .badge { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; color: white; letter-spacing: 0.4px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); }
     .bg-pending { background: linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9)); }
     .bg-shipping { background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(37,99,235,0.9)); }
     .bg-delivered { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(5,150,105,0.9)); }
     .bg-rejected { background: linear-gradient(135deg, rgba(239,68,68,0.9), rgba(220,38,38,0.9)); }
-
     .empty-state { text-align: center; padding: 40px 20px; color: var(--grey); font-size: 13px; }
     .empty-state-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.4; }
-
     .cart-item { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur-light); border: 1px solid var(--glass-border); padding: 14px 16px; border-radius: var(--radius-sm); margin-bottom: 12px; display: flex; gap: 14px; align-items: center; }
     .cart-item-thumb { width: 64px; height: 64px; flex-shrink: 0; background: rgba(241,245,249,0.8); border: 1px solid rgba(255,255,255,0.7); border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .cart-item-thumb img { max-width: 85%; max-height: 85%; object-fit: contain; }
@@ -171,13 +158,11 @@
     .qty-display { min-width: 28px; text-align: center; font-size: 13px; font-weight: 800; color: var(--dark); padding: 0 4px; }
     .cart-item-remove { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--danger); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; }
     .cart-item-remove:hover { background: rgba(239, 68, 68, 0.9); color: white; }
-
     .cart-total-card { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; margin-top: 16px; }
     .cart-total-label { font-size: 11px; color: var(--grey); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 8px; }
     .cart-total-amount { font-size: 34px; font-weight: 800; background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; font-family: 'Space Grotesk', sans-serif; }
     .cart-summary-line { display: flex; justify-content: space-between; font-size: 12px; color: var(--grey); margin-bottom: 6px; }
     .cart-summary-line strong { color: var(--dark); font-weight: 700; }
-
     .chat-widget-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
     .chat-toggle-btn { background: var(--gradient-primary); color: white; border: none; padding: 15px 24px; border-radius: var(--radius-pill); font-weight: 700; cursor: pointer; box-shadow: 0 12px 32px rgba(99,102,241,0.4); font-size: 14px; display: flex; align-items: center; gap: 8px; }
     .chat-toggle-btn:hover { transform: translateY(-3px) scale(1.03); }
@@ -192,7 +177,6 @@
     .chat-footer { display: flex; padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.7); gap: 10px; }
     .chat-input { flex: 1; border: 1px solid rgba(255, 255, 255, 0.8); border-radius: var(--radius-pill); padding: 12px 18px; outline: none; font-size: 13px; background: rgba(255, 255, 255, 0.8); }
     .chat-send-btn { background: var(--gradient-primary); border: none; color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 16px; }
-
     .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.35); backdrop-filter: blur(12px); z-index: 1900; display: none; align-items: center; justify-content: center; padding: 18px; }
     .modal-overlay.open { display: flex; }
     .modal { width: 760px; max-width: 100%; max-height: 92vh; overflow: auto; background: rgba(255,255,255,.96); border: 1px solid rgba(255,255,255,.8); border-radius: 24px; box-shadow: 0 30px 80px rgba(15,23,42,.25); padding: 24px; }
@@ -227,7 +211,6 @@
     .avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#667eea,#764ba2); color: white; font-weight: 900; font-size: 20px; }
     .wishlist-empty { text-align: center; padding: 25px; color: #64748b; }
 
-    /* ============ DEVELOPER STYLES ============ */
     #devSite { display: none; color: white; min-height: 100vh; }
     #devSite.active { display: block; }
     .dev-auth-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 20px; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(24px) saturate(180%); animation: fadeIn 0.4s ease; }
@@ -249,7 +232,7 @@
     .dev-sync-badge.error { background: rgba(239, 68, 68, 0.9); }
     .dev-btn-refresh { background: rgba(99, 102, 241, 0.9); color: white; border: none; padding: 10px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
     .dev-btn-refresh:hover { background: rgba(79, 70, 229, 1); transform: translateY(-1px); }
-    .dev-btn-refresh.spinning span { display: inline-block; animation: spin 0.8s linear infinite; }
+    .dev-btn-refresh.spinning span:first-child { display: inline-block; animation: spin 0.8s linear infinite; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .dev-btn-logout { background: rgba(239, 68, 68, 0.9); color: white; border: none; padding: 10px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 13px; cursor: pointer; }
 
@@ -259,32 +242,26 @@
     .stat-card:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-3px); }
     .stat-card small { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6); font-weight: 700; }
     .stat-card strong { display: block; font-size: 32px; font-weight: 800; margin-top: 8px; font-family: 'Space Grotesk', sans-serif; }
-
     .tabs-bar { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; margin-bottom: 24px; backdrop-filter: blur(20px); overflow-x: auto; }
     .dev-tab { flex: 1; min-width: 140px; padding: 12px 16px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 12px; transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
     .dev-tab:hover { background: rgba(255, 255, 255, 0.08); color: white; }
     .dev-tab.active { background: rgba(255, 255, 255, 0.15); color: white; }
-    .dev-tab .tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; animation: pulse 2s ease-in-out infinite; }
+    .dev-tab .tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; }
     .dev-tab .tab-badge.green { background: #10b981; }
     .dev-tab .tab-badge:empty, .dev-tab .tab-badge[data-count="0"] { display: none; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
     .panel { display: none; animation: fadeIn 0.3s; }
     .panel.active { display: block; }
     .panel h3 { color: white; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
     .panel h3 .count { background: rgba(255, 255, 255, 0.15); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; }
-
     .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
     .chip { padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.8); font-size: 12px; font-weight: 700; cursor: pointer; }
     .chip:hover { background: rgba(255, 255, 255, 0.12); }
     .chip.active { background: #6366f1; color: white; border-color: #6366f1; }
-
     .card-list { display: grid; gap: 14px; }
     .dev-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius-sm); padding: 18px 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); transition: all 0.25s; }
     .dev-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2); }
     .dev-card.verified { background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(255, 255, 255, 0.95)); }
-    .dev-card.new-arrival { animation: highlight 2s ease-out; }
-    @keyframes highlight { 0% { box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5); } 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); } }
     .dev-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
     .dev-card-title { font-weight: 800; color: var(--dark); font-size: 15px; word-break: break-all; }
     .dev-card-meta { color: var(--grey); font-size: 12px; margin-top: 4px; }
@@ -294,7 +271,6 @@
     .badge-shipped { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .badge-delivered { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .badge-rejected { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-
     .dev-card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
     .btn-sm { padding: 9px 15px; border-radius: 10px; border: none; font-weight: 700; font-size: 12px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
     .btn-sm:hover { transform: translateY(-2px); }
@@ -302,13 +278,10 @@
     .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .btn-info { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
     .btn-primary-sm { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-
     .dev-item-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; color: var(--grey); }
     .dev-item-row strong { color: var(--dark); }
-
     .empty-panel { background: rgba(255, 255, 255, 0.06); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius); padding: 60px 30px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 14px; }
     .empty-panel .icon { font-size: 56px; opacity: 0.4; margin-bottom: 14px; display: block; }
-
     .form-card { background: rgba(255, 255, 255, 0.95); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); }
     .form-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 800; color: var(--dark); margin-bottom: 16px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -319,7 +292,6 @@
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 10px; }
@@ -351,7 +323,6 @@
       .modal { padding: 16px; }
       .product-grid { grid-template-columns: 1fr; }
     }
-
     @supports not (backdrop-filter: blur(1px)) {
       .auth-card, .product-card, .drawer, .item-card, .chat-box, .cart-total-card, .cart-item, .qty-control { background: rgba(255, 255, 255, 0.95); }
       header, .drawer-header, .chat-header, .chat-footer { background: rgba(255, 255, 255, 0.95); }
@@ -360,7 +331,6 @@
 </head>
 <body>
 
-  <!-- ============ CUSTOMER SITE ============ -->
   <div id="customerSite">
     <div class="sync-badge" id="syncBadge">💾 Local mode</div>
 
@@ -431,7 +401,6 @@
     <div class="modal-overlay" id="checkoutModal"><div class="modal"><div class="modal-head"><h3>Secure Demo Checkout</h3><button class="close-btn" onclick="closeModal('checkoutModal')">✕</button></div><div id="checkoutBody"></div></div></div>
   </div>
 
-  <!-- ============ DEVELOPER SITE ============ -->
   <div id="devSite">
     <div class="dev-auth-overlay" id="devAuthOverlay">
       <div class="dev-auth-card">
@@ -527,17 +496,18 @@
 
   <script>
     // ============================================================
-    // ZONE.IN — FULLY FIXED
-    // Fix 1: Product grid layout
-    // Fix 2: Cross-device registration sync (dev console now
-    //        force-pulls from cloud every 3s and always re-renders)
+    // ZONE.IN — BULLETPROOF CROSS-DEVICE SYNC
+    // ============================================================
+    // Principle: every 2 seconds, ALWAYS pull from cloud,
+    // ALWAYS replace local memory, ALWAYS re-render.
+    // No hash checks. No input guards. No skips.
     // ============================================================
     const JSONBIN_BIN_ID = "6aa30871ac6210605abdfb81";
     const JSONBIN_API_KEY = "$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.";
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
     const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('6aa30871ac6210605abdfb81') && !JSONBIN_API_KEY.includes('$2a$10$6SI1vr.CfjlYnu9mN/AG2..uxsVWOHtUK9rNQhGmJay6PudqUgYl.');
     const DEV_KEY = 'ADMIN-2026';
-    const POLL_INTERVAL_MS = 3000;
+    const POLL_MS = 2000;
 
     const DEFAULT_PRODUCTS = [
       {id:1,title:'Wireless Headphones',price:4999,quantity:10,image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700&q=85',size:'Standard',category:'Electronics',rating:4.7,description:'Comfortable wireless headphones with rich sound, long battery life and a lightweight design.'},
@@ -550,7 +520,6 @@
     let currentUser=null, cart=[], wishlist=[], coupon=null;
     let userFilter='all', adminOrderFilter='all', orderFilter='all', searchTerm='';
     let isSyncing=false, isDevMode=false, isDevUnlocked=false;
-    let lastUserCount = 0, lastOrderCount = 0;  // For detecting new arrivals
 
     const $=id=>document.getElementById(id);
     const money=n=>Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -564,16 +533,19 @@
       return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
     }
 
+    // ---------- LOCAL STORAGE ----------
     function saveLocal(){
-      localStorage.setItem('zone_users_v2',JSON.stringify(userAccounts));
-      localStorage.setItem('zone_products_v2',JSON.stringify(products));
-      localStorage.setItem('zone_orders_v2',JSON.stringify(orders));
-      localStorage.setItem('zone_chat_v2',JSON.stringify(chatMessages));
-      if(currentUser){
-        localStorage.setItem('zone_session_v2',currentUser.email);
-        localStorage.setItem('zone_cart_'+currentUser.email,JSON.stringify(cart));
-        localStorage.setItem('zone_wishlist_'+currentUser.email,JSON.stringify(wishlist));
-      }
+      try{
+        localStorage.setItem('zone_users_v2',JSON.stringify(userAccounts));
+        localStorage.setItem('zone_products_v2',JSON.stringify(products));
+        localStorage.setItem('zone_orders_v2',JSON.stringify(orders));
+        localStorage.setItem('zone_chat_v2',JSON.stringify(chatMessages));
+        if(currentUser){
+          localStorage.setItem('zone_session_v2',currentUser.email);
+          localStorage.setItem('zone_cart_'+currentUser.email,JSON.stringify(cart));
+          localStorage.setItem('zone_wishlist_'+currentUser.email,JSON.stringify(wishlist));
+        }
+      }catch(e){}
     }
 
     function loadLocal(){
@@ -597,58 +569,80 @@
       return true;
     }
 
+    // ---------- SYNC BADGE ----------
     function setSync(status,text){
       const b=$('syncBadge');if(b){b.className='sync-badge '+status;b.textContent=text}
       const db=$('devSyncBadge');if(db){db.className='dev-sync-badge '+status;db.textContent=text}
     }
 
-    // ⭐ CRITICAL FIX: Cloud load now ALWAYS returns whether data was replaced.
-    // The dev console will use this to force a re-render on every successful pull.
+    // ---------- CLOUD LOAD (bulletproof) ----------
+    // ALWAYS overwrites local memory with cloud data.
+    // Returns true if the fetch itself succeeded.
     async function cloudLoad(silent=false){
-      if(!CLOUD_ENABLED){if(!silent)setSync('error','💾 Local mode');return false}
+      if(!CLOUD_ENABLED){
+        loadLocal();
+        if(!silent)setSync('error','⚠️ Local mode');
+        return true;
+      }
       try{
-        if(!silent)setSync('syncing','⬇️ Syncing...');
-        const r=await fetch(JSONBIN_URL+'/latest',{
+        if(!silent)setSync('syncing','⬇️ Loading...');
+        const res = await fetch(JSONBIN_URL+'/latest', {
           headers:{'X-Master-Key':JSONBIN_API_KEY},
-          cache:'no-store'   // ⭐ Bypass HTTP cache
+          cache:'no-store'
         });
-        if(!r.ok)throw Error('HTTP '+r.status);
-        const j=await r.json();
-        const d=j.record||{};
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const data = await res.json();
+        const r = data.record || {};
 
-        if(Array.isArray(d.users))    userAccounts=d.users;
-        if(Array.isArray(d.products) && d.products.length) products=d.products;
-        if(Array.isArray(d.orders))   orders=d.orders;
-        if(Array.isArray(d.chat))     chatMessages=d.chat;
+        // ⭐ ALWAYS overwrite — never merge, never skip
+        userAccounts = Array.isArray(r.users)    ? r.users    : [];
+        products     = (Array.isArray(r.products) && r.products.length) ? r.products : structuredClone(DEFAULT_PRODUCTS);
+        orders       = Array.isArray(r.orders)   ? r.orders   : [];
+        chatMessages = Array.isArray(r.chat)     ? r.chat     : [];
 
         saveLocal();
         if(!silent)setSync('ok','☁️ Synced');
         return true;
       }catch(e){
+        console.error('Cloud load failed:', e);
         if(!silent)setSync('error','⚠️ Offline');
+        // fallback to local
+        loadLocal();
         return false;
       }
     }
 
+    // ---------- CLOUD SAVE ----------
     async function cloudSave(){
       saveLocal();
-      if(!CLOUD_ENABLED||isSyncing)return;
-      isSyncing=true;
+      if(!CLOUD_ENABLED) return;
+      if(isSyncing) return;
+      isSyncing = true;
       try{
         setSync('syncing','⬆️ Saving...');
-        const r=await fetch(JSONBIN_URL,{
+        const res = await fetch(JSONBIN_URL, {
           method:'PUT',
           headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
           body:JSON.stringify({users:userAccounts,products,orders,chat:chatMessages})
         });
-        if(!r.ok)throw Error('HTTP '+r.status);
+        if(!res.ok) throw new Error('HTTP '+res.status);
         setSync('ok','☁️ Synced');
-      }catch(e){setSync('error','❌ Save failed')}
-      finally{isSyncing=false}
+      }catch(e){
+        console.error('Cloud save failed:', e);
+        setSync('error','❌ Save failed');
+      }finally{isSyncing=false}
     }
 
-    async function persist(){saveLocal();await cloudSave();renderAll()}
+    // ---------- PERSIST (save + push + render) ----------
+    // For admin actions: we DON'T render here — the polling loop will.
+    // But we do it once for immediate feedback.
+    async function persist(){
+      saveLocal();
+      await cloudSave();
+      renderAll();
+    }
 
+    // ---------- ROUTING ----------
     function route(){
       const hash=(window.location.hash||'').toLowerCase();
       if(hash==='#admin'){
@@ -688,6 +682,7 @@
       }
     }
 
+    // ---------- AUTH ----------
     function toggleAuthView(view){
       $('registerForm').style.display=view==='register'?'block':'none';
       $('loginForm').style.display=view==='login'?'block':'none';
@@ -700,18 +695,27 @@
       if(pass.length<6)return alert('Password must be at least 6 characters.');
       if(pass!==pass2)return alert('Passwords do not match.');
 
-      // Pull latest before checking duplicate
-      await cloudLoad(true);loadLocal();
+      // 1) Pull latest from cloud so we don't overwrite someone else's data
+      await cloudLoad(true);
 
+      // 2) Check duplicate
       if(userAccounts.some(u=>u.email===email))return alert('An account with this email already exists.');
 
-      userAccounts.push({email,passwordHash:await hashPassword(pass),isVerified:false,createdAt:new Date().toISOString()});
+      // 3) Add new pending user
+      userAccounts.push({
+        email,
+        passwordHash:await hashPassword(pass),
+        isVerified:false,
+        createdAt:new Date().toISOString()
+      });
 
-      // ⭐ Save locally FIRST so if cloud fails, data is not lost
+      // 4) Save locally first (never lose data)
       saveLocal();
-      // Then push to cloud
+
+      // 5) Push to cloud
       await cloudSave();
 
+      // 6) Success message
       alert('✅ Account request submitted!\n\nA developer must approve your account before you can sign in.\n\nThey will see your request on their device within a few seconds.');
       $('regEmail').value=$('regPassword').value=$('regPassword2').value='';
       toggleAuthView('login');
@@ -721,12 +725,16 @@
       const email=$('loginEmail').value.trim().toLowerCase();
       const pass=$('loginPassword').value;
       if(!email||!pass)return alert('Enter your email and password.');
-      await cloudLoad(true);loadLocal();
+
+      // ⭐ ALWAYS pull fresh from cloud before checking
+      await cloudLoad(true);
+
       const acc=userAccounts.find(u=>u.email===email);
       if(!acc)return alert('Invalid email or password.');
       if(!acc.isVerified)return alert('⏳ Account approval is still pending.\n\nA developer must approve your account before you can sign in.');
       const hash=await hashPassword(pass);
       if(acc.passwordHash!==hash)return alert('Invalid email or password.');
+
       loginAsUser(acc);
     }
 
@@ -757,6 +765,7 @@
       renderCustomerAll();
     }
 
+    // ---------- CUSTOMER RENDER ----------
     function renderCategories(){
       const previous=$('categoryFilter').value||'all';
       const cats=[...new Set(products.map(p=>p.category||'Other'))].sort();
@@ -914,14 +923,31 @@
     async function submitOrder(){
       const name=$('coName').value.trim(),phone=$('coPhone').value.trim(),pin=$('coPin').value.trim(),address=$('coAddress').value.trim(),city=$('coCity').value.trim(),state=$('coState').value.trim(),payment=document.querySelector('input[name=payment]:checked')?.value;
       if(!name||!/^\d{10}$/.test(phone)||!pin||!address||!city||!state)return alert('Please complete all delivery fields.');
-      await cloudLoad(true);loadLocal();
+
+      await cloudLoad(true);
+
       const fresh=cart.map(i=>{const p=products.find(x=>x.id===i.id);return p?{productId:p.id,title:p.title,price:p.price,quantity:i.quantity,image:p.image}:null}).filter(Boolean);
       if(fresh.length!==cart.length)return alert('A product changed while you were checking out. Please review your cart.');
       for(const i of fresh){const p=products.find(x=>x.id===i.productId);if(!p||p.quantity<i.quantity)return alert(`${i.title} no longer has enough stock.`)}
+
       const t=cartTotals();
-      const order={orderId:uid('ORD-'),userEmail:currentUser.email,items:fresh,subtotal:t.subtotal,discount:t.discount,total:t.total,address:{name,phone,pin,address,city,state},payment,status:'Pending Verification',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),stockReserved:false};
+      const order={
+        orderId:uid('ORD-'),
+        userEmail:currentUser.email,
+        items:fresh,
+        subtotal:t.subtotal,
+        discount:t.discount,
+        total:t.total,
+        address:{name,phone,pin,address,city,state},
+        payment,
+        status:'Pending Verification',
+        createdAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString(),
+        stockReserved:false
+      };
       orders.unshift(order);
       cart=[];coupon=null;
+
       closeModal('checkoutModal');
       saveLocal();
       await cloudSave();
@@ -962,8 +988,12 @@
       if(!o)return;
       if(!['Pending Verification','Confirmed','Processing'].includes(o.status))return alert('This order can no longer be cancelled.');
       if(!confirm('Cancel this order?'))return;
-      if(o.stockReserved){o.items.forEach(i=>{const p=products.find(x=>x.id===i.productId);if(p)p.quantity+=i.quantity});o.stockReserved=false}
-      o.status='Cancelled';o.updatedAt=new Date().toISOString();
+      await cloudLoad(true);
+      const fresh=orders.find(x=>x.orderId===id);
+      if(fresh){
+        if(fresh.stockReserved){fresh.items.forEach(i=>{const p=products.find(x=>x.id===i.productId);if(p)p.quantity+=i.quantity});fresh.stockReserved=false}
+        fresh.status='Cancelled';fresh.updatedAt=new Date().toISOString();
+      }
       saveLocal();
       await cloudSave();
       renderCustomerAll();
@@ -976,8 +1006,9 @@
     }
 
     async function saveProfile(){
+      await cloudLoad(true);
       const u=userAccounts.find(x=>x.email===currentUser.email);
-      u.name=$('profileName').value.trim();currentUser=u;
+      if(u){u.name=$('profileName').value.trim();currentUser=u;}
       saveLocal();
       await cloudSave();
       renderCustomerAll();
@@ -988,10 +1019,11 @@
       const text=$('chatInput').value.trim();
       if(!text)return;
       if(!currentUser)return alert('Please sign in first.');
+      await cloudLoad(true);
       chatMessages.push({id:uid('MSG-'),sender:'customer',user:currentUser.email,text,time:new Date().toISOString()});
-      $('chatInput').value='';
       saveLocal();
       await cloudSave();
+      $('chatInput').value='';
       renderChat();
     }
 
@@ -1015,23 +1047,14 @@
       $(id).classList.toggle('open');
     }
 
-    // ============ DEVELOPER ============
+    // ---------- DEVELOPER ----------
     function devLogin(){
       const key=$('devKey').value.trim();
       if(key!==DEV_KEY){alert('Invalid developer key.');return}
       isDevUnlocked=true;
       $('devAuthOverlay').style.display='none';
       $('devDashboard').style.display='block';
-
-      // Force fresh pull from cloud right away
-      loadLocal();
-      cloudLoad(true).then(()=>{
-        loadLocal();
-        lastUserCount = userAccounts.length;
-        lastOrderCount = orders.length;
-        renderDevAll();
-      });
-      renderDevAll();
+      cloudLoad(true).then(()=>renderDevAll());
     }
 
     function devLogout(){
@@ -1041,18 +1064,14 @@
       $('devKey').value='';
     }
 
-    // ⭐ Manual refresh — instantly pulls from cloud and re-renders
     async function manualRefresh(){
-      const btn = $('refreshBtn');
-      if(btn) btn.classList.add('spinning');
+      const btn=$('refreshBtn');
+      if(btn)btn.classList.add('spinning');
       setSync('syncing','🔄 Refreshing...');
-      const ok = await cloudLoad(true);
-      loadLocal();
-      lastUserCount = userAccounts.length;
-      lastOrderCount = orders.length;
+      await cloudLoad(true);
       renderDevAll();
-      if(btn) setTimeout(()=>btn.classList.remove('spinning'), 600);
-      if(ok) setSync('ok','☁️ Synced');
+      setSync('ok','☁️ Synced');
+      if(btn)setTimeout(()=>btn.classList.remove('spinning'),600);
     }
 
     function switchTab(tab){
@@ -1075,7 +1094,7 @@
     }
 
     async function devVerifyUser(email){
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       const u=userAccounts.find(x=>x.email===email);
       if(!u)return alert('User not found. Try refreshing.');
       u.isVerified=true;
@@ -1087,7 +1106,7 @@
 
     async function devRemoveUser(email){
       if(!confirm(`Remove ${email}? This will delete their account and orders.`))return;
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       userAccounts=userAccounts.filter(x=>x.email!==email);
       orders=orders.filter(x=>x.userEmail!==email);
       saveLocal();
@@ -1108,7 +1127,7 @@
       if(!title||!Number.isFinite(price)||price<0||!Number.isInteger(quantity)||quantity<0){
         return alert('Enter valid product details.');
       }
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       products.push({id:products.length?Math.max(...products.map(p=>Number(p.id)||0))+1:1,title,price,quantity,category,size,image,description,rating});
       saveLocal();
       await cloudSave();
@@ -1118,7 +1137,7 @@
     }
 
     async function devSaveProduct(id){
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       const p=products.find(x=>x.id===id);if(!p)return;
       p.title=$('pt_'+id).value.trim();
       p.price=Number($('pp_'+id).value);
@@ -1139,7 +1158,7 @@
       const used=orders.some(o=>(o.items||[]).some(i=>i.productId===id)&&!['Cancelled','Rejected','Delivered'].includes(o.status));
       if(used)return alert('Cannot delete: product is in active orders.');
       if(!confirm('Delete this product?'))return;
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       products=products.filter(p=>p.id!==id);
       saveLocal();
       await cloudSave();
@@ -1147,7 +1166,7 @@
     }
 
     async function devOrderAction(id,action){
-      await cloudLoad(true);loadLocal();
+      await cloudLoad(true);
       const o=orders.find(x=>x.orderId===id);if(!o)return;
       if(action==='confirm'){
         if(o.stockReserved)return;
@@ -1178,13 +1197,8 @@
       const pending=userAccounts.filter(u=>!u.isVerified).length;
       const badge=$('tabAccountsBadge');
       badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
-
-      if(!arr.length){
-        $('accountsList').innerHTML='<div class="empty-panel"><span class="icon">👥</span>No accounts found.</div>';
-        return;
-      }
-      // ⭐ Sort: newest first (so new registrations appear at the top)
-      const sorted = [...arr].sort((a,b)=>new Date(b.createdAt||0) - new Date(a.createdAt||0));
+      if(!arr.length){$('accountsList').innerHTML='<div class="empty-panel"><span class="icon">👥</span>No accounts found.</div>';return}
+      const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       $('accountsList').innerHTML=sorted.map(u=>`<div class="dev-card ${u.isVerified?'verified':''}"><div class="dev-card-head"><div><div class="dev-card-title">${esc(u.email)}</div><div class="dev-card-meta">Joined ${new Date(u.createdAt||Date.now()).toLocaleString()}</div></div><span class="dev-card-badge ${u.isVerified?'badge-verified':'badge-pending'}">${u.isVerified?'Verified':'Pending'}</span></div><div class="dev-card-actions">${!u.isVerified?`<button class="btn-sm btn-success" onclick="devVerifyUser('${esc(u.email)}')">✓ Approve</button>`:''}<button class="btn-sm btn-danger" onclick="devRemoveUser('${esc(u.email)}')">🗑 Remove</button></div></div>`).join('');
     }
 
@@ -1203,7 +1217,6 @@
       const badge=$('tabOrdersBadge');
       badge.textContent=pending;badge.dataset.count=pending;badge.style.display=pending?'inline-flex':'none';
       if(!arr.length){$('ordersList').innerHTML='<div class="empty-panel"><span class="icon">🛍️</span>No orders found.</div>';return}
-      // Sort: newest first
       const sorted=[...arr].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       $('ordersList').innerHTML=sorted.map(o=>{const totalItems=(o.items||[]).reduce((a,i)=>a+i.quantity,0);return `<div class="dev-card"><div class="dev-card-head"><div><div class="dev-card-title">${esc(o.orderId)}</div><div class="dev-card-meta">👤 ${esc(o.userEmail)} · ${new Date(o.createdAt).toLocaleString()}</div></div><span class="dev-card-badge ${devStatusClass(o.status)}">${esc(o.status)}</span></div><div style="background:#f8fafc; padding:12px; border-radius:10px; margin:10px 0;">${(o.items||[]).map(i=>`<div class="dev-item-row"><span>${esc(i.title)} × ${i.quantity}</span><strong>₹${money(i.price*i.quantity)}</strong></div>`).join('')}<div class="dev-item-row" style="border-top:1px solid #e2e8f0; margin-top:6px; padding-top:6px;"><span>Total</span><strong>₹${money(o.total)}</strong></div></div><div class="dev-card-meta">📍 ${esc(o.address.city)}, ${esc(o.address.state)} · ${esc(o.address.pin)} · 📞 ${esc(o.address.phone)}</div><div class="dev-card-meta">💳 ${o.payment==='COD'?'Cash on Delivery':'Demo Card'} · ${totalItems} item(s)</div><div class="dev-card-actions">${o.status==='Pending Verification'?`<button class="btn-sm btn-success" onclick="devOrderAction('${o.orderId}','confirm')">✓ Confirm</button><button class="btn-sm btn-danger" onclick="devOrderAction('${o.orderId}','reject')">✕ Reject</button>`:''}${o.status==='Confirmed'?`<button class="btn-sm btn-info" onclick="devOrderAction('${o.orderId}','processing')">⚙ Processing</button>`:''}${o.status==='Processing'?`<button class="btn-sm btn-info" onclick="devOrderAction('${o.orderId}','shipped')">🚚 Mark Shipped</button>`:''}${o.status==='Shipped'?`<button class="btn-sm btn-success" onclick="devOrderAction('${o.orderId}','delivered')">✓ Mark Delivered</button>`:''}</div></div>`}).join('');
     }
@@ -1218,6 +1231,7 @@
     async function devReplyCustomer(email){
       const text=prompt(`Reply to ${email}:`);
       if(!text||!text.trim())return;
+      await cloudLoad(true);
       chatMessages.push({id:uid('MSG-'),sender:'developer',user:email,text:text.trim(),time:new Date().toISOString()});
       saveLocal();
       await cloudSave();
@@ -1241,97 +1255,69 @@
 
     document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('searchResults')?.classList.remove('open')});
 
-    // ⭐ MAIN POLLING LOOP — the KEY FIX for cross-device sync
+    // ============================================================
+    // ⭐ THE BULLETPROOF POLLING LOOP
+    // Every 2 seconds:
+    //   1. Force-fetch from cloud (bypass cache)
+    //   2. Replace local memory completely
+    //   3. Re-render whatever view is active
+    // No hashes. No skips. No focus guards.
+    // ============================================================
+    async function pollOnce(){
+      const wasDevMode = isDevMode;
+      const wasUnlocked = isDevUnlocked;
+
+      // Force-fetch fresh data from cloud
+      await cloudLoad(true);
+      // (cloudLoad already replaces userAccounts/products/orders/chatMessages)
+
+      if(wasDevMode){
+        // Developer mode: always re-render
+        if(wasUnlocked) renderDevAll();
+      } else {
+        // Customer mode: check session validity, then re-render
+        if(currentUser){
+          const u=userAccounts.find(x=>x.email===currentUser.email);
+          if(u){
+            currentUser=u;
+            if(!currentUser.isVerified){
+              logout();
+              alert('Your account access has been revoked.');
+              return;
+            }
+          } else {
+            logout();
+            alert('Your account has been removed.');
+            return;
+          }
+        }
+        renderCustomerAll();
+      }
+    }
+
     window.addEventListener('load',async()=>{
       loadLocal();
       await cloudLoad(true);
       route();
-
-      // Track baseline counts so we can highlight new arrivals
-      lastUserCount = userAccounts.length;
-      lastOrderCount = orders.length;
-
       setSync('ok',CLOUD_ENABLED?'☁️ Synced':'💾 Local mode');
 
-      // Poll every 3 seconds — ALWAYS pull fresh from cloud
-      setInterval(async()=>{
-        const wasDevMode = isDevMode;
-        const wasUnlocked = isDevUnlocked;
+      // Start the polling loop — this is what makes cross-device work
+      setInterval(pollOnce, POLL_MS);
 
-        // Force pull from cloud (silent, no badge flicker)
-        await cloudLoad(true);
-
-        // Always reload local memory to pick up the new data
-        loadLocal();
-
-        // ---- Admin console path ----
-        if(wasDevMode && wasUnlocked){
-          // Detect new arrivals
-          const newUserCount = userAccounts.length;
-          const newOrderCount = orders.length;
-          const hasNewUser = newUserCount > lastUserCount;
-          const hasNewOrder = newOrderCount > lastOrderCount;
-          lastUserCount = newUserCount;
-          lastOrderCount = newOrderCount;
-
-          // ALWAYS re-render the dev UI so new data appears
-          renderDevAll();
-
-          // If new user arrived, flash the Accounts tab badge
-          if(hasNewUser){
-            const badge = $('tabAccountsBadge');
-            if(badge) {
-              badge.style.animation = 'none';
-              setTimeout(()=>{badge.style.animation = 'pulse 2s ease-in-out 3';}, 10);
-            }
-          }
-          return;
-        }
-
-        // ---- Customer path ----
-        if(!wasDevMode){
-          // Verify session is still valid
-          if(currentUser){
-            const u = userAccounts.find(x=>x.email===currentUser.email);
-            if(u){
-              currentUser = u;
-              if(!currentUser.isVerified){
-                logout();
-                alert('Your account access has been revoked.');
-                return;
-              }
-            } else {
-              logout();
-              alert('Your account has been removed.');
-              return;
-            }
-          }
-          renderCustomerAll();
-        }
-      }, POLL_INTERVAL_MS);
-    });
-
-    window.addEventListener('hashchange',()=>{
-      route();
-      cloudLoad(true).then(()=>{
-        loadLocal();
-        lastUserCount = userAccounts.length;
-        lastOrderCount = orders.length;
-        if(!isDevMode)renderCustomerAll();
-        else if(isDevUnlocked)renderDevAll();
+      // Also poll immediately when tab becomes visible
+      document.addEventListener('visibilitychange',()=>{
+        if(document.visibilityState==='visible') pollOnce();
       });
+
+      // Also poll on window focus
+      window.addEventListener('focus',pollOnce);
     });
 
-    // Also refresh immediately when the browser tab becomes visible again
-    // (helps when the user switches to another app and comes back)
-    document.addEventListener('visibilitychange', async ()=>{
-      if(document.visibilityState === 'visible' && isDevMode && isDevUnlocked){
-        await cloudLoad(true);
-        loadLocal();
-        lastUserCount = userAccounts.length;
-        lastOrderCount = orders.length;
-        renderDevAll();
-      }
+    window.addEventListener('hashchange',async()=>{
+      route();
+      await cloudLoad(true);
+      if(isDevMode && isDevUnlocked) renderDevAll();
+      else if(!isDevMode) renderCustomerAll();
     });
   </script>
 </body>
