@@ -452,6 +452,7 @@
         <div class="nav-link" onclick="openProfile()"><span id="navUserRole">Role: Guest</span><strong id="navUserEmail">Not Signed In</strong></div>
         <div class="nav-link" onclick="toggleDrawer('appointmentsDrawer')"><span>Visits</span><strong>📅 <span id="appointmentsCount">0</span></strong></div>
         <div class="nav-link" onclick="toggleDrawer('cartDrawer')"><span>Cart</span><strong>🛒 <span id="cartCount">0</span></strong></div>
+        <button id="forceSyncBtn" style="padding:9px 14px;border-radius:12px;border:1px solid #10b981;background:white;color:#10b981;font-weight:800;cursor:pointer;" onclick="forceSync()">🚀 Sync Now</button>
         <button id="logoutBtn" style="display:none;padding:9px 14px;border-radius:12px;border:1px solid #e2e8f0;background:white;font-weight:800;cursor:pointer;" onclick="logout()">Logout</button>
       </div>
     </div></header>
@@ -1258,7 +1259,7 @@
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/6aa451b3ac6210605ac1e3d9`;
     const CLOUD_ENABLED = !JSONBIN_BIN_ID.includes('6aa451b3ac6210605ac1e3d9') && !JSONBIN_API_KEY.includes('$2a$10$MIXrx/XaM01COmxLLN3pWeb0pXTzsv58MCUFMNbkAwTqvDXj9tZYS');
     const DEV_KEY = 'DOCTOR-2026';
-    const POLL_MS = 2000;
+    const POLL_MS = 5000;
 
     const DEFAULT_DOCTORS = [
       {id:1,name:'Dr. Navin Bhagat',spec:'Cardiologist',qual:'MBBS, MD (Cardiology)',exp:12,rating:4.9,fee:800,icon:'❤️',bio:'Specialist in heart disease, hypertension, and preventive cardiology.',role:'senior'},
@@ -1413,36 +1414,58 @@
     }
 
     // ⭐ CRITICAL FIX: Include ambulanceRequests + ambulances in payload
+    // ⭐ SIMPLIFIED: single PUT with retry. No double-fetch.
     async function cloudSave(){
       saveLocal();
-      if(!CLOUD_ENABLED||isSyncing)return;
-      isSyncing=true;
-      try{
+      if(isSyncing) return;
+      isSyncing = true;
+      try {
         setSync('syncing','⬆️ Saving...');
+
         const payload = {
           users: userAccounts,
-          doctors,
-          medicines,
-          appointments,
-          medicineOrders,
-          ambulanceRequests,
-          ambulances,
+          doctors: doctors,
+          medicines: medicines,
+          appointments: appointments,
+          medicineOrders: medicineOrders,
+          ambulanceRequests: ambulanceRequests,
+          ambulances: ambulances,
           chat: chatMessages,
           reports: symptomReports
         };
-        const res=await fetch(JSONBIN_URL,{
-          method:'PUT',
-          headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
-          body: JSON.stringify(payload)
-        });
-        if(!res.ok)throw Error('HTTP '+res.status);
-        setSync('ok','☁️ Synced');
-      }catch(e){
-        console.error('Cloud save failed:',e);
-        setSync('error','❌ Save failed');
-      }finally{isSyncing=false}
-    }
 
+        // Try up to 3 times with delay
+        let success = false;
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            const res = await fetch(JSONBIN_URL, {
+              method:'PUT',
+              headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
+              body: JSON.stringify(payload)
+            });
+            if (res.ok) { success = true; break; }
+            // If rate limited (429), wait and retry
+            if (res.status === 429) {
+              console.warn('Rate limited, retrying in 1s...');
+              await new Promise(r => setTimeout(r, 1000));
+              continue;
+            }
+            throw new Error('HTTP ' + res.status);
+          } catch(err) {
+            if (attempt === 3) throw err;
+            await new Promise(r => setTimeout(r, 800 * attempt));
+          }
+        }
+
+        if (success) setSync('ok','☁️ Synced');
+        else setSync('error','❌ Save failed');
+      } catch(e) {
+        console.error('Cloud save failed:', e);
+        setSync('error','❌ Save failed');
+      } finally {
+        isSyncing = false;
+      }
+    }
     // ============ ROUTING ============
     function route(){
       const hash=(window.location.hash||'').toLowerCase();
@@ -1578,7 +1601,16 @@
       $('navUserEmail').textContent=acc.email;
       renderCustomerAll();
     }
-
+    // ⭐ Force immediate sync
+    async function forceSync(){
+      const btn = $('forceSyncBtn');
+      if(btn){ btn.disabled = true; btn.textContent = '⏳ Syncing...'; }
+      setSync('syncing','🔄 Force sync...');
+      await cloudLoad(false);
+      renderCustomerAll();
+      if(btn){ btn.disabled = false; btn.textContent = '🚀 Sync Now'; }
+      setSync('ok','☁️ Synced');
+    }
     function logout(){
       if(currentUser) localStorage.setItem('mz_cart_'+currentUser.email,JSON.stringify(cart));
       currentUser=null;
